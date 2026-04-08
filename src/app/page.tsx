@@ -1,36 +1,47 @@
-const routeSignals = [
+type Card = {
+  label: string;
+  title: string;
+  description: string;
+  meta: string;
+  theme: "cyan" | "violet" | "orange" | "emerald";
+};
+
+const routeSignals: Card[] = [
   {
     label: "Closest Verified Wash",
-    title: "Palo Alto Prime Route",
-    description:
-      "A verified first-time wash aligned directly with a Mountain View → Redwood City drive path.",
+    title: "Palo Alto Prime Route", 
+    description: "A verified first-time wash aligned directly with a Mountain View → Redwood City drive path.",
     meta: "5.5 miles",
     theme: "cyan",
   },
   {
     label: "Stacked Bonus Stop",
     title: "Redwood Value Chain",
-    description:
-      "Add a second free-value stop after your first redemption with timing and route continuity preserved.",
-    meta: "Optional stop",
+    description: "Add a second free-value stop after your first redemption with timing and route continuity preserved.",
+    meta: "Optional stop", 
     theme: "violet",
   },
   {
     label: "Offer Intelligence",
     title: "Grand Opening Signal",
-    description:
-      "Detected first-time promotional momentum from newly opened local businesses and activation campaigns.",
+    description: "Detected first-time promotional momentum from newly opened local businesses and activation campaigns.",
     meta: "Fresh promo",
-    theme: "orange",
+    theme: "orange", 
   },
 ];
 
-const premiumCards = [
+type PremiumCard = {
+  eyebrow: string;
+  title: string;
+  body: string;
+  theme: "cyan" | "violet" | "orange" | "emerald";
+};
+
+const premiumCards: PremiumCard[] = [
   {
     eyebrow: "Verification Layer",
-    title: "Free offers you can actually use.",
-    body:
-      "FreeWash Finder filters expired promos, weak offers, low-trust submissions, and misleading redemptions so the product feels reliable from day one.",
+    title: "Free offers you can actually use.", 
+    body: "FreeWash Finder filters expired promos, weak offers, low-trust submissions, and misleading redemptions so the product feels reliable from day one.",
     theme: "cyan",
   },
   {
@@ -49,14 +60,25 @@ const premiumCards = [
   },
 ];
 
-const stats = [
+type Stat = {
+  value: string;
+  label: string;
+};
+
+const stats: Stat[] = [
   { value: "100%", label: "Premium positioning" },
   { value: "Route-Aware", label: "Built around movement" },
   { value: "Verified", label: "Signal over clutter" },
   { value: "Scalable", label: "Beyond car washes" },
 ];
 
-const expansion = [
+type ExpansionItem = {
+  title: string;
+  copy: string;
+  theme: "cyan" | "violet" | "orange" | "emerald";
+};
+
+const expansion: ExpansionItem[] = [
   {
     title: "Gyms",
     copy: "Free day passes, first-week access, and local membership trial incentives.",
