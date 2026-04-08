@@ -194,6 +194,56 @@ function ArtworkPanel({ theme }: { theme: string }) {
   );
 }
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { WaitlistSchema } from "@/db/schema";
+import { toast } from "react-hot-toast";
+import { supabase } from "@/auth";
+
+function WaitlistForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(WaitlistSchema),
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      const { error } = await supabase
+        .from("waitlist")
+        .insert(data);
+        
+      if (error) throw error;
+      
+      toast.success("You're on the list!");
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-8 flex max-w-2xl flex-col gap-4 sm:flex-row">
+      <div className="relative flex-1">
+        <input
+          {...register("email")}
+          type="email"
+          placeholder="Enter your email"
+          className="min-w-0 w-full rounded-full border border-white/10 bg-[#091323]/94 px-5 py-4 text-sm text-white outline-none placeholder:text-white/28 focus:border-cyan-300/40 peer"
+        />
+        {errors.email && (
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-red-400">
+            ✕
+          </span>
+        )}
+      </div>
+      <button
+        type="submit"
+        className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.26)] transition hover:scale-[1.02]"
+      >
+        Join Waitlist
+      </button>
+    </form>
+  );
+}
+
 export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#06111f] text-white">
@@ -588,25 +638,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <form className="mt-8 flex max-w-2xl flex-col gap-4 sm:flex-row">
-                <div className="relative flex-1">
-                  <input
-                    type="email"
-                    required
-                    placeholder="Enter your email"
-                    className="min-w-0 w-full rounded-full border border-white/10 bg-[#091323]/94 px-5 py-4 text-sm text-white outline-none placeholder:text-white/28 focus:border-cyan-300/40 peer"
-                  />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-white/40 peer-valid:text-emerald-400 peer-valid:animate-pulse">
-                    ✓
-                  </span>
-                </div>
-                <button
-                  type="submit"
-                  className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.26)] transition hover:scale-[1.02]"
-                >
-                  Join Waitlist
-                </button>
-              </form>
+              <WaitlistForm />
             </div>
           </div>
         </section>
