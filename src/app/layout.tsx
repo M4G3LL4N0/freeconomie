@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
-import { MapPin, List, PlusCircle } from "lucide-react";
+import { MapPin, List, PlusCircle, Sun, Moon } from "lucide-react";
+import ThemeToggle from "@/components/theme-toggle";
 
 export const metadata: Metadata = {
   title: "FreeWash Finder",
@@ -23,7 +24,8 @@ export default function RootLayout({
                 <Link href="/" className="text-lg font-semibold">
                   FreeWash Finder
                 </Link>
-                <div className="flex gap-4">
+                <div className="flex items-center gap-4">
+                  <ThemeToggle />
                   <Link 
                     href="/map" 
                     className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
