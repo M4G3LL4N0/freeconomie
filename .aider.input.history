@@ -15,3 +15,37 @@
 +- fix root causes
 +- prefer deploy-worthy output
 +- avoid tiny cosmetic-only changes unless bundled with stronger progress
+
+# 2026-04-08 04:01:31.586569
++Venture: freewash-finder
++State: foundation
++Lane: foundation
++
++Current mission:
++- complete essential routes
++- stabilize layout/homepage
++- improve core structure
++
++Rules:
++- make meaningful progress
++- preserve build stability
++- fix root causes
++- prefer deploy-worthy output
++- avoid tiny cosmetic-only changes unless bundled with stronger progress
+
+# 2026-04-08 06:35:59.432946
++Venture: freewash-finder
++State: broken
++Lane: repair
++
++Current mission:
++- repair build blockers
++- fix type/module/env issues
++- restore successful build and deploy
++
++Rules:
++- make meaningful progress
++- preserve build stability
++- fix root causes
++- prefer deploy-worthy output
++- avoid tiny cosmetic-only changes unless bundled with stronger progress
