@@ -23,13 +23,22 @@ export default function RootLayout({
                   FreeWash Finder
                 </Link>
                 <div className="flex gap-4">
-                  <Link href="/map" className="hover:text-foreground/80">
+                  <Link 
+                    href="/map" 
+                    className="hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                  >
                     Map
                   </Link>
-                  <Link href="/list" className="hover:text-foreground/80">
+                  <Link 
+                    href="/list" 
+                    className="hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                  >
                     List
                   </Link>
-                  <Link href="/submit" className="hover:text-foreground/80">
+                  <Link 
+                    href="/submit" 
+                    className="hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                  >
                     Submit
                   </Link>
                 </div>
