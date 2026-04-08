@@ -1,37 +1,61 @@
-const routeSignals = [
+type RouteSignal = {
+  id: string;
+  label: string;
+  title: string;
+  description: string;
+  meta: string;
+  theme: 'cyan' | 'violet' | 'orange' | 'emerald';
+  verificationFlags: string[];
+};
+
+const routeSignals: RouteSignal[] = [
   {
+    id: 'verified-wash',
     label: "Closest Verified Wash",
     title: "Palo Alto Prime Route",
     description:
       "A verified first-time wash aligned directly with a Mountain View → Redwood City drive path.",
     meta: "5.5 miles",
     theme: "cyan",
+    verificationFlags: ['GPS Verified', 'Active Promotion', 'Low Friction']
   },
   {
+    id: 'stacked-stop',
     label: "Stacked Bonus Stop",
     title: "Redwood Value Chain",
     description:
       "Add a second free-value stop after your first redemption with timing and route continuity preserved.",
     meta: "Optional stop",
     theme: "violet",
+    verificationFlags: ['On Route', 'Stackable']
   },
   {
+    id: 'offer-intel',
     label: "Offer Intelligence",
     title: "Grand Opening Signal",
     description:
-      "Detected first-time promotional momentum from newly opened local businesses and activation campaigns.",
+      "Detected first-time promotional momentum from newly opened local businesses.",
     meta: "Fresh promo",
     theme: "orange",
+    verificationFlags: ['New Location', 'High Value'] 
   },
 ];
 
-const premiumCards = [
+type PremiumCard = {
+  eyebrow: string;
+  title: string;
+  body: string;
+  theme: 'cyan' | 'violet' | 'orange';
+  categories: string[];
+};
+
+const premiumCards: PremiumCard[] = [
   {
     eyebrow: "Verification Layer",
     title: "Free offers you can actually use.",
-    body:
-      "FreeWash Finder filters expired promos, weak offers, low-trust submissions, and misleading redemptions so the product feels reliable from day one.",
+    body: "FreeWash Finder filters expired promos, weak offers, low-trust submissions, and misleading redemptions so the product feels reliable from day one.",
     theme: "cyan",
+    categories: ["Car Washes", "Gyms", "Food"],
   },
   {
     eyebrow: "Route Logic",
@@ -119,6 +143,21 @@ function themeClasses(theme: string) {
   }
 }
 
+function RouteAnalytics({ verificationFlags }: { verificationFlags: string[] }) {
+  return (
+    <div className="mt-4 flex flex-wrap gap-2">
+      {verificationFlags.map((flag) => (
+        <span 
+          key={flag}
+          className="rounded-full border border-emerald-300/20 bg-emerald-400/10 px-2.5 py-1 text-xs text-emerald-200"
+        >
+          {flag}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 function ArtworkPanel({ theme }: { theme: string }) {
   const c = themeClasses(theme);
 
@@ -170,7 +209,8 @@ export default function Home() {
         <header className="sticky top-0 z-50 border-b border-white/8 bg-[#071120]/70 backdrop-blur-2xl">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8 lg:px-10">
             <div className="flex items-center gap-3">
-              <div className="relative h-9 w-9 overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(135deg,rgba(34,211,238,0.22),rgba(249,115,22,0.18),rgba(168,85,247,0.2))]">
+              <div className="relative flex items-center gap-2">
+                <div className="relative h-9 w-9 overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(135deg,rgba(34,211,238,0.22),rgba(249,115,22,0.18),rgba(168,85,247,0.2))]">
                 <div className="absolute inset-[6px] rounded-xl border border-white/10 bg-[#081321]/80 backdrop-blur-xl" />
                 <div className="absolute inset-x-2 top-2 h-1 rounded-full bg-gradient-to-r from-cyan-300/70 via-white/60 to-orange-300/70" />
                 <div className="absolute bottom-2 left-2 right-2 h-3 rounded-lg border border-white/10 bg-white/6" />
