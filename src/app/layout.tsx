@@ -25,20 +25,23 @@ export default function RootLayout({
                 <div className="flex gap-4">
                   <Link 
                     href="/map" 
-                    className="hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                    className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
                   >
+                    <MapPin className="h-4 w-4" />
                     Map
                   </Link>
                   <Link 
                     href="/list" 
-                    className="hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                    className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
                   >
+                    <List className="h-4 w-4" />
                     List
                   </Link>
                   <Link 
                     href="/submit" 
-                    className="hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                    className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
                   >
+                    <PlusCircle className="h-4 w-4" />
                     Submit
                   </Link>
                 </div>
