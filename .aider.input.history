@@ -1,0 +1,17 @@
+
+# 2026-04-08 03:56:19.707715
++Venture: freewash-finder
++State: broken
++Lane: repair
++
++Current mission:
++- repair build blockers
++- fix type/module/env issues
++- restore successful build and deploy
++
++Rules:
++- make meaningful progress
++- preserve build stability
++- fix root causes
++- prefer deploy-worthy output
++- avoid tiny cosmetic-only changes unless bundled with stronger progress
