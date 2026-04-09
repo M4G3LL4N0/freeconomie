@@ -12,8 +12,8 @@ export type StaticOffer = {
   state: "CA";
   address: string;
   region: "South Bay" | "Peninsula" | "East Bay" | "North Bay" | "Outer Bay";
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
   category: "free-first-wash" | "free-membership-trial";
   summary: string;
   offerHint: string;
@@ -24,6 +24,10 @@ export type StaticOffer = {
   expirationDate?: string;
   daysUntilExpiration?: number;
   isExpired?: boolean;
+  verificationScore: number;
+  distance?: number;
+  lastVerifiedAt: string;
+  accessibilityFeatures: string[];
 };
 
 export type Location = {
