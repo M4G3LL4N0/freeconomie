@@ -9,9 +9,9 @@ type Card = {
 const routeSignals: Card[] = [
   {
     label: "Closest Verified Wash",
-    title: "Palo Alto Prime Route", 
-    description: "A verified first-time wash aligned directly with a Mountain View → Redwood City drive path.",
-    meta: "5.5 miles",
+    title: "Hayward Prime Route", 
+    description: "A verified first-time wash aligned directly with a San Leandro → Hayward drive path.",
+    meta: "3.2 miles",
     theme: "cyan",
   },
   {

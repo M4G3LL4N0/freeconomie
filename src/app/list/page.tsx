@@ -10,7 +10,8 @@ export default function OffersListPage() {
 
   const filterOffers = (offers: StaticOffer[]) => {
     return offers.filter(offer => {
-      const matchesRegion = !regionFilter || offer.region === regionFilter;
+      const matchesRegion = !regionFilter || 
+        (regionFilter === "Hayward" ? offer.city === "Hayward" : offer.region === regionFilter);
       const matchesCategory = !categoryFilter || offer.category === categoryFilter;
       const matchesSearch = !searchQuery || 
         offer.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -119,6 +120,7 @@ export default function OffersListPage() {
                   <option value="Peninsula">Peninsula</option>
                   <option value="East Bay">East Bay</option>
                   <option value="North Bay">North Bay</option>
+                  <option value="Hayward">Hayward Only</option>
                 </select>
               </div>
 

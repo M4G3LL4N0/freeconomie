@@ -57,7 +57,7 @@ export const bayAreaStaticOffers: StaticOffer[] = [
     accessibilityFeatures: ["ADA accessible"],
     restrictions: "Must cancel within 7 days to avoid charges",
     offerType: "membership-trial",
-    tags: ["verified", "membership", "east-bay"],
+    tags: ["verified", "membership", "east-bay", "hayward", "jackson-st"],
     source: {
       name: "Bay Area Car Wash",
       url: "https://www.bayareacarwash.com/",
@@ -89,7 +89,7 @@ export const bayAreaStaticOffers: StaticOffer[] = [
     accessibilityFeatures: ["Mobile app", "Contactless payment"],
     restrictions: "One per household",
     offerType: "first-time",
-    tags: ["verified", "mobile-app", "east-bay"],
+    tags: ["verified", "mobile-app", "east-bay", "hayward", "industrial-pkwy"],
     source: {
       name: "Hayward Express Wash",
       url: "https://www.haywardexpresswash.com/",
