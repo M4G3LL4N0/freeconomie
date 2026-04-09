@@ -1,4 +1,4 @@
-import { bayAreaStaticOffers } from "@/lib/bay-area-offers";
+import { bayAreaStaticOffers } from '@/lib/freewash-data';
 import { FilterIcon, MapPinIcon, VerifiedIcon } from "@/components/icons";
 import { useState } from "react";
 
