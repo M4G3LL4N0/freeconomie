@@ -29,27 +29,19 @@ export async function GET(request: Request) {
       limit: Number(searchParams.get('limit')) || 20,
     });
 
-    let query = supabase
-      .rpc('nearby_locations', {
-        lat: input.lat,
-        lng: input.lng,
-        radius: input.radius
-      })
-      .select('*');
-
-    // Enhanced route-aware sorting
-    if (searchParams.get('sort') === 'route_optimized') {
-      query = query
-        .order('verification_score', { ascending: false })
-        .order('distance_in_km', { ascending: true });
-    } else {
-      query = query.order('distance_in_km', { ascending: true });
-    }
-    
-    const { data, error } = await query
-      .limit(input.limit);
-
-    if (error) throw error;
+    // Convert static offers to API response format
+    const data = bayAreaStaticOffers.map(offer => ({
+      id: offer.id,
+      name: offer.businessName,
+      address: offer.address,
+      lat: offer.latitude,
+      lng: offer.longitude,
+      offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
+      details: offer.summary,
+      expires_at: offer.expirationDate,
+      created_at: new Date().toISOString(),
+      distance_in_km: 0 // Will be calculated
+    }));
 
     captureEvent("locations_fetched", {
       lat: input.lat,

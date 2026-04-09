@@ -9,11 +9,10 @@ export async function GET(request: Request) {
     return NextResponse.json([], { status: 200 });
   }
 
-  const results = bayAreaStaticOffers.filter(offer => 
-    offer.businessName.toLowerCase().includes(query) ||
-    offer.city.toLowerCase().includes(query) ||
-    offer.address.toLowerCase().includes(query)
-  ).slice(0, 20);
+  const results = bayAreaStaticOffers.filter(offer =>
+    offer.businessName.toLowerCase().includes(query.toLowerCase()) ||
+    offer.city.toLowerCase().includes(query.toLowerCase())
+  );
 
   return NextResponse.json(results);
 }

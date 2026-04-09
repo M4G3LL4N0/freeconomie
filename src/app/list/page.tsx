@@ -48,11 +48,25 @@ export default function OffersListPage() {
     }));
   };
 
-  const filteredOffers = enhanceOffers(
-    sortOffers(
-      filterOffers(bayAreaStaticOffers)
-    )
-  );
+  const filteredOffers = bayAreaStaticOffers
+    .filter(offer => {
+      const matchesRegion = !regionFilter || offer.region === regionFilter;
+      const matchesCategory = !categoryFilter || offer.category === categoryFilter;
+      const matchesSearch = !searchQuery || 
+        offer.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        offer.city.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      return matchesRegion && matchesCategory && matchesSearch;
+    })
+    .map(offer => ({
+      ...offer,
+      daysUntilExpiration: offer.expirationDate 
+        ? Math.floor((new Date(offer.expirationDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+        : undefined,
+      isExpired: offer.expirationDate 
+        ? new Date(offer.expirationDate) < new Date()
+        : false
+    }));
     .sort((a, b) => {
       if (sortBy === "distance") {
         return (a.distance || 0) - (b.distance || 0);
