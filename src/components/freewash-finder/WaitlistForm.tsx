@@ -46,16 +46,16 @@ export default function WaitlistForm() {
     <form 
       onSubmit={handleSubmit(onSubmit)} 
       aria-labelledby="waitlist-heading"
-      className="mt-8 flex max-w-2xl flex-col gap-6 sm:flex-row"
+      className="mt-6 sm:mt-8 flex flex-col gap-4 sm:flex-row sm:gap-6 max-w-2xl"
     >
       <h2 id="waitlist-heading" className="sr-only">Join Waitlist</h2>
-      <div className="min-w-0 flex-1">
+      <div className="w-full sm:flex-1">
         <label htmlFor="waitlist-email" className="sr-only">Email address</label>
         <input
           id="waitlist-email"
           type="email"
           placeholder="Enter your email"
-          className={`w-full rounded-full border-2 ${errors.email ? 'border-rose-400/50' : 'border-white/15'} glass-form-element px-6 py-4 text-sm text-white/90 outline-none transition-all placeholder:text-white/28 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/30`}
+          className={`w-full rounded-full border-2 ${errors.email ? 'border-rose-400/50' : 'border-white/15'} glass-form-element px-4 py-3 sm:px-5 sm:py-3.5 text-sm text-white/90 outline-none transition-all placeholder:text-white/28 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/30`}
           {...register("email")}
           aria-invalid={errors.email ? "true" : "false"}
           aria-describedby={errors.email ? "email-error" : undefined}
@@ -67,7 +67,7 @@ export default function WaitlistForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_14px_50px_rgba(59,130,246,0.4)] disabled:opacity-70"
+        className="w-full sm:w-auto rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-3 sm:px-8 sm:py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_14px_50px_rgba(59,130,246,0.4)] disabled:opacity-70"
       >
         {isSubmitting ? "Joining..." : "Join Waitlist"}
       </button>

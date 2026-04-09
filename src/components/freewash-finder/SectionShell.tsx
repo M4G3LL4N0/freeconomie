@@ -20,7 +20,7 @@ export default function SectionShell({
   return (
     <section 
       id={id} 
-      className={`px-6 py-20 sm:py-24 sm:px-8 lg:px-10 relative isolate ${className}`}
+      className={`px-4 py-16 sm:px-6 sm:py-20 md:px-8 lg:px-10 lg:py-24 relative isolate ${className}`}
     >
       {/* Background gradient */}
       {theme === "primary" && (
@@ -32,7 +32,7 @@ export default function SectionShell({
 
       <div className="mx-auto max-w-7xl">
         {(title || subtitle) && (
-          <div className="max-w-3xl mb-10 lg:mb-14">
+          <div className="max-w-3xl mb-8 sm:mb-10 lg:mb-14 px-4 sm:px-0">
             {subtitle && (
               <div className="text-[11px] uppercase tracking-[0.28em] text-white/42 mb-3">
                 {subtitle}
@@ -45,7 +45,7 @@ export default function SectionShell({
             )}
           </div>
         )}
-        <div className="space-y-16">{children}</div>
+        <div className="space-y-12 sm:space-y-16">{children}</div>
       </div>
     </section>
   );

@@ -238,15 +238,15 @@ export default function Home() {
           </div>
         </header>
 
-        <section className="px-6 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-16 lg:px-10 lg:pt-20">
+        <section className="px-4 pb-12 pt-8 sm:px-6 sm:pb-16 sm:pt-12 lg:px-8 lg:pt-16">
           <div className="mx-auto max-w-7xl">
-            <div className="relative overflow-hidden rounded-[2.4rem] border border-white/10 bg-[linear-gradient(135deg,rgba(13,28,52,0.96),rgba(20,34,68,0.88)_38%,rgba(25,24,52,0.84)_100%)] px-6 py-10 shadow-[0_30px_100px_rgba(0,0,0,0.42)] sm:px-8 sm:py-12 lg:px-12 lg:py-14">
+            <div className="relative overflow-hidden rounded-[1.8rem] sm:rounded-[2.4rem] border border-white/10 bg-[linear-gradient(135deg,rgba(13,28,52,0.96),rgba(20,34,68,0.88)_38%,rgba(25,24,52,0.84)_100%)] px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 shadow-[0_30px_100px_rgba(0,0,0,0.42)]">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_26%),radial-gradient(circle_at_right,rgba(255,255,255,0.06),transparent_22%)]" />
               <div className="absolute left-[6%] top-[10%] h-32 w-32 rounded-full bg-cyan-300/10 blur-3xl" />
               <div className="absolute right-[10%] top-[8%] h-40 w-40 rounded-full bg-violet-300/10 blur-3xl" />
 
-              <div className="relative grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
-                <div>
+              <div className="relative grid items-center gap-8 lg:grid-cols-[1fr_1fr]">
+                <div className="order-2 lg:order-1">
                   <div className="inline-flex items-center rounded-full border border-white/10 bg-white/6 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.26em] text-white/68 backdrop-blur-xl">
                     Premium consumer utility, not coupon clutter
                   </div>
@@ -292,7 +292,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative order-1 lg:order-2">
                   <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-cyan-400/12 via-violet-500/10 to-orange-400/12 blur-2xl" />
                   <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(8,16,30,0.9),rgba(7,13,24,0.96))] p-5 backdrop-blur-2xl">
                     <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.04] p-5">
