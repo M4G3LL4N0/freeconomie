@@ -1,0 +1,310 @@
+export type OfferSource = {
+  name: string;
+  url: string;
+  checkedAt: string;
+};
+
+export type StaticOffer = {
+  id: string;
+  businessName: string;
+  offerTitle: string;
+  city: string;
+  state: "CA";
+  address: string;
+  region:
+    | "South Bay"
+    | "Peninsula"
+    | "East Bay"
+    | "North Bay"
+    | "Outer Bay";
+  latitude?: number;
+  longitude?: number;
+  category: "free-first-wash" | "free-membership-trial";
+  summary: string;
+  offerHint: string;
+  signupRequired: boolean;
+  verified: boolean;
+  source: OfferSource;
+  tags: string[];
+};
+
+export const bayAreaStaticOffers: StaticOffer[] = [
+  {
+    id: "autopride-palo-alto",
+    businessName: "Auto Pride Car Wash",
+    offerTitle: "Free Car Wash",
+    city: "Palo Alto",
+    state: "CA",
+    address: "841 El Camino Real, Palo Alto, CA 94301",
+    region: "Peninsula",
+    category: "free-first-wash",
+    summary: "Official site advertises a free car wash and lists this Palo Alto location.",
+    offerHint: "Likely requires form/signup on official free wash page.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Auto Pride Car Wash",
+      url: "https://www.autopridecarwash.com/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "peninsula", "el-camino"],
+  },
+  {
+    id: "autopride-redwood-city",
+    businessName: "Auto Pride Car Wash",
+    offerTitle: "Free Car Wash",
+    city: "Redwood City",
+    state: "CA",
+    address: "909 Woodside Road, Redwood City, CA 94061",
+    region: "Peninsula",
+    category: "free-first-wash",
+    summary: "Official site advertises a free car wash and lists this Redwood City location.",
+    offerHint: "Likely requires form/signup on official free wash page.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Auto Pride Car Wash",
+      url: "https://www.autopridecarwash.com/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "peninsula"],
+  },
+  {
+    id: "autopride-san-carlos",
+    businessName: "Auto Pride Car Wash",
+    offerTitle: "Free Car Wash",
+    city: "San Carlos",
+    state: "CA",
+    address: "195 El Camino Real, San Carlos, CA 94070",
+    region: "Peninsula",
+    category: "free-first-wash",
+    summary: "Official site advertises a free car wash and lists this San Carlos location.",
+    offerHint: "Likely requires form/signup on official free wash page.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Auto Pride Car Wash",
+      url: "https://www.autopridecarwash.com/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "peninsula", "el-camino"],
+  },
+  {
+    id: "autopride-burlingame",
+    businessName: "Auto Pride Car Wash",
+    offerTitle: "Free Car Wash",
+    city: "Burlingame",
+    state: "CA",
+    address: "1095 Carolan Avenue, Burlingame, CA 94010",
+    region: "Peninsula",
+    category: "free-first-wash",
+    summary: "Official site advertises a free car wash and lists this Burlingame location.",
+    offerHint: "Likely requires form/signup on official free wash page.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Auto Pride Car Wash",
+      url: "https://www.autopridecarwash.com/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "peninsula"],
+  },
+  {
+    id: "autopride-san-jose",
+    businessName: "Auto Pride Car Wash",
+    offerTitle: "Free Car Wash",
+    city: "San Jose",
+    state: "CA",
+    address: "3197 Silver Creek Road, San Jose, CA 95121",
+    region: "South Bay",
+    category: "free-first-wash",
+    summary: "Official site advertises a free car wash and lists this San Jose location.",
+    offerHint: "Likely requires form/signup on official free wash page.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Auto Pride Car Wash",
+      url: "https://www.autopridecarwash.com/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "south-bay"],
+  },
+  {
+    id: "bayareacarwash-redwood-city",
+    businessName: "Bay Area Car Wash",
+    offerTitle: "Get a Free Car Wash",
+    city: "Redwood City",
+    state: "CA",
+    address: "215 El Camino Real, Redwood City, CA 94062",
+    region: "Peninsula",
+    category: "free-membership-trial",
+    summary: "Official site says 'get a free car wash' as a trial of its unlimited membership program.",
+    offerHint: "Free wash appears tied to trying the unlimited membership program.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Bay Area Car Wash",
+      url: "https://www.bayareacarwash.com/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "membership-trial", "peninsula"],
+  },
+  {
+    id: "bayareacarwash-san-mateo",
+    businessName: "Bay Area Car Wash",
+    offerTitle: "Get a Free Car Wash",
+    city: "San Mateo",
+    state: "CA",
+    address: "221 E Hillsdale Blvd, San Mateo, CA 94403",
+    region: "Peninsula",
+    category: "free-membership-trial",
+    summary: "Official site says 'get a free car wash' as a trial of its unlimited membership program.",
+    offerHint: "Free wash appears tied to trying the unlimited membership program.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Bay Area Car Wash",
+      url: "https://www.bayareacarwash.com/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "membership-trial", "peninsula"],
+  },
+  {
+    id: "bayareacarwash-san-leandro",
+    businessName: "Bay Area Car Wash",
+    offerTitle: "Get a Free Car Wash",
+    city: "San Leandro",
+    state: "CA",
+    address: "550 MacArthur Blvd, San Leandro, CA 94577",
+    region: "East Bay",
+    category: "free-membership-trial",
+    summary: "Official site says 'get a free car wash' as a trial of its unlimited membership program.",
+    offerHint: "Free wash appears tied to trying the unlimited membership program.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Bay Area Car Wash",
+      url: "https://www.bayareacarwash.com/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "membership-trial", "east-bay"],
+  },
+  {
+    id: "bayareacarwash-hayward",
+    businessName: "Bay Area Car Wash",
+    offerTitle: "Get a Free Car Wash",
+    city: "Hayward",
+    state: "CA",
+    address: "133 Jackson St, Hayward, CA 94544",
+    region: "East Bay",
+    category: "free-membership-trial",
+    summary: "Official site says 'get a free car wash' as a trial of its unlimited membership program.",
+    offerHint: "Free wash appears tied to trying the unlimited membership program.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Bay Area Car Wash",
+      url: "https://www.bayareacarwash.com/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "membership-trial", "east-bay"],
+  },
+  {
+    id: "zipthru-santa-clara",
+    businessName: "Zip Thru Express Car Wash",
+    offerTitle: "Free Car Wash Promotion",
+    city: "Santa Clara",
+    state: "CA",
+    address: "3740 El Camino Real, Santa Clara, CA 95051",
+    region: "South Bay",
+    category: "free-first-wash",
+    summary: "Zip Thru has a dedicated free car wash promotions flow and lists this Santa Clara location.",
+    offerHint: "Check the location-specific free car wash promotion page.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Zip Thru Express Car Wash",
+      url: "https://zipthrucarwashes.com/freecarwash-suisuncity/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "south-bay", "el-camino"],
+  },
+  {
+    id: "zipthru-sunnyvale",
+    businessName: "Zip Thru Express Car Wash",
+    offerTitle: "Free Car Wash Promotion",
+    city: "Sunnyvale",
+    state: "CA",
+    address: "905 E El Camino Real, Sunnyvale, CA 94087",
+    region: "South Bay",
+    category: "free-first-wash",
+    summary: "Zip Thru has a dedicated free car wash promotions flow and lists this Sunnyvale location.",
+    offerHint: "Check the location-specific free car wash promotion page.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Zip Thru Express Car Wash",
+      url: "https://zipthrucarwashes.com/freecarwash-suisuncity/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "south-bay", "el-camino"],
+  },
+  {
+    id: "zipthru-morgan-hill",
+    businessName: "Zip Thru Express Car Wash",
+    offerTitle: "Free Car Wash Promotion",
+    city: "Morgan Hill",
+    state: "CA",
+    address: "16015 Caputo Dr, Morgan Hill, CA 95037",
+    region: "South Bay",
+    category: "free-first-wash",
+    summary: "Zip Thru has a dedicated free car wash promotions flow and lists this Morgan Hill location.",
+    offerHint: "Check the location-specific free car wash promotion page.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Zip Thru Express Car Wash",
+      url: "https://zipthrucarwashes.com/free-car-wash/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "south-bay"],
+  },
+  {
+    id: "zipthru-brentwood",
+    businessName: "Zip Thru Express Car Wash",
+    offerTitle: "Free Car Wash Promotion",
+    city: "Brentwood",
+    state: "CA",
+    address: "2650 Empire Ave, Brentwood, CA 94513",
+    region: "East Bay",
+    category: "free-first-wash",
+    summary: "Zip Thru has a dedicated free car wash promotions flow and lists this Brentwood location.",
+    offerHint: "Check the location-specific free car wash promotion page.",
+    signupRequired: true,
+    verified: true,
+    source: {
+      name: "Zip Thru Express Car Wash",
+      url: "https://zipthrucarwashes.com/free-car-wash/",
+      checkedAt: "2026-04-08",
+    },
+    tags: ["verified", "official-site", "east-bay"],
+  },
+];
+
+export const bayAreaCities = [
+  "San Francisco",
+  "Oakland",
+  "San Jose",
+  "Palo Alto",
+  "Mountain View",
+  "Sunnyvale",
+  "Santa Clara",
+  "Redwood City",
+  "San Carlos",
+  "Burlingame",
+  "San Mateo",
+  "Hayward",
+  "San Leandro",
+  "Brentwood",
+  "Morgan Hill",
+];
