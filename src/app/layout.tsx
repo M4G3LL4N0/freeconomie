@@ -18,9 +18,9 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body className="h-full bg-background text-foreground">
         <div className="flex flex-col min-h-full">
-          <header className="border-b border-foreground/10">
-            <div className="container mx-auto px-4 py-4">
-              <nav className="flex items-center justify-between">
+          <header className="sticky top-0 z-50 border-b border-white/10 bg-[#071120]/90 backdrop-blur-xl">
+            <div className="container mx-auto px-6 py-4">
+              <nav className="flex items-center justify-between gap-6">
                 <Link href="/" className="text-lg font-semibold">
                   FreeWash Finder
                 </Link>

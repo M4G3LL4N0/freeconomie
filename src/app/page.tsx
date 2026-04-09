@@ -183,7 +183,8 @@ export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#06111f] text-white">
       <div className="relative isolate">
-        <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-[#06111f] to-[#040c18]" />
+        <div className="pointer-events-none absolute inset-0 -z-20">
           <div className="absolute left-[-12%] top-[-10rem] h-[30rem] w-[30rem] rounded-full bg-cyan-500/14 blur-3xl" />
           <div className="absolute right-[-8%] top-[-4rem] h-[34rem] w-[34rem] rounded-full bg-violet-500/12 blur-3xl" />
           <div className="absolute left-1/2 top-[24rem] h-[24rem] w-[36rem] -translate-x-1/2 rounded-full bg-orange-400/10 blur-3xl" />
@@ -397,23 +398,25 @@ export default function Home() {
 
         <section id="platform" className="px-6 pb-20 sm:px-8 lg:px-10">
           <div className="mx-auto max-w-7xl">
-            <div className="grid gap-5 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {premiumCards.map((card) => {
                 const c = themeClasses(card.theme);
                 return (
                   <div
                     key={card.title}
-                    className="relative overflow-hidden rounded-[1.8rem] border border-white/15 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04))] p-8 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
+                    className="relative overflow-hidden rounded-[1.8rem] border border-white/15 bg-gradient-to-b from-white/8 to-white/4 p-8 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
                   >
-                    <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-cyan-400/70 via-violet-500/60 to-orange-400/60`} />
+                    <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400/70 via-violet-500/60 to-orange-400/60`} />
                     <div className={`absolute right-[-2rem] top-[-2rem] h-24 w-24 rounded-full blur-3xl ${c.orb}`} />
-                    <div className="text-[11px] uppercase tracking-[0.24em] text-white/42">
-                      {card.eyebrow}
+                    <div className="relative space-y-4">
+                      <span className="inline-block text-[11px] uppercase tracking-[0.24em] text-white/42">
+                        {card.eyebrow}
+                      </span>
+                      <h3 className="text-2xl font-bold tracking-tight text-white">
+                        {card.title}
+                      </h3>
+                      <p className="text-base leading-7 text-white/70">{card.body}</p>
                     </div>
-                    <h3 className="mt-5 text-2xl font-bold tracking-tight text-white">
-                      {card.title}
-                    </h3>
-                    <p className="mt-4 text-base leading-7 text-white/70">{card.body}</p>
                   </div>
                 );
               })}
