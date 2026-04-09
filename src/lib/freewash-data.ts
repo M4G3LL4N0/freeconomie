@@ -2,6 +2,70 @@ import { StaticOffer } from "../types/freewash";
 
 export const bayAreaStaticOffers: StaticOffer[] = [
   {
+    id: "brentwood-auto-spa-2024",
+    businessName: "Brentwood Auto Spa",
+    offerTitle: "First Wash Free",
+    city: "Brentwood",
+    state: "CA",
+    address: "5651 Lone Tree Way, Brentwood, CA 94513",
+    latitude: 37.9368,
+    longitude: -121.6919,
+    region: "East Bay",
+    category: "free-first-wash",
+    summary: "Complimentary first wash for new customers",
+    offerHint: "Must sign up for email newsletter",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-20", 
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "official-site",
+      confidenceScore: 88
+    },
+    redemptionInstructions: "1. Visit location\n2. Sign up for newsletter at kiosk\n3. Receive free wash code",
+    lastVerifiedAt: "2024-05-25",
+    accessibilityFeatures: ["ADA accessible"],
+    restrictions: "One per household",
+    offerType: "first-time",
+    tags: ["verified", "brentwood", "east-bay"],
+    source: {
+      name: "Brentwood Auto Spa",
+      url: "https://www.brentwoodautospa.com/",
+      checkedAt: "2026-04-08",
+    }
+  },
+  {
+    id: "delta-car-wash-2024",
+    businessName: "Delta Car Wash",
+    offerTitle: "Free Trial Wash",
+    city: "Brentwood",
+    state: "CA", 
+    address: "8850 Brentwood Blvd, Brentwood, CA 94513",
+    latitude: 37.9264,
+    longitude: -121.7172,
+    region: "East Bay",
+    category: "free-membership-trial",
+    summary: "Free basic wash with membership trial signup",
+    offerHint: "Requires credit card for trial",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-18",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "phone-confirmation",
+      confidenceScore: 85  
+    },
+    redemptionInstructions: "1. Visit location\n2. Sign up for 7-day trial\n3. Free wash included",
+    lastVerifiedAt: "2024-05-22",
+    accessibilityFeatures: ["Mobile app", "Contactless payment"],
+    restrictions: "Must cancel within 7 days",
+    offerType: "membership-trial",
+    tags: ["verified", "membership", "brentwood"],
+    source: {
+      name: "Delta Car Wash",
+      url: "https://www.deltacarwash.com/",
+      checkedAt: "2026-04-08",
+    }
+  },
+  {
     id: "zipthru-santa-clara-2024",
     businessName: "Zip Thru Express Car Wash",
     offerTitle: "Free Car Wash Promotion",

@@ -72,11 +72,11 @@ const stats: Stat[] = [
   },
   { 
     value: "Launch Cities", 
-    label: "Palo Alto, Redwood City, Sunnyvale, San Jose, San Mateo, Santa Clara" 
+    label: "Palo Alto, Redwood City, Sunnyvale, San Jose, San Mateo, Santa Clara, Brentwood" 
   },
   { 
-    value: "Peninsula", 
-    label: "Launch Region" 
+    value: bayAreaStaticOffers.filter(o => o.verification.confidenceScore >= 80).length + " Locations", 
+    label: "Bay Area Coverage" 
   },
   { 
     value: "Daily", 
