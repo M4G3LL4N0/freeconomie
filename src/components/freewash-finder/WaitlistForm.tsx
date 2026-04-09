@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { captureEvent } from "@/lib/analytics";
-import { toast } from "react-hot-toast";
+import { showSuccess, showError } from "@/lib/notifications";
 
 const schema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -33,11 +33,11 @@ export default function WaitlistForm() {
 
       if (!response.ok) throw new Error("Failed to join waitlist");
 
-      toast.success("You're on the list!");
+      showSuccess("You're on the list! We'll notify you soon.");
       reset();
       captureEvent("waitlist_signup", { email: data.email });
     } catch (error) {
-      toast.error(error.message);
+      showError(error.message || "Failed to join waitlist");
       captureEvent("waitlist_error", { error: error.message });
     }
   };

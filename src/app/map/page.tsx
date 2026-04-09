@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaf
 import "leaflet/dist/leafset.css";
 import { useEffect, useState } from "react";
 import { MapPin, RefreshCw, Search } from "lucide-react";
+import LoadingState from "@/components/freewash-finder/LoadingState";
 import { captureEvent } from "@/lib/analytics";
 import { toast } from "react-hot-toast";
 
@@ -136,11 +137,11 @@ export default function MapPage() {
       </MapContainer>
 
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-          <div className="rounded-xl bg-white/10 p-8 text-white backdrop-blur-sm flex items-center gap-4">
-            <RefreshCw className="h-6 w-6 animate-spin" />
-            <span className="text-lg">Loading locations...</span>
-          </div>
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-[1000]">
+          <LoadingState 
+            message="Finding nearby washes..." 
+            className="bg-white/10 p-8"
+          />
         </div>
       )}
     </div>

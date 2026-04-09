@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { captureEvent } from "@/lib/analytics";
+import { showSuccess, showError, showLoading } from "@/lib/notifications";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -21,6 +22,10 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   try {
+    // Show loading state immediately
+    if (typeof window !== 'undefined') {
+      showLoading("Verifying your submission...");
+    }
     const body = await request.json();
     const data = schema.parse({
       ...body,
@@ -68,9 +73,11 @@ export async function POST(request: Request) {
       throw error;
     }
     
+    showSuccess("Offer submitted for review!");
     captureEvent("offer_submitted", { type: data.offer_type });
     return NextResponse.json({ success: true });
   } catch (error) {
+    showError("Submission failed. Please check your details.");
     captureEvent("offer_error", { 
       error: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined
@@ -79,5 +86,9 @@ export async function POST(request: Request) {
       { error: "Submission failed. Please try again later." },
       { status: 400 }
     );
+  } finally {
+    if (typeof window !== 'undefined') {
+      toast.dismiss(); // Clear any loading toasts
+    }
   }
 }
