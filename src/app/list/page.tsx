@@ -5,13 +5,32 @@ import { useState } from "react";
 export default function OffersListPage() {
   const [regionFilter, setRegionFilter] = useState<string>("");
   const [categoryFilter, setCategoryFilter] = useState<string>("");
+  const [sortBy, setSortBy] = useState<"distance" | "expiration" | "rating">("distance");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const filteredOffers = bayAreaStaticOffers.filter(offer => {
-    return (
-      (!regionFilter || offer.region === regionFilter) &&
-      (!categoryFilter || offer.category === categoryFilter)
-    );
-  });
+  const filteredOffers = bayAreaStaticOffers
+    .filter(offer => {
+      const matchesRegion = !regionFilter || offer.region === regionFilter;
+      const matchesCategory = !categoryFilter || offer.category === categoryFilter;
+      const matchesSearch = !searchQuery || 
+        offer.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        offer.city.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      return matchesRegion && matchesCategory && matchesSearch;
+    })
+    .sort((a, b) => {
+      if (sortBy === "distance") {
+        // Add distance calculation logic here
+        return 0;
+      } else if (sortBy === "expiration") {
+        // Add expiration date comparison logic here
+        return 0;
+      } else if (sortBy === "rating") {
+        // Add rating comparison logic here
+        return 0;
+      }
+      return 0;
+    });
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -58,13 +77,33 @@ export default function OffersListPage() {
 
         {/* Offers list */}
         <div className="flex-1 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center justify-between">
             <h1 className="text-2xl font-bold text-white">
               Verified Car Wash Offers
               <span className="ml-2 text-sm font-normal text-white/60">
                 ({filteredOffers.length} results)
               </span>
             </h1>
+            
+            <div className="flex gap-3">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search businesses..."
+                className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+              />
+              
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+              >
+                <option value="distance">Sort by Distance</option>
+                <option value="expiration">Sort by Expiration</option>
+                <option value="rating">Sort by Rating</option>
+              </select>
+            </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

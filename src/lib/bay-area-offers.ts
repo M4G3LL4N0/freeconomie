@@ -26,6 +26,9 @@ export type StaticOffer = {
   verified: boolean;
   source: OfferSource;
   tags: string[];
+  expirationDate?: string;
+  rating?: number;
+  distance?: number;
 };
 
 export const bayAreaStaticOffers: StaticOffer[] = [
