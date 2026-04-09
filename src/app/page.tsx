@@ -105,6 +105,8 @@ function themeClasses(theme: string) {
   const gradients = {
     cyan: {
       glow: "from-cyan-400/50 via-sky-500/40 to-blue-600/30",
+      medium: "from-cyan-400/30 via-sky-500/20 to-blue-600/15",
+      heavy: "from-cyan-400/70 via-sky-500/60 to-blue-600/50",
       pill: "text-cyan-200 border-cyan-300/25 bg-cyan-400/15",
       beam: "from-cyan-300/80 via-sky-400/60 to-transparent",
       orb: "bg-cyan-400/25",
@@ -114,6 +116,8 @@ function themeClasses(theme: string) {
     },
     violet: {
       glow: "from-violet-400/50 via-purple-500/40 to-fuchsia-600/30",
+      medium: "from-violet-400/30 via-purple-500/20 to-fuchsia-600/15",
+      heavy: "from-violet-400/70 via-purple-500/60 to-fuchsia-600/50",
       pill: "text-violet-200 border-violet-300/25 bg-violet-400/15",
       beam: "from-violet-300/80 via-purple-400/60 to-transparent",
       orb: "bg-violet-400/25",
@@ -123,6 +127,8 @@ function themeClasses(theme: string) {
     },
     orange: {
       glow: "from-orange-400/50 via-amber-500/40 to-yellow-600/30",
+      medium: "from-orange-400/30 via-amber-500/20 to-yellow-600/15",
+      heavy: "from-orange-400/70 via-amber-500/60 to-yellow-600/50",
       pill: "text-orange-200 border-orange-300/25 bg-orange-400/15",
       beam: "from-orange-300/80 via-amber-400/60 to-transparent",
       orb: "bg-orange-400/25",
@@ -132,6 +138,8 @@ function themeClasses(theme: string) {
     },
     emerald: {
       glow: "from-emerald-400/50 via-teal-500/40 to-cyan-600/30",
+      medium: "from-emerald-400/30 via-teal-500/20 to-cyan-600/15",
+      heavy: "from-emerald-400/70 via-teal-500/60 to-cyan-600/50",
       pill: "text-emerald-200 border-emerald-300/25 bg-emerald-400/15",
       beam: "from-emerald-300/80 via-teal-400/60 to-transparent",
       orb: "bg-emerald-400/25",
@@ -407,18 +415,21 @@ export default function Home() {
                 return (
                   <div
                     key={card.title}
-                    className="relative overflow-hidden rounded-[1.8rem] border border-white/10 glass-panel p-8"
+                    className={`relative overflow-hidden rounded-[1.8rem] border border-white/10 glass-panel p-[1px] transition-all hover:scale-[1.02] hover:shadow-[0_24px_80px_rgba(0,0,0,0.4)]`}
                   >
-                    <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400/70 via-violet-500/60 to-orange-400/60`} />
-                    <div className={`absolute right-[-2rem] top-[-2rem] h-24 w-24 rounded-full blur-3xl ${c.orb}`} />
-                    <div className="relative space-y-6">
-                      <span className="inline-block text-[11px] uppercase tracking-[0.24em] text-white/42">
-                        {card.eyebrow}
-                      </span>
-                      <h3 className="text-2xl font-bold tracking-tight text-white">
-                        {card.title}
-                      </h3>
-                      <p className="text-base leading-7 text-white/70">{card.body}</p>
+                    <div className={`absolute inset-0 rounded-[calc(1.8rem-1px)] bg-gradient-to-br ${c.medium}`} />
+                    <div className="relative h-full rounded-[calc(1.8rem-1px)] bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-[8px]">
+                      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${c.heavy}`} />
+                      <div className={`absolute right-[-2rem] top-[-2rem] h-24 w-24 rounded-full blur-3xl ${c.orb}`} />
+                      <div className="relative space-y-6 p-8">
+                        <span className="inline-block text-[11px] uppercase tracking-[0.24em] text-white/42">
+                          {card.eyebrow}
+                        </span>
+                        <h3 className="text-2xl font-bold tracking-tight text-white">
+                          {card.title}
+                        </h3>
+                        <p className="text-base leading-7 text-white/70">{card.body}</p>
+                      </div>
                     </div>
                   </div>
                 );
