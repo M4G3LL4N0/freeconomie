@@ -11,18 +11,12 @@ const supabase = createClient(
 const schema = z.object({
   lat: z.number().min(-90).max(90),
   lng: z.number().min(-180).max(180),
-  radius: z.number().min(1).max(100).default(10), // in km
+  radius: z.number().min(1).max(100).default(10),
   offer_type: z.enum(['wash', 'trial', 'promo', 'all']).optional().default('all'),
   limit: z.number().min(1).max(100).optional().default(20),
 });
 
-const nearbyLocationsQuery = (lat: number, lng: number, radius: number) => {
-  return supabase.rpc('nearby_locations', {
-    lat,
-    lng,
-    radius
-  });
-};
+export const revalidate = 3600; // Cache for 1 hour
 
 export async function GET(request: Request) {
   try {
@@ -35,16 +29,15 @@ export async function GET(request: Request) {
       limit: Number(searchParams.get('limit')) || 20,
     });
 
-    let query = nearbyLocationsQuery(input.lat, input.lng, input.radius)
+    const { data, error } = await supabase
+      .rpc('nearby_locations', {
+        lat: input.lat,
+        lng: input.lng,
+        radius: input.radius
+      })
       .select('*')
       .order('distance_in_km', { ascending: true })
       .limit(input.limit);
-
-    if (input.offer_type !== 'all') {
-      query = query.eq('offer_type', input.offer_type);
-    }
-
-    const { data, error } = await query;
 
     if (error) throw error;
 
@@ -57,9 +50,11 @@ export async function GET(request: Request) {
     
     return NextResponse.json(data);
   } catch (error) {
-    captureEvent("locations_error", { error: error.message });
+    captureEvent("locations_error", { 
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
     return NextResponse.json(
-      { error: error.message },
+      { error: "Failed to fetch locations" },
       { status: 400 }
     );
   }

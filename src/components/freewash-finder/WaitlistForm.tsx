@@ -6,11 +6,10 @@ import { z } from "zod";
 import { captureEvent } from "@/lib/analytics";
 import { toast } from "react-hot-toast";
 
-const waitlistSchema = z.object({
+const schema = z.object({
   email: z.string().email("Please enter a valid email"),
+  referral_code: z.string().optional(),
 });
-
-type WaitlistFormData = z.infer<typeof waitlistSchema>;
 
 export default function WaitlistForm() {
   const {
@@ -18,11 +17,11 @@ export default function WaitlistForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<WaitlistFormData>({
-    resolver: zodResolver(waitlistSchema),
+  } = useForm({
+    resolver: zodResolver(schema),
   });
 
-  const onSubmit = async (data: WaitlistFormData) => {
+  const onSubmit = async (data) => {
     try {
       const response = await fetch("/api/waitlist", {
         method: "POST",
@@ -34,20 +33,17 @@ export default function WaitlistForm() {
 
       if (!response.ok) throw new Error("Failed to join waitlist");
 
-      toast.success("You've joined the waitlist!");
+      toast.success("You're on the list!");
       reset();
       captureEvent("waitlist_signup", { email: data.email });
     } catch (error) {
-      toast.error("Failed to join waitlist. Please try again.");
-      captureEvent("waitlist_error", { error: (error as Error).message });
+      toast.error(error.message);
+      captureEvent("waitlist_error", { error: error.message });
     }
   };
 
   return (
-    <form 
-      onSubmit={handleSubmit(onSubmit)}
-      className="mt-8 flex max-w-2xl flex-col gap-4 sm:flex-row"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-8 flex max-w-2xl flex-col gap-4 sm:flex-row">
       <div className="min-w-0 flex-1">
         <input
           type="email"

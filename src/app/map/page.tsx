@@ -1,53 +1,64 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { captureEvent } from "@/lib/analytics";
 import { useEffect, useState } from "react";
-import { MapPin } from "lucide-react";
+import { MapPin, RefreshCw } from "lucide-react";
+import { captureEvent } from "@/lib/analytics";
 import { toast } from "react-hot-toast";
 
+function MapControls({ onRefresh }: { onRefresh: () => void }) {
+  const map = useMapEvents({
+    moveend() {
+      captureEvent("map_moved", {
+        center: map.getCenter(),
+        zoom: map.getZoom()
+      });
+    }
+  });
+
+  return null;
+}
+
 export default function MapPage() {
-  const [locations, setLocations] = useState([]);
+  const [locations, setLocations] = useState<Location[]>([]);
   const [loading, setLoading] = useState(true);
-  const [center, setCenter] = useState([37.7749, -122.4194]); // Default to SF
+  const [center, setCenter] = useState([37.7749, -122.4194]);
+
+  const fetchLocations = async (lat: number, lng: number) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `/api/locations?lat=${lat}&lng=${lng}&radius=10`
+      );
+      if (!response.ok) throw new Error("Failed to load");
+      const data = await response.json();
+      setLocations(data);
+    } catch (error) {
+      toast.error("Failed to load locations");
+      captureEvent("map_error", { error: (error as Error).message });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Get user's location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCenter([position.coords.latitude, position.coords.longitude]);
-          captureEvent("map_location_detected");
+        (pos) => {
+          setCenter([pos.coords.latitude, pos.coords.longitude]);
+          fetchLocations(pos.coords.latitude, pos.coords.longitude);
         },
         () => {
-          toast.error("Could not detect your location");
-          captureEvent("map_location_error");
+          fetchLocations(center[0], center[1]);
         }
       );
     }
-
-    // Fetch locations
-    const fetchLocations = async () => {
-      try {
-        const response = await fetch("/api/locations");
-        const data = await response.json();
-        setLocations(data);
-        captureEvent("map_locations_loaded");
-      } catch (error) {
-        toast.error("Failed to load locations");
-        captureEvent("map_locations_error");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLocations();
   }, []);
 
   return (
-    <div className="h-[calc(100vh-64px)]">
-      <MapContainer 
+    <div className="relative h-[calc(100vh-64px)]">
+      <MapContainer
         center={center}
         zoom={13}
         className="h-full w-full"
@@ -56,22 +67,22 @@ export default function MapPage() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
+        <MapControls onRefresh={() => fetchLocations(center[0], center[1])} />
         
         {locations.map((location) => (
-          <Marker 
-            key={location.id}
-            position={[location.lat, location.lng]}
-          >
-            <Popup>
-              <div className="space-y-2">
+          <Marker key={location.id} position={[location.lat, location.lng]}>
+            <Popup className="rounded-xl">
+              <div className="space-y-2 p-2">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
                   <h3 className="font-semibold">{location.name}</h3>
                 </div>
                 <p className="text-sm">{location.address}</p>
-                <p className="text-sm text-green-500">
-                  Free until: {location.freeUntil}
-                </p>
+                {location.expires_at && (
+                  <p className="text-sm text-green-500">
+                    Valid until: {new Date(location.expires_at).toLocaleDateString()}
+                  </p>
+                )}
               </div>
             </Popup>
           </Marker>
