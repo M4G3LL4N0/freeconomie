@@ -3,10 +3,10 @@ import WaitlistForm from "./WaitlistForm";
 
 export default function WaitlistSection() {
   return (
-    <section id="waitlist" className="px-6 pb-24 sm:px-8 lg:px-10">
+    <section id="waitlist" className="px-6 pb-32 sm:px-8 lg:px-10">
       <div className="mx-auto max-w-7xl">
-        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-8 shadow-[0_18px_60px_rgba(0,0,0,0.3)] sm:p-10 lg:p-12">
-          <div className="max-w-3xl">
+        <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-10 shadow-[0_18px_60px_rgba(0,0,0,0.3)] sm:p-12 lg:p-14">
+          <div className="max-w-3xl space-y-8">
             <div className="text-[11px] uppercase tracking-[0.28em] text-white/42">
               Early Access
             </div>
@@ -20,7 +20,9 @@ export default function WaitlistSection() {
             </p>
           </div>
 
-          <WaitlistForm />
+          <div className="mt-12">
+            <WaitlistForm />
+          </div>
         </div>
       </div>
     </section>

@@ -43,22 +43,22 @@ export default function WaitlistForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-8 flex max-w-2xl flex-col gap-4 sm:flex-row">
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-8 flex max-w-2xl flex-col gap-6 sm:flex-row">
       <div className="min-w-0 flex-1">
         <input
           type="email"
           placeholder="Enter your email"
-          className="w-full rounded-full border-2 border-white/15 bg-[#091323]/94 px-5 py-4 text-sm text-white outline-none transition-all placeholder:text-white/28 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/30"
+          className="w-full rounded-full border-2 border-white/15 bg-[#091323]/94 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-white/28 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/30"
           {...register("email")}
         />
         {errors.email && (
-          <p className="mt-2 text-xs text-rose-400">{errors.email.message}</p>
+          <p className="mt-3 text-xs text-rose-400">{errors.email.message}</p>
         )}
       </div>
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_14px_50px_rgba(59,130,246,0.4)] disabled:opacity-70"
+        className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_14px_50px_rgba(59,130,246,0.4)] disabled:opacity-70"
       >
         {isSubmitting ? "Joining..." : "Join Waitlist"}
       </button>

@@ -398,7 +398,7 @@ export default function Home() {
 
         <section id="platform" className="px-6 pb-20 sm:px-8 lg:px-10">
           <div className="mx-auto max-w-7xl">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {premiumCards.map((card) => {
                 const c = themeClasses(card.theme);
                 return (
@@ -408,7 +408,7 @@ export default function Home() {
                   >
                     <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400/70 via-violet-500/60 to-orange-400/60`} />
                     <div className={`absolute right-[-2rem] top-[-2rem] h-24 w-24 rounded-full blur-3xl ${c.orb}`} />
-                    <div className="relative space-y-4">
+                    <div className="relative space-y-6">
                       <span className="inline-block text-[11px] uppercase tracking-[0.24em] text-white/42">
                         {card.eyebrow}
                       </span>

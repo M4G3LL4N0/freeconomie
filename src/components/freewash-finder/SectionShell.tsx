@@ -12,9 +12,9 @@ export default function SectionShell({
   return (
     <section 
       id={id} 
-      className={`px-6 py-24 sm:px-8 lg:px-10 ${className}`}
+      className={`px-6 py-28 sm:px-8 lg:px-10 ${className}`}
     >
-      <div className="mx-auto max-w-7xl space-y-12">{children}</div>
+      <div className="mx-auto max-w-7xl space-y-16">{children}</div>
     </section>
   );
 }

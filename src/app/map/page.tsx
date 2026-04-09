@@ -57,7 +57,7 @@ export default function MapPage() {
   }, []);
 
   return (
-    <div className="relative h-[calc(100vh-64px)]">
+    <div className="relative h-[calc(100vh-80px)]">
       <MapContainer
         center={center}
         zoom={13}
@@ -91,8 +91,9 @@ export default function MapPage() {
 
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-          <div className="rounded-lg bg-white/10 p-6 text-white backdrop-blur-sm">
-            Loading map...
+          <div className="rounded-xl bg-white/10 p-8 text-white backdrop-blur-sm flex items-center gap-4">
+            <RefreshCw className="h-6 w-6 animate-spin" />
+            <span className="text-lg">Loading locations...</span>
           </div>
         </div>
       )}
