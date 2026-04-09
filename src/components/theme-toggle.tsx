@@ -25,6 +25,7 @@ export default function ThemeToggle() {
       aria-label={`Toggle ${theme === "dark" ? "light" : "dark"} mode`}
       aria-pressed={theme === "dark"}
       aria-live="polite"
+      aria-controls="theme-root"
     >
       {theme === "dark" ? (
         <Moon className="h-5 w-5" />

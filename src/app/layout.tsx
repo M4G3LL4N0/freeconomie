@@ -17,7 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body className="h-full bg-background text-foreground">
-        <div className="flex flex-col min-h-full">
+        <a 
+          href="#main-content" 
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:rounded"
+        >
+          Skip to main content
+        </a>
+        <div id="main-content" className="flex flex-col min-h-full">
           <header className="sticky top-0 z-50 border-b border-white/10 bg-[#071120]/90 backdrop-blur-xl">
             <div className="container mx-auto px-6 py-4">
               <nav className="flex items-center justify-between gap-6">

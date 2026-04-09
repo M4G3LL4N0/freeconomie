@@ -57,6 +57,7 @@ export default function WaitlistForm() {
           placeholder="Enter your email"
           className={`w-full rounded-full border-2 ${errors.email ? 'border-rose-400/50' : 'border-white/15'} glass-form-element px-4 py-3 sm:px-5 sm:py-3.5 text-sm text-white/90 outline-none transition-all placeholder:text-white/28 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/30`}
           {...register("email")}
+          aria-required="true"
           aria-invalid={errors.email ? "true" : "false"}
           aria-describedby={errors.email ? "email-error" : undefined}
         />

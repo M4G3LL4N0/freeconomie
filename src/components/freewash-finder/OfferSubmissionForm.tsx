@@ -47,11 +47,13 @@ export default function OfferSubmissionForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
       <div>
-        <label className="block text-sm font-medium text-white/80 mb-1">
+        <label htmlFor="business-name" className="block text-sm font-medium text-white/80 mb-1">
           Business Name
         </label>
         <input
+          id="business-name"
           {...register("name")}
+          aria-required="true"
           className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/30 focus:border-cyan-300/40 focus:outline-none"
           placeholder="e.g. Sparkle Car Wash"
         />

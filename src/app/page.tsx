@@ -192,7 +192,7 @@ import WaitlistSection from "@/components/freewash-finder/WaitlistSection";
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#06111f] text-white">
+    <main id="main-content" role="main" className="min-h-screen overflow-x-hidden bg-[#06111f] text-white">
       <div className="relative isolate">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-[#06111f] to-[#040c18]" />
         <div className="pointer-events-none absolute inset-0 -z-20">
