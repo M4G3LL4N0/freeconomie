@@ -59,7 +59,8 @@ export default function OffersListPage() {
         "San Jose",
         "Santa Clara",
         "San Mateo",
-        "Brentwood"
+        "Brentwood",
+        "Morgan Hill"
       ]);
       
       const matchesRegion = !regionFilter || offer.region === regionFilter;

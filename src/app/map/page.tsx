@@ -39,7 +39,8 @@ export default function MapPage() {
         "San Jose",
         "Santa Clara",
         "San Mateo",
-        "Brentwood"
+        "Brentwood",
+        "Morgan Hill"
       ]);
 
       const verifiedLocations = bayAreaStaticOffers

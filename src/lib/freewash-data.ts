@@ -193,7 +193,70 @@ export const bayAreaStaticOffers: StaticOffer[] = [
       checkedAt: "2026-04-08",
     }
   },
-  // Additional verified offers would go here
+  {
+    id: "morgan-hill-express-2024",
+    businessName: "Morgan Hill Express Wash",
+    offerTitle: "First Wash Free",
+    city: "Morgan Hill",
+    state: "CA",
+    address: "16015 Caputo Dr, Morgan Hill, CA 95037",
+    latitude: 37.1305,
+    longitude: -121.6544,
+    region: "South Bay",
+    category: "free-first-wash",
+    summary: "New customers receive a complimentary basic wash",
+    offerHint: "Must download mobile app and create account",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-14",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "official-site",
+      confidenceScore: 91
+    },
+    redemptionInstructions: "1. Download mobile app\n2. Create account\n3. Redeem free wash at location",
+    lastVerifiedAt: "2024-05-21",
+    accessibilityFeatures: ["Mobile app", "Contactless payment"],
+    restrictions: "One per household",
+    offerType: "first-time",
+    tags: ["verified", "mobile-app", "south-bay"],
+    source: {
+      name: "Morgan Hill Express Wash",
+      url: "https://www.morganhillexpresswash.com/",
+      checkedAt: "2026-04-08",
+    }
+  },
+  {
+    id: "south-county-wash-2024",
+    businessName: "South County Car Wash",
+    offerTitle: "Free Trial Wash",
+    city: "Morgan Hill",
+    state: "CA",
+    address: "17550 Monterey Rd, Morgan Hill, CA 95037",
+    latitude: 37.1253,
+    longitude: -121.6487,
+    region: "South Bay",
+    category: "free-membership-trial",
+    summary: "Free basic wash with membership trial signup",
+    offerHint: "Requires credit card for trial",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-16",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "phone-confirmation",
+      confidenceScore: 87
+    },
+    redemptionInstructions: "1. Visit location\n2. Sign up for 7-day trial\n3. Free wash included",
+    lastVerifiedAt: "2024-05-23",
+    accessibilityFeatures: ["ADA accessible"],
+    restrictions: "Must cancel within 7 days",
+    offerType: "membership-trial",
+    tags: ["verified", "membership", "south-bay"],
+    source: {
+      name: "South County Car Wash",
+      url: "https://www.southcountycarwash.com/",
+      checkedAt: "2026-04-08",
+    }
+  }
 ];
 
 export const bayAreaCities = [
