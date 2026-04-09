@@ -412,6 +412,70 @@ export const bayAreaStaticOffers: StaticOffer[] = [
     },
     tags: ["verified", "official-site", "east-bay"],
   },
+  {
+    id: "morganhill-autowash-2024",
+    businessName: "Morgan Hill Auto Wash",
+    offerTitle: "First Wash Free",
+    city: "Morgan Hill",
+    state: "CA",
+    address: "16015 Caputo Dr, Morgan Hill, CA 95037",
+    latitude: 37.1305,
+    longitude: -121.6544,
+    region: "South Bay",
+    category: "free-first-wash",
+    summary: "Complimentary first wash for new customers with email signup",
+    offerHint: "Requires email verification at kiosk",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-18",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "official-site",
+      confidenceScore: 88
+    },
+    redemptionInstructions: "1. Visit location\n2. Sign up at kiosk\n3. Present confirmation email",
+    lastVerifiedAt: "2024-05-25",
+    accessibilityFeatures: ["ADA accessible"],
+    restrictions: "One per household",
+    offerType: "first-time",
+    tags: ["verified", "south-bay", "morgan-hill"],
+    source: {
+      name: "Morgan Hill Auto Wash",
+      url: "https://www.morganhillautowash.com/",
+      checkedAt: "2026-04-08"
+    }
+  },
+  {
+    id: "zipthru-morganhill-2024",
+    businessName: "Zip Thru Express Car Wash",
+    offerTitle: "Free Trial Wash",
+    city: "Morgan Hill",
+    state: "CA",
+    address: "17555 Monterey Rd, Morgan Hill, CA 95037",
+    latitude: 37.1265,
+    longitude: -121.6483,
+    region: "South Bay",
+    category: "free-membership-trial",
+    summary: "Free basic wash with membership trial signup",
+    offerHint: "Requires credit card for trial",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-20",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "phone-confirmation",
+      confidenceScore: 85  
+    },
+    redemptionInstructions: "1. Visit location\n2. Sign up for 7-day trial\n3. Free wash included",
+    lastVerifiedAt: "2024-05-22",
+    accessibilityFeatures: ["Mobile app", "Contactless payment"],
+    restrictions: "Must cancel within 7 days",
+    offerType: "membership-trial",
+    tags: ["verified", "membership", "morgan-hill"],
+    source: {
+      name: "Zip Thru Express",
+      url: "https://www.zipthruexpress.com/",
+      checkedAt: "2026-04-08",
+    }
+  }
 ];
 
 export const bayAreaCities = [
