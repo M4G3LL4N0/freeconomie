@@ -14,7 +14,8 @@ export default function OffersListPage() {
       const matchesCategory = !categoryFilter || offer.category === categoryFilter;
       const matchesSearch = !searchQuery || 
         offer.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        offer.city.toLowerCase().includes(searchQuery.toLowerCase());
+        offer.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        offer.address.toLowerCase().includes(searchQuery.toLowerCase());
       
       return matchesRegion && matchesCategory && matchesSearch;
     });
