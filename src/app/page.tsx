@@ -403,17 +403,17 @@ export default function Home() {
                 return (
                   <div
                     key={card.title}
-                    className="relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
+                    className="relative overflow-hidden rounded-[1.8rem] border border-white/15 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04))] p-8 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
                   >
-                    <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${c.glow}`} />
+                    <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-cyan-400/70 via-violet-500/60 to-orange-400/60`} />
                     <div className={`absolute right-[-2rem] top-[-2rem] h-24 w-24 rounded-full blur-3xl ${c.orb}`} />
                     <div className="text-[11px] uppercase tracking-[0.24em] text-white/42">
                       {card.eyebrow}
                     </div>
-                    <h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-white">
+                    <h3 className="mt-5 text-2xl font-bold tracking-tight text-white">
                       {card.title}
                     </h3>
-                    <p className="mt-4 text-sm leading-7 text-white/62">{card.body}</p>
+                    <p className="mt-4 text-base leading-7 text-white/70">{card.body}</p>
                   </div>
                 );
               })}
