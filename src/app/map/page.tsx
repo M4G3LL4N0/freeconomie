@@ -168,6 +168,7 @@ export default function MapPage() {
                   <VerifiedBadge 
                     confidenceScore={location.verification_score}
                     verifiedAt={location.verified_at}
+                    lastCheckedAt={location.lastVerifiedAt}
                     size="md"
                     interactive
                   />
