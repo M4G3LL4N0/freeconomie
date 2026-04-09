@@ -14,6 +14,9 @@ const schema = z.object({
   radius: z.number().min(1).max(100).default(10),
   offer_type: z.enum(['wash', 'trial', 'promo', 'all']).optional().default('all'),
   limit: z.number().min(1).max(100).optional().default(20),
+  min_verification_score: z.number().min(0).max(100).optional().default(80),
+  accessibility_features: z.array(z.string()).optional(),
+  exclude_expired: z.boolean().optional().default(true),
 });
 
 export const revalidate = 3600; // Cache for 1 hour

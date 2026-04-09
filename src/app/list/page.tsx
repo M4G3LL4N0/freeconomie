@@ -197,8 +197,18 @@ export default function OffersListPage() {
                       <span
                         key={tag}
                         className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-white/60"
+                        aria-label={`Tag: ${tag}`}
                       >
                         {tag}
+                      </span>
+                    ))}
+                    {offer.accessibilityFeatures?.map((feature) => (
+                      <span
+                        key={feature}
+                        className="inline-flex items-center rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2 py-0.5 text-xs text-emerald-300"
+                        aria-label={`Accessibility feature: ${feature}`}
+                      >
+                        {feature}
                       </span>
                     ))}
                     {offer.expirationDate && (
