@@ -168,7 +168,8 @@ export default function MapPage() {
                   <VerifiedBadge 
                     confidenceScore={location.verification_score}
                     verifiedAt={location.verified_at}
-                    className="text-xs"
+                    size="md"
+                    interactive
                   />
                   <SourceBadge
                     sourceName={offer.source.name}

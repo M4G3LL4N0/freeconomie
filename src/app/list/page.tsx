@@ -540,6 +540,8 @@ type InventoryFilter = {
                       <VerifiedBadge 
                         confidenceScore={offer.verification.confidenceScore}
                         verifiedAt={offer.verification.verifiedAt}
+                        size="sm"
+                        showDate={false}
                       />
                       <SourceBadge 
                         sourceName={offer.source.name}
