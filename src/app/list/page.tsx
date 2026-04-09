@@ -128,8 +128,8 @@ export default function OffersListPage() {
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Filters sidebar */}
-        <div className="w-full md:w-64 space-y-6">
-          <div className="bg-white/5 rounded-xl border border-white/10 p-4">
+        <div className="w-full md:w-72 space-y-6">
+          <div className="glass-panel rounded-xl p-4">
             <h3 className="flex items-center gap-2 text-sm font-medium text-white/80 mb-4">
               <FilterIcon className="h-4 w-4" />
               Inventory Filters
@@ -137,49 +137,98 @@ export default function OffersListPage() {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-xs text-white/60 mb-1">Verification Score</label>
+                <label className="block text-xs text-white/60 mb-1">Region</label>
                 <select
-                  value={verificationFilter}
-                  onChange={(e) => setVerificationFilter(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                  value={filters.region}
+                  onChange={(e) => setFilters({...filters, region: e.target.value as BayAreaRegion})}
+                  className="w-full glass-input"
                 >
-                  <option value="all">All Offers</option>
-                  <option value="high">High (90%+)</option>
-                  <option value="medium">Medium (80-89%)</option>
-                  <option value="verified">Verified (70%+)</option>
+                  <option value="">All Regions</option>
+                  <option value="South Bay">South Bay</option>
+                  <option value="Peninsula">Peninsula</option>
+                  <option value="East Bay">East Bay</option>
+                  <option value="North Bay">North Bay</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">City</label>
+                <select
+                  value={filters.city}
+                  onChange={(e) => setFilters({...filters, city: e.target.value as BayAreaCity})}
+                  className="w-full glass-input"
+                >
+                  <option value="">All Cities</option>
+                  {Array.from(new Set(bayAreaStaticOffers.map(o => o.city))).map(city => (
+                    <option key={city} value={city}>{city}</option>
+                  ))}
                 </select>
               </div>
 
               <div>
                 <label className="block text-xs text-white/60 mb-1">Offer Type</label>
                 <select
-                  value={categoryFilter}
-                  onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                  value={filters.category}
+                  onChange={(e) => setFilters({...filters, category: e.target.value as RouteCategory})}
+                  className="w-full glass-input"
                 >
                   <option value="">All Types</option>
-                  <option value="free-first-wash">First Wash Free</option>
+                  <option value="free-first-wash">Free First Wash</option>
                   <option value="free-membership-trial">Membership Trial</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs text-white/60 mb-1">Signup Required</label>
+                <label className="block text-xs text-white/60 mb-1">Verification</label>
                 <select
-                  value={signupFilter}
-                  onChange={(e) => setSignupFilter(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                  value={filters.verification}
+                  onChange={(e) => setFilters({...filters, verification: e.target.value as 'verified' | 'all'})}
+                  className="w-full glass-input"
                 >
-                  <option value="all">Any</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value="verified">Verified Only</option>
+                  <option value="all">All Offers</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs text-white/60 mb-1">Expiration</label>
+                <label className="block text-xs text-white/60 mb-1">Status</label>
                 <select
-                  value={expirationFilter}
+                  value={filters.status}
+                  onChange={(e) => setFilters({...filters, status: e.target.value as 'active' | 'expired' | 'all'})}
+                  className="w-full glass-input"
+                >
+                  <option value="active">Active</option>
+                  <option value="expired">Expired</option>
+                  <option value="all">All</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="glass-panel rounded-xl p-4">
+            <h3 className="text-sm font-medium text-white/80 mb-4">
+              Inventory Stats
+            </h3>
+            <div className="space-y-3">
+              <div className="flex justify-between text-sm">
+                <span className="text-white/60">Total Offers</span>
+                <span className="font-medium text-white">{bayAreaStaticOffers.length}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-white/60">Verified</span>
+                <span className="font-medium text-emerald-400">
+                  {bayAreaStaticOffers.filter(o => o.verification.confidenceScore >= 80).length}
+                </span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-white/60">Active</span>
+                <span className="font-medium text-white">
+                  {bayAreaStaticOffers.filter(o => !o.expirationDate || new Date(o.expirationDate) > new Date()).length}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
                   onChange={(e) => setExpirationFilter(e.target.value)}
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
                 >
@@ -258,72 +307,79 @@ export default function OffersListPage() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredOffers.map((offer) => (
-              <div className="rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
+              <div key={offer.id} className="glass-panel rounded-xl overflow-hidden hover:bg-white/5 transition-colors">
                 <div className="p-4">
-                  <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-start justify-between">
                     <div>
                       <h3 className="font-medium text-white">{offer.businessName}</h3>
-                      <p className="mt-1 text-sm text-white/80">{offer.offerTitle}</p>
+                      <p className="mt-1 text-sm text-white/80">{offer.city}, {offer.region}</p>
                     </div>
                     <div className="flex flex-col items-end">
-                      <div className="flex items-center gap-1 text-xs text-emerald-400">
-                        <VerifiedIcon className="h-3 w-3" />
-                        <span>{offer.verification.confidenceScore}%</span>
-                      </div>
-                      <div className="mt-1 text-[11px] text-white/40">
+                      <span className={`text-xs font-medium ${
+                        offer.verification.confidenceScore >= 90 ? 'text-emerald-400' : 
+                        offer.verification.confidenceScore >= 80 ? 'text-cyan-400' : 
+                        'text-amber-400'
+                      }`}>
+                        {offer.verification.confidenceScore}% Verified
+                      </span>
+                      <span className="mt-1 text-xs text-white/50">
                         {new Date(offer.verification.verifiedAt).toLocaleDateString()}
-                      </div>
+                      </span>
                     </div>
                   </div>
-                  
-                  <div className="mt-4 flex items-center gap-2 text-xs text-white/60">
-                    <MapPinIcon className="h-3 w-3" />
-                    <span>{offer.city}, {offer.region}</span>
-                    <span className="text-white/20">•</span>
-                    <span>{offer.distance ? `${offer.distance.toFixed(1)} mi` : '--'}</span>
+
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      offer.category === 'free-first-wash' 
+                        ? 'bg-cyan-500/15 text-cyan-400' 
+                        : 'bg-violet-500/15 text-violet-400'
+                    }`}>
+                      {offer.category === 'free-first-wash' ? 'First Wash' : 'Membership Trial'}
+                    </span>
+                    {offer.expirationDate && (
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        offer.isExpired
+                          ? 'bg-red-500/15 text-red-400'
+                          : offer.daysUntilExpiration && offer.daysUntilExpiration <= 7
+                          ? 'bg-amber-500/15 text-amber-400'
+                          : 'bg-emerald-500/15 text-emerald-400'
+                      }`}>
+                      {offer.isExpired ? 'Expired' : `Expires in ${offer.daysUntilExpiration}d`}
+                    </span>
+                    )}
                   </div>
 
                   <div className="mt-4 text-sm text-white/70">
                     {offer.summary}
                   </div>
 
-                  <div className="mt-4 grid grid-cols-2 gap-2">
-                    <div className="rounded-lg border border-white/10 bg-white/5 p-2 text-xs">
-                      <div className="text-white/50">Type</div>
-                      <div className="mt-1 font-medium">
-                        {offer.category === 'free-first-wash' ? 'First Wash' : 'Trial'}
-                      </div>
-                    </div>
-                    <div className="rounded-lg border border-white/10 bg-white/5 p-2 text-xs">
-                      <div className="text-white/50">Signup</div>
-                      <div className="mt-1 font-medium">
-                        {offer.signupRequired ? 'Required' : 'Not Needed'}
-                      </div>
-                    </div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {offer.tags.filter(tag => !['verified', 'official-site'].includes(tag)).map((tag) => (
+                      <span
+                        key={tag}
+                        className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-white/60"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
 
-                  {offer.expirationDate && (
-                    <div className={`mt-4 text-xs ${
-                      offer.isExpired 
-                        ? 'text-red-400' 
-                        : offer.daysUntilExpiration && offer.daysUntilExpiration <= 7 
-                          ? 'text-amber-400' 
-                          : 'text-emerald-400'
-                    }`}>
-                      {offer.isExpired
-                        ? 'Offer expired'
-                        : `Expires in ${offer.daysUntilExpiration} day${offer.daysUntilExpiration === 1 ? '' : 's'}`}
-                    </div>
-                  )}
-
-                  <a
-                    href={offer.source.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex w-full items-center justify-center rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white hover:bg-white/10 transition-colors"
-                  >
-                    Verify Offer Details
-                  </a>
+                  <div className="mt-4 flex items-center justify-between">
+                    <a
+                      href={offer.source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-white/60 hover:text-white/80"
+                    >
+                      View Source
+                    </a>
+                    <button 
+                      className="text-xs text-white/60 hover:text-white/80"
+                      onClick={() => navigator.clipboard.writeText(offer.address)}
+                    >
+                      Copy Address
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
