@@ -165,7 +165,11 @@ export default function MapPage() {
             <Popup className="rounded-xl border border-white/10 glass-panel backdrop-blur-[12px] min-w-[300px]">
               <div className="space-y-3 p-3">
                 <div className="flex items-center gap-2">
-                  <VerifiedIcon className="h-4 w-4 text-emerald-400" />
+                  <VerifiedBadge 
+                    confidenceScore={location.verification_score}
+                    verifiedAt={location.verified_at}
+                    className="text-xs"
+                  />
                   <h3 className="font-semibold text-white">{location.name}</h3>
                 </div>
                 <p className="text-sm text-white/80">{location.address}</p>
