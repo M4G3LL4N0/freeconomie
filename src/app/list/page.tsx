@@ -1,15 +1,51 @@
 import { bayAreaStaticOffers } from '@/lib/freewash-data';
 import { FilterIcon, MapPinIcon, VerifiedIcon } from "@/components/icons";
+
+function InventoryStatusBadge({ status, count }: { status: string; count: number }) {
+  const statusClasses = {
+    [INVENTORY_STATUS.ACTIVE]: 'text-emerald-400 border-emerald-400/20 bg-emerald-400/10',
+    [INVENTORY_STATUS.EXPIRING_SOON]: 'text-amber-400 border-amber-400/20 bg-amber-400/10',
+    [INVENTORY_STATUS.NEWLY_ADDED]: 'text-cyan-400 border-cyan-400/20 bg-cyan-400/10'
+  };
+
+  return (
+    <div className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${statusClasses[status]}`}>
+      <div className="w-2 h-2 rounded-full mr-2 bg-current opacity-80" />
+      <span className="mr-1">{status}</span>
+      <span className="font-semibold">{count}</span>
+    </div>
+  );
+}
+
+function VerificationScoreBadge({ score }: { score: number }) {
+  const getScoreClass = (s: number) => {
+    if (s >= 90) return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20';
+    if (s >= 75) return 'text-amber-400 bg-amber-400/10 border-amber-400/20';
+    return 'text-red-400 bg-red-400/10 border-red-400/20';
+  };
+
+  return (
+    <div className={`inline-flex items-center rounded-full border px-2 text-xs ${getScoreClass(score)}`}>
+      {score}% Confidence
+    </div>
+  );
+}
 import { useState } from "react";
 
 export default function OffersListPage() {
-  type InventoryFilter = {
-    region: BayAreaRegion | '';
-    city: BayAreaCity | '';
-    category: RouteCategory | '';
-    verification: 'verified' | 'all';
-    status: 'active' | 'expired' | 'all';
-  };
+const INVENTORY_STATUS = {
+  ACTIVE: 'Active',
+  EXPIRING_SOON: 'Expiring Soon',
+  NEWLY_ADDED: 'Newly Added'
+} as const;
+
+type InventoryFilter = {
+  status: typeof INVENTORY_STATUS[keyof typeof INVENTORY_STATUS] | 'All';
+  verification: 'All' | 'High Confidence' | 'Medium Confidence' | 'Verified';
+  region: BayAreaRegion | 'All';
+  city: BayAreaCity | 'All';
+  category: RouteCategory | 'All';
+};
 
   const [filters, setFilters] = useState<InventoryFilter>({
     region: '',
@@ -243,47 +279,62 @@ export default function OffersListPage() {
 
         {/* Offers list */}
         <div className="flex-1 space-y-4">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-white">
-                Bay Area Free Wash Inventory
-              </h1>
-              <p className="mt-2 text-white/60">
-                Verified offers across {new Set(bayAreaStaticOffers.map(o => o.city)).size} cities
-              </p>
-            </div>
-            
-            <div className="flex items-center gap-3">
-              <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm">
-                <span className="text-emerald-400">
-                  {bayAreaStaticOffers.filter(o => o.verification.confidenceScore >= 90).length}
-                </span>
-                <span className="text-white/60 ml-1">High Confidence</span>
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-white">
+                  Bay Area Free Wash Inventory
+                </h1>
+                <p className="mt-2 text-white/60">
+                  {filteredOffers.length} verified offers across {new Set(bayAreaStaticOffers.map(o => o.city)).size} cities
+                </p>
               </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm">
-                <span className="text-white">
-                  {filteredOffers.length}
-                </span>
-                <span className="text-white/60 ml-1">Showing</span>
-              </div>
-            </div>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search businesses..."
-                className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-cyan-500"
-              />
               
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
-              >
-                <option value="distance">Sort by Distance</option>
-                <option value="expiration">Sort by Expiration</option>
-                <option value="rating">Sort by Rating</option>
-              </select>
+              <div className="flex items-center gap-3">
+                <div className="hidden sm:flex items-center gap-3">
+                  <InventoryStatusBadge 
+                    status={INVENTORY_STATUS.ACTIVE}
+                    count={bayAreaStaticOffers.filter(o => !o.expirationDate || new Date(o.expirationDate) > new Date()).length}
+                  />
+                  <InventoryStatusBadge 
+                    status={INVENTORY_STATUS.EXPIRING_SOON}
+                    count={bayAreaStaticOffers.filter(o => {
+                      if (!o.expirationDate) return false;
+                      const daysLeft = Math.floor((new Date(o.expirationDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+                      return daysLeft <= 7 && daysLeft >= 0;
+                    }).length}
+                  />
+                </div>
+                <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm">
+                  <span className="text-emerald-400">
+                    {bayAreaStaticOffers.filter(o => o.verification.confidenceScore >= 90).length}
+                  </span>
+                  <span className="text-white/60 ml-1">High Confidence</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <div className="flex-1">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search businesses..."
+                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                />
+              </div>
+              <div className="flex items-center gap-3">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as any)}
+                  className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                >
+                  <option value="verification">Sort by Verification</option>
+                  <option value="distance">Sort by Distance</option>
+                  <option value="expiration">Sort by Expiration</option>
+                </select>
+              </div>
             </div>
           </div>
 
