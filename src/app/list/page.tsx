@@ -8,8 +8,8 @@ export default function OffersListPage() {
   const [sortBy, setSortBy] = useState<"distance" | "expiration" | "rating">("distance");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const filteredOffers = bayAreaStaticOffers
-    .filter(offer => {
+  const filterOffers = (offers: StaticOffer[]) => {
+    return offers.filter(offer => {
       const matchesRegion = !regionFilter || offer.region === regionFilter;
       const matchesCategory = !categoryFilter || offer.category === categoryFilter;
       const matchesSearch = !searchQuery || 
@@ -17,7 +17,41 @@ export default function OffersListPage() {
         offer.city.toLowerCase().includes(searchQuery.toLowerCase());
       
       return matchesRegion && matchesCategory && matchesSearch;
-    })
+    });
+  };
+
+  const sortOffers = (offers: StaticOffer[]) => {
+    return offers.sort((a, b) => {
+      if (sortBy === "distance") {
+        return (a.distance || 0) - (b.distance || 0);
+      } else if (sortBy === "expiration") {
+        const aExpiry = a.expirationDate ? new Date(a.expirationDate).getTime() : Infinity;
+        const bExpiry = b.expirationDate ? new Date(b.expirationDate).getTime() : Infinity;
+        return aExpiry - bExpiry;
+      } else if (sortBy === "rating") {
+        return (b.rating || 0) - (a.rating || 0);
+      }
+      return 0;
+    });
+  };
+
+  const enhanceOffers = (offers: StaticOffer[]) => {
+    return offers.map(offer => ({
+      ...offer,
+      daysUntilExpiration: offer.expirationDate 
+        ? Math.floor((new Date(offer.expirationDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+        : undefined,
+      isExpired: offer.expirationDate 
+        ? new Date(offer.expirationDate) < new Date()
+        : false
+    }));
+  };
+
+  const filteredOffers = enhanceOffers(
+    sortOffers(
+      filterOffers(bayAreaStaticOffers)
+    )
+  );
     .sort((a, b) => {
       if (sortBy === "distance") {
         return (a.distance || 0) - (b.distance || 0);
