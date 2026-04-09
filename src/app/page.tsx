@@ -2,10 +2,22 @@ import Link from "next/link";
 import { bayAreaStaticOffers } from "@/lib/bay-area-offers";
 
 const stats = [
-  { value: `${bayAreaStaticOffers.length}+`, label: "Launch offers" },
-  { value: `${new Set(bayAreaStaticOffers.map((o) => o.city)).size}`, label: "Cities covered" },
-  { value: `${new Set(bayAreaStaticOffers.map((o) => o.region)).size}`, label: "Regions covered" },
-  { value: "Verified", label: "Official-site sourced" },
+  { 
+    value: `${bayAreaStaticOffers.length}+`, 
+    label: "Verified Launch Offers" 
+  },
+  { 
+    value: `${new Set(bayAreaStaticOffers.map(o => o.city)).size}`, 
+    label: "Bay Area Cities" 
+  },
+  { 
+    value: `${new Set(bayAreaStaticOffers.map(o => o.region)).size}`, 
+    label: "Regions Covered" 
+  },
+  { 
+    value: "Static Seed", 
+    label: "Current Data State" 
+  },
 ];
 
 const featured = bayAreaStaticOffers.slice(0, 3);
@@ -77,7 +89,7 @@ export default function Home() {
                   </h1>
 
                   <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
-                    FreeWash Finder launches with verified Bay Area free-wash offers sourced from official car wash websites and structured into a premium route-aware discovery experience.
+                    Launching with verified static Bay Area inventory now, then expanding into live ingestion, re-checking, and broader free-value discovery. Currently covering {bayAreaStaticOffers.length} offers across {new Set(bayAreaStaticOffers.map(o => o.city)).size} cities.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">

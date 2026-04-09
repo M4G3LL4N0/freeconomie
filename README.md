@@ -1,4 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Bay Area Launch Dataset
+
+FreeWash Finder is currently running with verified static seed data covering:
+
+- **${bayAreaStaticOffers.length}** free wash offers
+- **${new Set(bayAreaStaticOffers.map(o => o.city)).size}** Bay Area cities  
+- **${new Set(bayAreaStaticOffers.map(o => o.region)).size}** regions
+
+### Current Coverage
+
+**Cities:**  
+${Array.from(new Set(bayAreaStaticOffers.map(o => o.city))).join(', ')}
+
+**Businesses:**  
+${Array.from(new Set(bayAreaStaticOffers.map(o => o.businessName))).join(', ')}
+
+### Next Steps
+
+1. Build scraper/import pipeline for live offer updates
+2. Expand verification system
+3. Add real-time route intelligence
 
 ## Getting Started
 
