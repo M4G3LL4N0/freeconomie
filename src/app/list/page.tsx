@@ -1,5 +1,6 @@
 import { bayAreaStaticOffers } from '@/lib/freewash-data';
-import { FilterIcon, MapPinIcon, VerifiedIcon } from "@/components/icons";
+import { FilterIcon, VerifiedIcon } from "@/components/icons";
+import { MapPin } from 'lucide-react';
 
 function InventoryStatusBadge({ status, count }: { status: string; count: number }) {
   const statusClasses = {
