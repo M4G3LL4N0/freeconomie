@@ -30,10 +30,42 @@ export default function MapPage() {
   const fetchLocations = async (lat: number, lng: number) => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/locations?lat=${lat}&lng=${lng}&radius=50`);
-      if (!response.ok) throw new Error('Failed to fetch locations');
-      const data = await response.json();
-      setLocations(data);
+      
+      // Calculate distances and filter offers
+      const mappedLocations = bayAreaStaticOffers
+        .map(offer => {
+          // Calculate distance if coordinates exist
+          let distance = Infinity;
+          if (offer.latitude && offer.longitude) {
+            const R = 6371; // Earth's radius in km
+            const dLat = (offer.latitude - lat) * (Math.PI / 180);
+            const dLon = (offer.longitude - lng) * (Math.PI / 180);
+            const a = 
+              Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat * (Math.PI / 180)) * 
+              Math.cos(offer.latitude * (Math.PI / 180)) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            distance = R * c;
+          }
+          
+          return {
+            ...offer,
+            distance_in_km: distance,
+            offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
+            lat: offer.latitude || 37.7749, // Fallback to SF coordinates
+            lng: offer.longitude || -122.4194
+          };
+        })
+        .filter(offer => offer.distance_in_km <= 50) // Within 50km radius
+        .sort((a, b) => a.distance_in_km - b.distance_in_km) // Sort by distance
+        .slice(0, 50); // Limit to 50 results
+        
+      setLocations(mappedLocations);
+      captureEvent("map_locations_loaded", {
+        count: mappedLocations.length,
+        center: [lat, lng]
+      });
     } catch (error) {
       toast.error("Failed to load locations");
     } finally {
