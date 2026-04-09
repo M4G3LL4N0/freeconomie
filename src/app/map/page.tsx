@@ -71,15 +71,15 @@ export default function MapPage() {
         
         {locations.map((location) => (
           <Marker key={location.id} position={[location.lat, location.lng]}>
-            <Popup className="rounded-xl">
+            <Popup className="rounded-xl border border-white/10 bg-[#091425]/94 backdrop-blur-lg">
               <div className="space-y-2 p-2">
                 <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <h3 className="font-semibold">{location.name}</h3>
+                  <MapPin className="h-4 w-4 text-cyan-300" />
+                  <h3 className="font-semibold text-white">{location.name}</h3>
                 </div>
-                <p className="text-sm">{location.address}</p>
+                <p className="text-sm text-white/80">{location.address}</p>
                 {location.expires_at && (
-                  <p className="text-sm text-green-500">
+                  <p className="text-sm text-emerald-400">
                     Valid until: {new Date(location.expires_at).toLocaleDateString()}
                   </p>
                 )}

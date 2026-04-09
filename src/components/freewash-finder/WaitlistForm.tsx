@@ -48,7 +48,7 @@ export default function WaitlistForm() {
         <input
           type="email"
           placeholder="Enter your email"
-          className="w-full rounded-full border-2 border-white/15 bg-[#091323]/94 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-white/28 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/30"
+          className="w-full rounded-full border-2 border-white/15 bg-[#091323]/94 px-6 py-4 text-sm text-white/90 outline-none transition-all placeholder:text-white/28 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/30"
           {...register("email")}
         />
         {errors.email && (

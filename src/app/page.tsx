@@ -109,27 +109,39 @@ function themeClasses(theme: string) {
         pill: "text-cyan-200 border-cyan-300/20 bg-cyan-400/10",
         beam: "from-cyan-300/70 via-sky-400/50 to-transparent",
         orb: "bg-cyan-400/20",
+        text: "text-cyan-300",
+        border: "border-cyan-400/30",
+        bg: "bg-cyan-500/10"
       };
     case "violet":
       return {
-        glow: "from-fuchsia-400/30 via-violet-500/20 to-indigo-600/25",
-        pill: "text-fuchsia-200 border-fuchsia-300/20 bg-fuchsia-400/10",
-        beam: "from-fuchsia-300/70 via-violet-400/50 to-transparent",
-        orb: "bg-fuchsia-400/20",
+        glow: "from-violet-400/30 via-purple-500/20 to-fuchsia-600/25",
+        pill: "text-violet-200 border-violet-300/20 bg-violet-400/10",
+        beam: "from-violet-300/70 via-purple-400/50 to-transparent",
+        orb: "bg-violet-400/20",
+        text: "text-violet-300",
+        border: "border-violet-400/30",
+        bg: "bg-violet-500/10"
       };
     case "orange":
       return {
-        glow: "from-orange-400/30 via-pink-500/20 to-rose-600/25",
-        pill: "text-orange-100 border-orange-300/20 bg-orange-400/10",
-        beam: "from-orange-300/70 via-pink-400/50 to-transparent",
+        glow: "from-orange-400/30 via-amber-500/20 to-yellow-600/25",
+        pill: "text-orange-200 border-orange-300/20 bg-orange-400/10",
+        beam: "from-orange-300/70 via-amber-400/50 to-transparent",
         orb: "bg-orange-400/20",
+        text: "text-orange-300",
+        border: "border-orange-400/30",
+        bg: "bg-orange-500/10"
       };
     case "emerald":
       return {
         glow: "from-emerald-400/30 via-teal-500/20 to-cyan-600/25",
-        pill: "text-emerald-100 border-emerald-300/20 bg-emerald-400/10",
+        pill: "text-emerald-200 border-emerald-300/20 bg-emerald-400/10",
         beam: "from-emerald-300/70 via-teal-400/50 to-transparent",
         orb: "bg-emerald-400/20",
+        text: "text-emerald-300",
+        border: "border-emerald-400/30",
+        bg: "bg-emerald-500/10"
       };
     default:
       return {
@@ -137,6 +149,9 @@ function themeClasses(theme: string) {
         pill: "text-cyan-200 border-cyan-300/20 bg-cyan-400/10",
         beam: "from-cyan-300/70 via-sky-400/50 to-transparent",
         orb: "bg-cyan-400/20",
+        text: "text-cyan-300",
+        border: "border-cyan-400/30",
+        bg: "bg-cyan-500/10"
       };
   }
 }
