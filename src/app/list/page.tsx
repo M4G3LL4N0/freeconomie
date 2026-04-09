@@ -360,19 +360,20 @@ type InventoryFilter = {
             {filteredOffers.map((offer) => (
               <div key={offer.id} className="glass-panel rounded-xl overflow-hidden hover:bg-white/5 transition-colors">
                 <div className="p-4">
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between gap-2">
                     <div>
                       <h3 className="font-medium text-white">{offer.businessName}</h3>
-                      <p className="mt-1 text-sm text-white/80">{offer.city}, {offer.region}</p>
+                      <div className="mt-1 flex items-center gap-2">
+                        <span className="text-sm text-white/80">{offer.city}, {offer.region}</span>
+                        {offer.daysUntilExpiration !== undefined && offer.daysUntilExpiration <= 7 && (
+                          <span className="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">
+                            Ending Soon
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex flex-col items-end">
-                      <span className={`text-xs font-medium ${
-                        offer.verification.confidenceScore >= 90 ? 'text-emerald-400' : 
-                        offer.verification.confidenceScore >= 80 ? 'text-cyan-400' : 
-                        'text-amber-400'
-                      }`}>
-                        {offer.verification.confidenceScore}% Verified
-                      </span>
+                      <VerificationScoreBadge score={offer.verification.confidenceScore} />
                       <span className="mt-1 text-xs text-white/50">
                         {new Date(offer.verification.verifiedAt).toLocaleDateString()}
                       </span>
