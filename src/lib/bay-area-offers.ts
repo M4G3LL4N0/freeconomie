@@ -321,24 +321,36 @@ export const bayAreaStaticOffers: StaticOffer[] = [
     tags: ["verified", "official-site", "membership-trial", "east-bay"],
   },
   {
-    id: "zipthru-santa-clara",
+    id: "zipthru-santa-clara-verified",
     businessName: "Zip Thru Express Car Wash",
-    offerTitle: "Free Car Wash Promotion",
+    offerTitle: "Free First Wash",
     city: "Santa Clara",
     state: "CA",
     address: "3740 El Camino Real, Santa Clara, CA 95051",
+    latitude: 37.3503,
+    longitude: -121.9952,
     region: "South Bay",
     category: "free-first-wash",
-    summary: "Zip Thru has a dedicated free car wash promotions flow and lists this Santa Clara location.",
-    offerHint: "Check the location-specific free car wash promotion page.",
+    summary: "Complimentary first wash for new customers with email signup",
+    offerHint: "Requires email verification at kiosk",
     signupRequired: true,
-    verified: true,
-    source: {
-      name: "Zip Thru Express Car Wash",
-      url: "https://zipthrucarwashes.com/freecarwash-suisuncity/",
-      checkedAt: "2026-04-08",
+    verification: {
+      verifiedAt: "2024-05-15",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "official-site",
+      confidenceScore: 95
     },
-    tags: ["verified", "official-site", "south-bay", "el-camino"],
+    redemptionInstructions: "1. Visit location\n2. Sign up at kiosk\n3. Present confirmation email",
+    lastVerifiedAt: "2024-05-20",
+    accessibilityFeatures: ["ADA accessible"],
+    restrictions: "One per household",
+    offerType: "first-time",
+    tags: ["verified", "south-bay", "santa-clara", "el-camino-real"],
+    source: {
+      name: "Zip Thru Express",
+      url: "https://www.zipthruexpress.com/santaclara",
+      checkedAt: "2026-04-08"
+    }
   },
   {
     id: "zipthru-sunnyvale",

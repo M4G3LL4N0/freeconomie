@@ -37,8 +37,8 @@ export default function MapPage() {
         "Redwood City",
         "Sunnyvale", 
         "San Jose",
-        "San Mateo",
-        "Santa Clara"
+        "Santa Clara", // Added here
+        "San Mateo"
       ]);
 
       const verifiedLocations = bayAreaStaticOffers

@@ -67,8 +67,8 @@ type Stat = {
 
 const stats: Stat[] = [
   { 
-    value: `${bayAreaStaticOffers.filter(o => o.verification.confidenceScore >= 80).length}`, 
-    label: "Verified Offers" 
+    value: bayAreaStaticOffers.filter(o => o.city === "Santa Clara" && o.verification.confidenceScore >= 80).length.toString(),
+    label: "Santa Clara Offers" 
   },
   { 
     value: "Launch Cities", 

@@ -5,7 +5,20 @@ export type BayAreaRegion =
   | "North Bay"
   | "Outer Bay";
 
-export type BayAreaCity = typeof bayAreaCities[number];
+export type BayAreaCity = 
+  | "San Francisco"
+  | "Oakland" 
+  | "San Jose"
+  | "Palo Alto"
+  | "Mountain View"
+  | "Sunnyvale"
+  | "Santa Clara" // Added here
+  | "Redwood City"
+  | "San Carlos"
+  | "Burlingame"
+  | "San Mateo"
+  | "Hayward"
+  | "San Leandro";
 
 export type VerificationMethod = 
   | "official-site" 

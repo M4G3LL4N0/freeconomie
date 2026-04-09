@@ -57,6 +57,7 @@ export default function OffersListPage() {
         "Redwood City", 
         "Sunnyvale",
         "San Jose",
+        "Santa Clara", // Added here
         "San Mateo",
         "San Leandro",
         "Hayward"
