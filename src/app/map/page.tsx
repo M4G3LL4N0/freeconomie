@@ -62,6 +62,7 @@ export default function MapPage() {
         center={center}
         zoom={13}
         className="h-full w-full"
+        aria-label="Interactive map of free car wash locations"
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

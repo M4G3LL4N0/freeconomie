@@ -23,6 +23,7 @@ export default function ThemeToggle() {
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="p-2 rounded-full hover:bg-white/10 transition-colors"
       aria-label="Toggle theme"
+      aria-pressed={theme === "dark"}
     >
       {theme === "dark" ? (
         <Moon className="h-5 w-5" />

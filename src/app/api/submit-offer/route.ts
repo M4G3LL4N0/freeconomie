@@ -36,14 +36,23 @@ export async function POST(request: Request) {
         }
       });
 
-    if (error) throw error;
+    if (error) {
+      captureEvent("offer_error", { 
+        error: error.message,
+        code: error.code 
+      });
+      throw error;
+    }
     
     captureEvent("offer_submitted", { type: data.offer_type });
     return NextResponse.json({ success: true });
   } catch (error) {
-    captureEvent("offer_error", { error: error.message });
+    captureEvent("offer_error", { 
+      error: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined
+    });
     return NextResponse.json(
-      { error: error.message },
+      { error: "Submission failed. Please try again later." },
       { status: 400 }
     );
   }

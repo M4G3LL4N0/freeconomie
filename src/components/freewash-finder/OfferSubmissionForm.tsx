@@ -152,9 +152,16 @@ export default function OfferSubmissionForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.02] disabled:opacity-70"
+        className={`w-full rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.28)] transition ${isSubmitting ? 'opacity-70' : 'hover:scale-[1.02]'}`}
       >
-        {isSubmitting ? "Submitting..." : "Submit Offer"}
+        {isSubmitting ? (
+          <span className="inline-flex items-center gap-2">
+            <RefreshCw className="h-4 w-4 animate-spin" />
+            Submitting...
+          </span>
+        ) : (
+          'Submit Offer'
+        )}
       </button>
     </form>
   );
