@@ -11,6 +11,13 @@ export type VerificationStatus = {
   confidenceScore: number;
 };
 
+export type VerificationStatus = {
+  verifiedAt: string;
+  verifiedBy: string;
+  verificationMethod: 'official-site' | 'phone-confirmation' | 'in-person';
+  confidenceScore: number;
+};
+
 export type StaticOffer = {
   id: string;
   businessName: string;
@@ -26,22 +33,21 @@ export type StaticOffer = {
   offerHint: string;
   signupRequired: boolean;
   verification: VerificationStatus;
-  source: OfferSource;
-  tags: string[];
-  expirationDate?: string;
-  daysUntilExpiration?: number;
-  isExpired?: boolean;
   redemptionInstructions: string;
   lastVerifiedAt: string;
   accessibilityFeatures: string[];
   restrictions?: string;
   offerType: 'first-time' | 'membership-trial' | 'promotional';
+  tags: string[];
+  expirationDate?: string;
+  daysUntilExpiration?: number;
+  isExpired?: boolean;
   distance?: number;
-    peakTimes: string[];
+  source: {
+    name: string;
+    url: string;
+    checkedAt: string;
   };
-  accessibilityFeatures: string[];
-  redemptionInstructions: string;
-  offerLimitations?: string;
 };
 
 export type Location = {

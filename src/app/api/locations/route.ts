@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     // Filter offers based on location and radius
     const filteredOffers = bayAreaStaticOffers
       .filter(offer => {
-        if (!offer.latitude || !offer.longitude) return false;
+        if (!offer.latitude || !offer.longitude || !offer.verification) return false;
         
         // Calculate distance in meters using Haversine formula
         const R = 6371e3; // Earth's radius in meters

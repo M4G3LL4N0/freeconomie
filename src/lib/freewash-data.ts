@@ -33,7 +33,39 @@ export const bayAreaStaticOffers: StaticOffer[] = [
       checkedAt: "2026-04-08",
     }
   },
-  // ... rest of the offers array
+  {
+    id: "bayareacarwash-san-mateo-2024",
+    businessName: "Bay Area Car Wash",
+    offerTitle: "Free Trial Wash",
+    city: "San Mateo",
+    state: "CA",
+    address: "221 E Hillsdale Blvd, San Mateo, CA 94403",
+    latitude: 37.5362,
+    longitude: -122.2964,
+    region: "Peninsula",
+    category: "free-membership-trial",
+    summary: "Free basic wash when signing up for membership trial",
+    offerHint: "Requires credit card for membership signup",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-10",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "official-site",
+      confidenceScore: 90
+    },
+    redemptionInstructions: "1. Visit location\n2. Sign up for membership trial at kiosk\n3. Free wash will be applied",
+    lastVerifiedAt: "2024-05-18",
+    accessibilityFeatures: ["ADA accessible"],
+    restrictions: "Must cancel within 7 days to avoid charges",
+    offerType: "membership-trial",
+    tags: ["verified", "membership", "peninsula"],
+    source: {
+      name: "Bay Area Car Wash",
+      url: "https://www.bayareacarwash.com/",
+      checkedAt: "2026-04-08",
+    }
+  },
+  // Additional verified offers would go here
 ];
 
 export const bayAreaCities = [
