@@ -16,4 +16,10 @@ export const submitOfferSchema = z.object({
   offer_type: z.enum(['wash', 'trial', 'promo']),
   details: z.string().min(10).max(500),
   expires_at: z.string().datetime(),
+  user_id: z.string().uuid().optional(), // Added for RLS
+  status: z.enum(['pending_review', 'approved', 'rejected']).optional().default('pending_review'),
+  verification_metadata: z.object({
+    verified_by: z.string().optional(),
+    reasons: z.array(z.string()).optional()
+  }).optional()
 });
