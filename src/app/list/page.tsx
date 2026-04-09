@@ -563,7 +563,11 @@ type InventoryFilter = {
                       </span>
                     )}
                   </div>
-                  <div className="mt-2 flex items-center justify-between">
+                  <div className="mt-2 flex items-center gap-2">
+                    <SignupBadge 
+                      type={offer.signupType}
+                      tooltip={offer.signupDetails}
+                    />
                     <span className={`text-xs px-3 py-1 rounded-full border whitespace-nowrap ${
                       CATEGORY_LABELS[offer.category].bg
                     } ${

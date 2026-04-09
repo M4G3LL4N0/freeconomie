@@ -46,6 +46,10 @@ export const bayAreaStaticOffers: StaticOffer[] = [
     summary: "Free basic wash when signing up for membership trial",
     offerHint: "Requires credit card for membership signup",
     signupRequired: true,
+    signupType: "app",
+    signupDetails: "Must download mobile app and create account",
+    signupType: "credit-card",
+    signupDetails: "Requires credit card for membership trial",
     verification: {
       verifiedAt: "2024-05-10",
       verifiedBy: "FreeWash Team",

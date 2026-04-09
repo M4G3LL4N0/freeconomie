@@ -187,6 +187,15 @@ export default function MapPage() {
                   </p>
                 )}
 
+                {offer.signupType !== 'none' && (
+                  <div className="mt-2">
+                    <SignupBadge 
+                      type={offer.signupType}
+                      tooltip={offer.signupDetails}
+                      className="text-xs"
+                    />
+                  </div>
+                )}
                 {offer?.category && (
                   <div className="mt-2">
                     <span className={`text-xs px-2 py-1 rounded-full ${

@@ -41,6 +41,8 @@ export type RouteCategory =
   | "promotional-offer"
   | "grand-opening";
 
+export type SignupType = 'email' | 'phone' | 'credit-card' | 'app' | 'membership' | 'none';
+
 export type StaticOffer = {
   id: string; // 'businessname-city-year'
   businessName: string;
@@ -55,6 +57,8 @@ export type StaticOffer = {
   summary: string;
   offerHint: string;
   signupRequired: boolean;
+  signupType: SignupType;
+  signupDetails?: string;
   verification: VerificationStatus;
   redemptionInstructions: string;
   lastVerifiedAt: string;
