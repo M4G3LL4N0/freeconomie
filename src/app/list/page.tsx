@@ -57,10 +57,9 @@ export default function OffersListPage() {
         "Redwood City", 
         "Sunnyvale",
         "San Jose",
-        "Santa Clara", // Added here
+        "Santa Clara",
         "San Mateo",
-        "San Leandro",
-        "Hayward"
+        "Brentwood"
       ]);
       
       const matchesRegion = !regionFilter || offer.region === regionFilter;
