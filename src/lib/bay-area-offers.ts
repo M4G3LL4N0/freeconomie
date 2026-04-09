@@ -33,6 +33,70 @@ export type StaticOffer = {
 
 export const bayAreaStaticOffers: StaticOffer[] = [
   {
+    id: "bayareacarwash-hayward-2024",
+    businessName: "Bay Area Car Wash",
+    offerTitle: "Free Trial Wash",
+    city: "Hayward",
+    state: "CA",
+    address: "133 Jackson St, Hayward, CA 94544",
+    latitude: 37.6689,
+    longitude: -122.0808,
+    region: "East Bay",
+    category: "free-membership-trial",
+    summary: "Free basic wash when signing up for membership trial",
+    offerHint: "Requires credit card for membership signup",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-10",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "official-site",
+      confidenceScore: 90
+    },
+    redemptionInstructions: "1. Visit location\n2. Sign up for membership trial at kiosk\n3. Free wash will be applied",
+    lastVerifiedAt: "2024-05-18",
+    accessibilityFeatures: ["ADA accessible"],
+    restrictions: "Must cancel within 7 days to avoid charges",
+    offerType: "membership-trial",
+    tags: ["verified", "membership", "east-bay"],
+    source: {
+      name: "Bay Area Car Wash",
+      url: "https://www.bayareacarwash.com/",
+      checkedAt: "2026-04-08",
+    }
+  },
+  {
+    id: "haywardexpresswash-2024",
+    businessName: "Hayward Express Wash",
+    offerTitle: "First Wash Free",
+    city: "Hayward",
+    state: "CA",
+    address: "30100 Industrial Pkwy SW, Hayward, CA 94544",
+    latitude: 37.6543,
+    longitude: -122.0921,
+    region: "East Bay",
+    category: "free-first-wash",
+    summary: "New customers receive a complimentary basic wash",
+    offerHint: "Must download mobile app and create account",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-12",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "official-site",
+      confidenceScore: 92
+    },
+    redemptionInstructions: "1. Download mobile app\n2. Create account\n3. Redeem free wash at location",
+    lastVerifiedAt: "2024-05-19",
+    accessibilityFeatures: ["Mobile app", "Contactless payment"],
+    restrictions: "One per household",
+    offerType: "first-time",
+    tags: ["verified", "mobile-app", "east-bay"],
+    source: {
+      name: "Hayward Express Wash",
+      url: "https://www.haywardexpresswash.com/",
+      checkedAt: "2026-04-08",
+    }
+  },
+  {
     id: "autopride-palo-alto",
     businessName: "Auto Pride Car Wash",
     offerTitle: "Free Car Wash",

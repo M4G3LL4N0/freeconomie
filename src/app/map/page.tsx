@@ -38,7 +38,7 @@ export default function MapPage() {
         "Sunnyvale", 
         "San Jose",
         "San Mateo",
-        "San Leandro"
+        "Hayward"
       ]);
 
       const verifiedLocations = bayAreaStaticOffers
