@@ -58,6 +58,20 @@ export const bayAreaStaticOffers: StaticOffer[] = [
     restrictions: "Must cancel within 7 days to avoid charges",
     offerType: "membership-trial",
     tags: ["verified", "membership", "east-bay", "hayward", "jackson-st"],
+    businessHours: "Mon-Fri: 8AM-7PM, Sat-Sun: 9AM-6PM",
+    phoneNumber: "(510) 555-1234",
+    website: "https://www.bayareacarwash.com/locations/hayward",
+    amenities: ["Free vacuums", "Air freshener station", "Seat cleaning"],
+    washTypes: ["Basic", "Deluxe", "Ultimate"],
+    averageWaitTime: "10-15 minutes",
+    loyaltyProgram: true,
+    paymentMethods: ["Credit Card", "Mobile App", "Membership"],
+    photoUrls: [
+      "https://example.com/photos/hayward1.jpg",
+      "https://example.com/photos/hayward2.jpg"
+    ],
+    lastVerifiedBy: "team@freewashfinder.com",
+    verificationNotes: "Offer confirmed via phone call on 2024-05-18",
     source: {
       name: "Bay Area Car Wash",
       url: "https://www.bayareacarwash.com/",

@@ -70,6 +70,17 @@ export type StaticOffer = {
     url: string;
     checkedAt: string;
   };
+  businessHours?: string;
+  phoneNumber?: string;
+  website?: string;
+  amenities?: string[];
+  washTypes?: string[];
+  averageWaitTime?: string;
+  loyaltyProgram?: boolean;
+  paymentMethods?: string[];
+  photoUrls?: string[];
+  lastVerifiedBy?: string;
+  verificationNotes?: string;
 };
 
 export type Location = {

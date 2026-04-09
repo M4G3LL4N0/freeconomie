@@ -162,20 +162,50 @@ export default function MapPage() {
         
         {locations.map((location) => (
           <Marker key={location.id} position={[location.lat, location.lng]}>
-            <Popup className="rounded-xl border border-white/10 glass-panel backdrop-blur-[12px]">
+            <Popup className="rounded-xl border border-white/10 glass-panel backdrop-blur-[12px] min-w-[300px]">
               <div className="space-y-3 p-3">
                 <div className="flex items-center gap-2">
                   <VerifiedIcon className="h-4 w-4 text-emerald-400" />
                   <h3 className="font-semibold text-white">{location.name}</h3>
                 </div>
                 <p className="text-sm text-white/80">{location.address}</p>
+                
                 {location.expires_at && (
                   <p className="text-sm text-emerald-400">
                     Valid until: {new Date(location.expires_at).toLocaleDateString()}
                   </p>
                 )}
+
+                {offer?.businessHours && (
+                  <div className="mt-2 text-xs text-white/70">
+                    <strong>Hours:</strong> {offer.businessHours}
+                  </div>
+                )}
+                
+                {offer?.phoneNumber && (
+                  <div className="mt-1 text-xs text-white/70">
+                    <strong>Phone:</strong> {offer.phoneNumber}
+                  </div>
+                )}
+                
+                {offer?.amenities?.length > 0 && (
+                  <div className="mt-2">
+                    <div className="text-xs font-medium text-white/80">Amenities:</div>
+                    <div className="mt-1 flex flex-wrap gap-1">
+                      {offer.amenities.slice(0, 3).map(amenity => (
+                        <span 
+                          key={amenity}
+                          className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10"
+                        >
+                          {amenity}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <a
-                  href={bayAreaStaticOffers.find(o => o.id === location.id)?.source.url}
+                  href={offer?.source.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/90 hover:bg-white/10 backdrop-blur-sm transition-colors"
