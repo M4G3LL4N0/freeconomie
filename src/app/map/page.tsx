@@ -170,6 +170,11 @@ export default function MapPage() {
                     verifiedAt={location.verified_at}
                     className="text-xs"
                   />
+                  <SourceBadge
+                    sourceName={offer.source.name}
+                    verificationMethod={offer.verification.verificationMethod}
+                    className="text-xs"
+                  />
                   <h3 className="font-semibold text-white">{location.name}</h3>
                 </div>
                 <p className="text-sm text-white/80">{location.address}</p>

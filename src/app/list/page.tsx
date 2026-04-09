@@ -536,10 +536,17 @@ type InventoryFilter = {
                         )}
                       </div>
                     </div>
-                    <VerifiedBadge 
-                      confidenceScore={offer.verification.confidenceScore}
-                      verifiedAt={offer.verification.verifiedAt}
-                    />
+                    <div className="flex flex-col items-end gap-1">
+                      <VerifiedBadge 
+                        confidenceScore={offer.verification.confidenceScore}
+                        verifiedAt={offer.verification.verifiedAt}
+                      />
+                      <SourceBadge 
+                        sourceName={offer.source.name}
+                        verificationMethod={offer.verification.verificationMethod}
+                        className="mt-1"
+                      />
+                    </div>
                   </div>
 
                   <div className="mt-4 flex items-center gap-2">
@@ -621,7 +628,7 @@ type InventoryFilter = {
           </div>
           
           <div className="mt-8 rounded-lg border border-white/10 bg-white/5 p-4 text-sm text-white/60">
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-1">
                 <VerifiedIcon className="h-3 w-3 text-emerald-400" />
                 <span>90-100%</span>
@@ -636,6 +643,30 @@ type InventoryFilter = {
                 <VerifiedIcon className="h-3 w-3 text-white/40" />
                 <span>Below 80%</span>
                 <span className="ml-1">Needs Review</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <SourceBadge 
+                  sourceName="Official Site" 
+                  verificationMethod="official-site" 
+                  className="text-xs"
+                />
+                <span>Official Website</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <SourceBadge 
+                  sourceName="Phone" 
+                  verificationMethod="phone-confirmation" 
+                  className="text-xs"
+                />
+                <span>Phone Verified</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <SourceBadge 
+                  sourceName="In-Person" 
+                  verificationMethod="in-person" 
+                  className="text-xs"
+                />
+                <span>Visited Location</span>
               </div>
             </div>
           </div>
