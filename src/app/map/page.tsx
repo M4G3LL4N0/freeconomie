@@ -1,9 +1,9 @@
 "use client";
 
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import "leaflet/dist/leafset.css";
 import { useEffect, useState } from "react";
-import { MapPin, RefreshCw } from "lucide-react";
+import { MapPin, RefreshCw, Search } from "lucide-react";
 import { captureEvent } from "@/lib/analytics";
 import { toast } from "react-hot-toast";
 
@@ -56,8 +56,37 @@ export default function MapPage() {
     }
   }, []);
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = async (query: string) => {
+    try {
+      const response = await fetch(`/api/locations/search?q=${encodeURIComponent(query)}`);
+      if (!response.ok) throw new Error('Search failed');
+      const data = await response.json();
+      setLocations(data);
+    } catch (error) {
+      toast.error('Search failed');
+      captureEvent('search_error', { query, error: error.message });
+    }
+  };
+
   return (
     <div className="relative h-[calc(100vh-80px)]">
+      <div className="absolute top-4 left-4 z-[1000]">
+        <div className="glass-panel backdrop-blur-xl rounded-xl overflow-hidden border border-white/15">
+          <div className="flex items-center px-4 py-3 gap-3">
+            <Search className="h-4 w-4 text-white/60" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch(searchQuery)}
+              placeholder="Search locations..."
+              className="bg-transparent border-none outline-none text-white placeholder-white/50 text-sm w-48 focus:ring-0"
+            />
+          </div>
+        </div>
+      </div>
       <MapContainer
         center={center}
         zoom={13}
@@ -73,7 +102,7 @@ export default function MapPage() {
         {locations.map((location) => (
           <Marker key={location.id} position={[location.lat, location.lng]}>
             <Popup className="rounded-xl border border-white/10 glass-panel backdrop-blur-[12px]">
-              <div className="space-y-2 p-2">
+              <div className="space-y-3 p-3">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-cyan-300" />
                   <h3 className="font-semibold text-white">{location.name}</h3>
@@ -84,6 +113,22 @@ export default function MapPage() {
                     Valid until: {new Date(location.expires_at).toLocaleDateString()}
                   </p>
                 )}
+                <button 
+                  onClick={() => {
+                    fetch('/api/favorites', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ locationId: location.id })
+                    })
+                    .then(() => toast.success('Saved to favorites'))
+                    .catch(() => toast.error('Failed to save'));
+                  }}
+                  className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/90 hover:bg-white/10 backdrop-blur-sm transition-colors"
+                >
+                  Save to Favorites
+                </button>
               </div>
             </Popup>
           </Marker>

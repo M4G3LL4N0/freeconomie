@@ -22,7 +22,31 @@ const schema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const data = schema.parse(body);
+    const data = schema.parse({
+      ...body,
+      lat: parseFloat(body.lat),
+      lng: parseFloat(body.lng)
+    });
+
+    // Verify coordinates are valid numbers
+    if (isNaN(data.lat) || isNaN(data.lng)) {
+      throw new Error('Invalid coordinates');
+    }
+
+    // Optional: Verify address with Google Maps API if key is configured
+    if (process.env.GOOGLE_MAPS_API_KEY) {
+      const geocodeResponse = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${data.lat},${data.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`
+      );
+      const geocodeData = await geocodeResponse.json();
+      
+      if (!geocodeData.results?.length) {
+        captureEvent('offer_submission_address_unverified', {
+          address: data.address,
+          coordinates: `${data.lat},${data.lng}`
+        });
+      }
+    }
 
     const { error } = await supabase
       .from('submissions')
