@@ -1,7 +1,7 @@
 "use client";
 
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
-import "leaflet/dist/leafset.css";
+import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { MapPin, RefreshCw, Search } from "lucide-react";
 import LoadingState from "@/components/freewash-finder/LoadingState";

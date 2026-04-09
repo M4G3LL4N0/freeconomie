@@ -1,3 +1,28 @@
+export type OfferSource = {
+  name: string;
+  url: string;
+  checkedAt: string;
+};
+
+export type StaticOffer = {
+  id: string;
+  businessName: string;
+  offerTitle: string;
+  city: string;
+  state: "CA";
+  address: string;
+  region: "South Bay" | "Peninsula" | "East Bay" | "North Bay" | "Outer Bay";
+  latitude?: number;
+  longitude?: number;
+  category: "free-first-wash" | "free-membership-trial";
+  summary: string;
+  offerHint: string;
+  signupRequired: boolean;
+  verified: boolean;
+  source: OfferSource;
+  tags: string[];
+};
+
 export type Location = {
   id: string;
   name: string;
