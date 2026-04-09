@@ -3,11 +3,24 @@ import { FilterIcon, MapPinIcon, VerifiedIcon } from "@/components/icons";
 import { useState } from "react";
 
 export default function OffersListPage() {
-  const [regionFilter, setRegionFilter] = useState<string>("");
-  const [categoryFilter, setCategoryFilter] = useState<string>("");
-  const [sortBy, setSortBy] = useState<"distance" | "expiration" | "rating">("distance");
+  type InventoryFilter = {
+    region: BayAreaRegion | '';
+    city: BayAreaCity | '';
+    category: RouteCategory | '';
+    verification: 'verified' | 'all';
+    status: 'active' | 'expired' | 'all';
+  };
+
+  const [filters, setFilters] = useState<InventoryFilter>({
+    region: '',
+    city: '',
+    category: '',
+    verification: 'verified',
+    status: 'active'
+  });
+
+  const [sortBy, setSortBy] = useState<'distance' | 'expiration' | 'rating' | 'verification'>('verification');
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [verificationFilter, setVerificationFilter] = useState<string>("all");
   const [signupFilter, setSignupFilter] = useState<string>("all");
   const [expirationFilter, setExpirationFilter] = useState<string>("all");
 
@@ -66,9 +79,14 @@ export default function OffersListPage() {
         "Morgan Hill"
       ]);
       
-      const matchesRegion = !regionFilter || 
-        (regionFilter === "Hayward" ? offer.city === "Hayward" : offer.region === regionFilter);
-      const matchesCategory = !categoryFilter || offer.category === categoryFilter;
+      const matchesRegion = !filters.region || offer.region === filters.region;
+      const matchesCity = !filters.city || offer.city === filters.city;
+      const matchesCategory = !filters.category || offer.category === filters.category;
+      const matchesVerification = filters.verification === 'all' || offer.verification.confidenceScore >= 80;
+      const matchesStatus = filters.status === 'all' || 
+        (filters.status === 'active' 
+          ? !offer.expirationDate || new Date(offer.expirationDate) > new Date()
+          : offer.expirationDate && new Date(offer.expirationDate) <= new Date());
       const matchesSearch = !searchQuery || 
         offer.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         offer.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -76,7 +94,10 @@ export default function OffersListPage() {
       
       return launchCities.has(offer.city) && 
              matchesRegion && 
+             matchesCity &&
              matchesCategory && 
+             matchesVerification &&
+             matchesStatus &&
              matchesSearch;
     })
     .map(offer => ({
@@ -86,10 +107,7 @@ export default function OffersListPage() {
         : undefined,
       isExpired: offer.expirationDate 
         ? new Date(offer.expirationDate) < new Date()
-        : false,
-      verificationScore: offer.verification.confidenceScore,
-      verificationDetails: `Verified via ${offer.verification.verificationMethod.replace('-', ' ')}`,
-      verificationDate: new Date(offer.verification.verifiedAt).toLocaleDateString()
+        : false
     }))
     .sort((a, b) => {
       if (sortBy === "distance") {
@@ -99,9 +117,11 @@ export default function OffersListPage() {
         const bExpiry = b.expirationDate ? new Date(b.expirationDate).getTime() : Infinity;
         return aExpiry - bExpiry;
       } else if (sortBy === "rating") {
-        return (b.verificationScore || 0) - (a.verificationScore || 0);
+        return (b.rating || 0) - (a.rating || 0);
+      } else {
+        // Default sort by verification score
+        return b.verification.confidenceScore - a.verification.confidenceScore;
       }
-      return 0;
     });
 
   return (
