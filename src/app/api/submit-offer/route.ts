@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { captureEvent } from "@/lib/analytics";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -15,6 +16,7 @@ const schema = z.object({
   offer_type: z.enum(['wash', 'trial', 'promo']),
   details: z.string().min(10),
   expires_at: z.string().optional(),
+  user_id: z.string().uuid().optional(),
 });
 
 export async function POST(request: Request) {
@@ -26,13 +28,20 @@ export async function POST(request: Request) {
       .from('submissions')
       .insert({
         ...data,
-        status: 'pending',
-        submitted_at: new Date().toISOString()
+        status: 'pending_review',
+        submitted_at: new Date().toISOString(),
+        verification_metadata: {
+          verified_by: null,
+          reasons: []
+        }
       });
 
     if (error) throw error;
+    
+    captureEvent("offer_submitted", { type: data.offer_type });
     return NextResponse.json({ success: true });
   } catch (error) {
+    captureEvent("offer_error", { error: error.message });
     return NextResponse.json(
       { error: error.message },
       { status: 400 }
