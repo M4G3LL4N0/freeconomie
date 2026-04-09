@@ -27,18 +27,24 @@ export default function MapPage() {
   const [center, setCenter] = useState([37.7749, -122.4194]);
 
   const fetchLocations = async (lat: number, lng: number) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      // Enhanced route-aware filtering
-      const response = await fetch(
-        `/api/locations?lat=${lat}&lng=${lng}&radius=10&sort=route_optimized`
-      );
-      if (!response.ok) throw new Error("Failed to load");
-      const data = await response.json();
-      setLocations(data);
+      // Using static data instead of API call
+      const results = bayAreaStaticOffers.slice(0, 20); // Show first 20 results
+      setLocations(results.map(offer => ({
+        id: offer.id,
+        name: offer.businessName,
+        address: offer.address,
+        lat: offer.latitude || 0,
+        lng: offer.longitude || 0,
+        offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
+        details: offer.summary,
+        expires_at: offer.expirationDate || '',
+        created_at: new Date().toISOString(),
+        distance_in_km: 0 // Not calculating distance for static data
+      })));
     } catch (error) {
       toast.error("Failed to load locations");
-      captureEvent("map_error", { error: (error as Error).message });
     } finally {
       setLoading(false);
     }
