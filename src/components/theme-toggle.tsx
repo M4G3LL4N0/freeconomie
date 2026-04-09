@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
+import { captureEvent } from "@/lib/analytics";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState(() => {
@@ -14,12 +15,14 @@ export default function ThemeToggle() {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
+    captureEvent('theme_change', { theme });
   }, [theme]);
 
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="p-2 rounded-full hover:bg-white/10 transition-colors"
+      aria-label="Toggle theme"
     >
       {theme === "dark" ? (
         <Moon className="h-5 w-5" />
