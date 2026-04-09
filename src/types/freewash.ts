@@ -21,6 +21,9 @@ export type StaticOffer = {
   verified: boolean;
   source: OfferSource;
   tags: string[];
+  expirationDate?: string;
+  daysUntilExpiration?: number;
+  isExpired?: boolean;
 };
 
 export type Location = {

@@ -20,17 +20,25 @@ export default function OffersListPage() {
     })
     .sort((a, b) => {
       if (sortBy === "distance") {
-        // Add distance calculation logic here
-        return 0;
+        return (a.distance || 0) - (b.distance || 0);
       } else if (sortBy === "expiration") {
-        // Add expiration date comparison logic here
-        return 0;
+        const aExpiry = a.expirationDate ? new Date(a.expirationDate).getTime() : Infinity;
+        const bExpiry = b.expirationDate ? new Date(b.expirationDate).getTime() : Infinity;
+        return aExpiry - bExpiry;
       } else if (sortBy === "rating") {
-        // Add rating comparison logic here
-        return 0;
+        return (b.rating || 0) - (a.rating || 0);
       }
       return 0;
-    });
+    })
+    .map(offer => ({
+      ...offer,
+      daysUntilExpiration: offer.expirationDate 
+        ? Math.floor((new Date(offer.expirationDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+        : undefined,
+      isExpired: offer.expirationDate 
+        ? new Date(offer.expirationDate) < new Date()
+        : false
+    }));
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -144,6 +152,21 @@ export default function OffersListPage() {
                         {tag}
                       </span>
                     ))}
+                    {offer.expirationDate && (
+                      <span
+                        className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs ${
+                          offer.isExpired
+                            ? 'border-red-400/30 bg-red-500/10 text-red-300'
+                            : offer.daysUntilExpiration && offer.daysUntilExpiration <= 7
+                            ? 'border-amber-400/30 bg-amber-500/10 text-amber-300'
+                            : 'border-emerald-400/30 bg-emerald-500/10 text-emerald-300'
+                        }`}
+                      >
+                        {offer.isExpired
+                          ? 'Expired'
+                          : `Expires in ${offer.daysUntilExpiration} day${offer.daysUntilExpiration === 1 ? '' : 's'}`}
+                      </span>
+                    )}
                   </div>
 
                   <a
