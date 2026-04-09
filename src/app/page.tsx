@@ -102,58 +102,46 @@ const expansion: ExpansionItem[] = [
 ];
 
 function themeClasses(theme: string) {
-  switch (theme) {
-    case "cyan":
-      return {
-        glow: "from-cyan-400/30 via-sky-500/20 to-blue-600/25",
-        pill: "text-cyan-200 border-cyan-300/20 bg-cyan-400/10",
-        beam: "from-cyan-300/70 via-sky-400/50 to-transparent",
-        orb: "bg-cyan-400/20",
-        text: "text-cyan-300",
-        border: "border-cyan-400/30",
-        bg: "bg-cyan-500/10"
-      };
-    case "violet":
-      return {
-        glow: "from-violet-400/30 via-purple-500/20 to-fuchsia-600/25",
-        pill: "text-violet-200 border-violet-300/20 bg-violet-400/10",
-        beam: "from-violet-300/70 via-purple-400/50 to-transparent",
-        orb: "bg-violet-400/20",
-        text: "text-violet-300",
-        border: "border-violet-400/30",
-        bg: "bg-violet-500/10"
-      };
-    case "orange":
-      return {
-        glow: "from-orange-400/30 via-amber-500/20 to-yellow-600/25",
-        pill: "text-orange-200 border-orange-300/20 bg-orange-400/10",
-        beam: "from-orange-300/70 via-amber-400/50 to-transparent",
-        orb: "bg-orange-400/20",
-        text: "text-orange-300",
-        border: "border-orange-400/30",
-        bg: "bg-orange-500/10"
-      };
-    case "emerald":
-      return {
-        glow: "from-emerald-400/30 via-teal-500/20 to-cyan-600/25",
-        pill: "text-emerald-200 border-emerald-300/20 bg-emerald-400/10",
-        beam: "from-emerald-300/70 via-teal-400/50 to-transparent",
-        orb: "bg-emerald-400/20",
-        text: "text-emerald-300",
-        border: "border-emerald-400/30",
-        bg: "bg-emerald-500/10"
-      };
-    default:
-      return {
-        glow: "from-cyan-400/30 via-sky-500/20 to-blue-600/25",
-        pill: "text-cyan-200 border-cyan-300/20 bg-cyan-400/10",
-        beam: "from-cyan-300/70 via-sky-400/50 to-transparent",
-        orb: "bg-cyan-400/20",
-        text: "text-cyan-300",
-        border: "border-cyan-400/30",
-        bg: "bg-cyan-500/10"
-      };
-  }
+  const gradients = {
+    cyan: {
+      glow: "from-cyan-400/50 via-sky-500/40 to-blue-600/30",
+      pill: "text-cyan-200 border-cyan-300/25 bg-cyan-400/15",
+      beam: "from-cyan-300/80 via-sky-400/60 to-transparent",
+      orb: "bg-cyan-400/25",
+      text: "text-cyan-300",
+      border: "border-cyan-400/35",
+      bg: "bg-cyan-500/15"
+    },
+    violet: {
+      glow: "from-violet-400/50 via-purple-500/40 to-fuchsia-600/30",
+      pill: "text-violet-200 border-violet-300/25 bg-violet-400/15",
+      beam: "from-violet-300/80 via-purple-400/60 to-transparent",
+      orb: "bg-violet-400/25",
+      text: "text-violet-300",
+      border: "border-violet-400/35",
+      bg: "bg-violet-500/15"
+    },
+    orange: {
+      glow: "from-orange-400/50 via-amber-500/40 to-yellow-600/30",
+      pill: "text-orange-200 border-orange-300/25 bg-orange-400/15",
+      beam: "from-orange-300/80 via-amber-400/60 to-transparent",
+      orb: "bg-orange-400/25",
+      text: "text-orange-300",
+      border: "border-orange-400/35",
+      bg: "bg-orange-500/15"
+    },
+    emerald: {
+      glow: "from-emerald-400/50 via-teal-500/40 to-cyan-600/30",
+      pill: "text-emerald-200 border-emerald-300/25 bg-emerald-400/15",
+      beam: "from-emerald-300/80 via-teal-400/60 to-transparent",
+      orb: "bg-emerald-400/25",
+      text: "text-emerald-300",
+      border: "border-emerald-400/35",
+      bg: "bg-emerald-500/15"
+    }
+  };
+
+  return gradients[theme] || gradients.cyan;
 }
 
 function ArtworkPanel({ theme }: { theme: string }) {
@@ -256,7 +244,7 @@ export default function Home() {
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
                     Find free value with a{" "}
-                    <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-cyan-300 via-white to-orange-300 bg-clip-text text-transparent">
                       smarter route layer.
                     </span>
                   </h1>
