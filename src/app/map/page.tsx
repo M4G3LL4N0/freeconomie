@@ -91,15 +91,24 @@ export default function MapPage() {
 
   const handleSearch = async (query: string) => {
     try {
-      const results = bayAreaStaticOffers.filter(offer =>
-        offer.businessName.toLowerCase().includes(query.toLowerCase()) ||
-        offer.city.toLowerCase().includes(query.toLowerCase())
-      ).map(offer => ({
-        ...offer,
-        offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
-        lat: offer.latitude || 37.7749,
-        lng: offer.longitude || -122.4194
-      }));
+      const results = bayAreaStaticOffers
+        .filter(offer =>
+          offer.businessName.toLowerCase().includes(query.toLowerCase()) ||
+          offer.city.toLowerCase().includes(query.toLowerCase()) ||
+          offer.address.toLowerCase().includes(query.toLowerCase())
+        )
+        .map(offer => ({
+          id: offer.id,
+          name: offer.businessName,
+          address: offer.address,
+          lat: offer.latitude || 37.7749,
+          lng: offer.longitude || -122.4194,
+          offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
+          details: offer.summary,
+          expires_at: offer.expirationDate || '',
+          created_at: new Date().toISOString(),
+          distance_in_km: 0
+        }));
       
       setLocations(results);
       captureEvent("map_search", {

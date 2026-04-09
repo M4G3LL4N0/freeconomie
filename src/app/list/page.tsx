@@ -54,7 +54,8 @@ export default function OffersListPage() {
       const matchesCategory = !categoryFilter || offer.category === categoryFilter;
       const matchesSearch = !searchQuery || 
         offer.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        offer.city.toLowerCase().includes(searchQuery.toLowerCase());
+        offer.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        offer.address.toLowerCase().includes(searchQuery.toLowerCase());
       
       return matchesRegion && matchesCategory && matchesSearch;
     })
@@ -65,7 +66,10 @@ export default function OffersListPage() {
         : undefined,
       isExpired: offer.expirationDate 
         ? new Date(offer.expirationDate) < new Date()
-        : false
+        : false,
+      verificationScore: 100, // Static offers are fully verified
+      lastVerifiedAt: new Date().toISOString(),
+      accessibilityFeatures: [] // Initialize empty array
     }))
     .sort((a, b) => {
       if (sortBy === "distance") {

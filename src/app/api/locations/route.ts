@@ -28,18 +28,34 @@ export async function GET(request: Request) {
     const filteredOffers = bayAreaStaticOffers
       .filter(offer => {
         if (!offer.latitude || !offer.longitude) return false;
-        const R = 6371; // Earth's radius in km
-        const dLat = (offer.latitude - input.lat) * (Math.PI / 180);
-        const dLon = (offer.longitude - input.lng) * (Math.PI / 180);
-        const a = 
-          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-          Math.cos(input.lat * (Math.PI / 180)) * 
-          Math.cos(offer.latitude * (Math.PI / 180)) *
-          Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        
+        // Calculate distance in meters using Haversine formula
+        const R = 6371e3; // Earth's radius in meters
+        const φ1 = input.lat * Math.PI/180;
+        const φ2 = offer.latitude * Math.PI/180;
+        const Δφ = (offer.latitude-input.lat) * Math.PI/180;
+        const Δλ = (offer.longitude-input.lng) * Math.PI/180;
+
+        const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                  Math.cos(φ1) * Math.cos(φ2) *
+                  Math.sin(Δλ/2) * Math.sin(Δλ/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         const distance = R * c;
-        return distance <= input.radius * 1000; // Convert km to meters
+        
+        return distance <= input.radius * 1000;
       })
+      .map(offer => ({
+        id: offer.id,
+        name: offer.businessName,
+        address: offer.address,
+        lat: offer.latitude!,
+        lng: offer.longitude!,
+        offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
+        details: offer.summary,
+        expires_at: offer.expirationDate || '',
+        created_at: new Date().toISOString(),
+        distance_in_km: 0 // Will be calculated client-side
+      }))
       .slice(0, input.limit);
 
     captureEvent("locations_fetched", {
