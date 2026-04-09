@@ -4,6 +4,13 @@ export type OfferSource = {
   checkedAt: string;
 };
 
+export type VerificationStatus = {
+  verifiedAt: string;
+  verifiedBy: string;
+  verificationMethod: 'official-site' | 'phone-confirmation' | 'in-person';
+  confidenceScore: number;
+};
+
 export type StaticOffer = {
   id: string;
   businessName: string;
@@ -18,22 +25,18 @@ export type StaticOffer = {
   summary: string;
   offerHint: string;
   signupRequired: boolean;
-  verified: boolean;
-  verificationScore: number;
-  verificationDetails: {
-    sourceType: 'official' | 'user-submitted' | 'partner';
-    verificationMethod: 'manual' | 'automated' | 'partner-api';
-    lastVerifiedAt: string;
-  };
+  verification: VerificationStatus;
   source: OfferSource;
   tags: string[];
   expirationDate?: string;
   daysUntilExpiration?: number;
   isExpired?: boolean;
+  redemptionInstructions: string;
+  lastVerifiedAt: string;
+  accessibilityFeatures: string[];
+  restrictions?: string;
+  offerType: 'first-time' | 'membership-trial' | 'promotional';
   distance?: number;
-  routeOptimization: {
-    majorRoads: string[];
-    commonRoutes: string[];
     peakTimes: string[];
   };
   accessibilityFeatures: string[];
