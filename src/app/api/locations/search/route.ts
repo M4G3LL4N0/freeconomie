@@ -10,8 +10,9 @@ export async function GET(request: Request) {
   }
 
   const results = bayAreaStaticOffers.filter(offer =>
-    offer.businessName.toLowerCase().includes(query.toLowerCase()) ||
-    offer.city.toLowerCase().includes(query.toLowerCase())
+    offer.businessName.toLowerCase().includes(query) ||
+    offer.city.toLowerCase().includes(query) ||
+    offer.address.toLowerCase().includes(query)
   );
 
   return NextResponse.json(results);

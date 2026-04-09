@@ -29,36 +29,10 @@ export default function MapPage() {
   const fetchLocations = async (lat: number, lng: number) => {
     try {
       setLoading(true);
-      // Convert static offers with distance filtering
-      const mappedLocations = bayAreaStaticOffers
-        .filter(offer => {
-          // Basic distance calculation
-          const R = 6371; // Earth's radius in km
-          const dLat = (offer.latitude - lat) * (Math.PI / 180);
-          const dLon = (offer.longitude - lng) * (Math.PI / 180);
-          const a = 
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat * (Math.PI / 180)) * 
-            Math.cos(offer.latitude * (Math.PI / 180)) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-          const distance = R * c;
-          return distance <= 50; // Within 50km radius
-        })
-        .map(offer => ({
-          id: offer.id,
-          name: offer.businessName,
-          address: offer.address,
-          lat: offer.latitude,
-          lng: offer.longitude,
-          offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
-          details: offer.summary,
-          expires_at: offer.expirationDate,
-          created_at: new Date().toISOString(),
-          distance_in_km: 0 // Will be calculated
-        }))
-        .slice(0, 50); // Limit to 50 results
-      setLocations(mappedLocations);
+      const response = await fetch(`/api/locations?lat=${lat}&lng=${lng}&radius=50`);
+      if (!response.ok) throw new Error('Failed to fetch locations');
+      const data = await response.json();
+      setLocations(data);
     } catch (error) {
       toast.error("Failed to load locations");
     } finally {

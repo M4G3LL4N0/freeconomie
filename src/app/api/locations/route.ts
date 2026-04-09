@@ -1,38 +1,55 @@
-import { bayAreaStaticOffers } from '@/lib/freewash-data';
+import { bayAreaStaticOffers } from '@/lib/bay-area-offers';
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
 import { captureEvent } from "@/lib/analytics";
 
-export const revalidate = 3600; // Keep existing cache
+const schema = z.object({
+  lat: z.number().min(-90).max(90),
+  lng: z.number().min(-180).max(180),
+  radius: z.number().min(1).max(100).default(10),
+  offer_type: z.enum(['wash', 'trial', 'promo', 'all']).optional().default('all'),
+  limit: z.number().min(1).max(100).optional().default(20),
+});
+
+export const revalidate = 3600; // Cache for 1 hour
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    // Maintain existing input validation
-    const lat = Number(searchParams.get('lat'));
-    const lng = Number(searchParams.get('lng'));
+    const input = schema.parse({
+      lat: Number(searchParams.get('lat')),
+      lng: Number(searchParams.get('lng')),
+      radius: Number(searchParams.get('radius')) || 10,
+      offer_type: searchParams.get('type'),
+      limit: Number(searchParams.get('limit')) || 20,
+    });
 
-    // Map static offers to expected response format
-    const data = bayAreaStaticOffers.map(offer => ({
-      id: offer.id,
-      name: offer.businessName,
-      address: offer.address,
-      lat: offer.latitude || 37.7749, // Fallback to SF coordinates
-      lng: offer.longitude || -122.4194,
-      offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
-      details: offer.summary,
-      expires_at: offer.expirationDate,
-      created_at: new Date().toISOString(),
-      distance_in_km: 0 // Will be calculated client-side
-    }));
+    // Filter offers based on location and radius
+    const filteredOffers = bayAreaStaticOffers
+      .filter(offer => {
+        if (!offer.latitude || !offer.longitude) return false;
+        const R = 6371; // Earth's radius in km
+        const dLat = (offer.latitude - input.lat) * (Math.PI / 180);
+        const dLon = (offer.longitude - input.lng) * (Math.PI / 180);
+        const a = 
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(input.lat * (Math.PI / 180)) * 
+          Math.cos(offer.latitude * (Math.PI / 180)) *
+          Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+        return distance <= input.radius * 1000; // Convert km to meters
+      })
+      .slice(0, input.limit);
 
-    // Preserve analytics event
     captureEvent("locations_fetched", {
-      lat,
-      lng,
-      count: data.length
+      lat: input.lat,
+      lng: input.lng,
+      radius: input.radius,
+      count: filteredOffers.length
     });
     
-    return NextResponse.json(data);
+    return NextResponse.json(filteredOffers);
   } catch (error) {
     // Maintain existing error handling
     captureEvent("locations_error", { 

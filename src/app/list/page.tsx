@@ -66,7 +66,7 @@ export default function OffersListPage() {
       isExpired: offer.expirationDate 
         ? new Date(offer.expirationDate) < new Date()
         : false
-    }));
+    }))
     .sort((a, b) => {
       if (sortBy === "distance") {
         return (a.distance || 0) - (b.distance || 0);
@@ -78,16 +78,7 @@ export default function OffersListPage() {
         return (b.rating || 0) - (a.rating || 0);
       }
       return 0;
-    })
-    .map(offer => ({
-      ...offer,
-      daysUntilExpiration: offer.expirationDate 
-        ? Math.floor((new Date(offer.expirationDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
-        : undefined,
-      isExpired: offer.expirationDate 
-        ? new Date(offer.expirationDate) < new Date()
-        : false
-    }));
+    });
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
