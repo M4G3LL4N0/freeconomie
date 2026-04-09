@@ -407,7 +407,7 @@ export default function Home() {
                 return (
                   <div
                     key={card.title}
-                    className="relative overflow-hidden rounded-[1.8rem] border border-white/15 bg-gradient-to-b from-white/8 to-white/4 p-8 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
+                    className="relative overflow-hidden rounded-[1.8rem] border border-white/10 glass-panel p-8"
                   >
                     <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400/70 via-violet-500/60 to-orange-400/60`} />
                     <div className={`absolute right-[-2rem] top-[-2rem] h-24 w-24 rounded-full blur-3xl ${c.orb}`} />
