@@ -33,6 +33,14 @@ function VerificationScoreBadge({ score }: { score: number }) {
 }
 import { useState } from "react";
 
+const REGION_FILTERS = [
+  { value: "", label: "All Regions" },
+  { value: "South Bay", label: "South Bay" },
+  { value: "Peninsula", label: "Peninsula" },
+  { value: "East Bay", label: "East Bay" },
+  { value: "North Bay", label: "North Bay" }
+] as const;
+
 export default function OffersListPage() {
 const INVENTORY_STATUS = {
   ACTIVE: 'Active',
@@ -63,13 +71,42 @@ type InventoryFilter = {
 
   const filterOffers = (offers: StaticOffer[]) => {
     return offers.filter(offer => {
-      const matchesRegion = !regionFilter || 
-        (regionFilter === "Hayward" ? offer.city === "Hayward" : offer.region === regionFilter);
-      const matchesCategory = !categoryFilter || offer.category === categoryFilter;
-      const matchesSearch = !searchQuery || 
-        offer.city.toLowerCase() === searchQuery.toLowerCase();
+      // Region filter
+      const matchesRegion = !filters.region || offer.region === filters.region;
       
-      return matchesRegion && matchesCategory && matchesSearch;
+      // City filter
+      const matchesCity = !filters.city || offer.city === filters.city;
+      
+      // Category filter
+      const matchesCategory = !filters.category || offer.category === filters.category;
+      
+      // Verification filter
+      const matchesVerification = 
+        filters.verification === 'all' || 
+        (filters.verification === 'verified' && offer.verification.confidenceScore >= 80) ||
+        (filters.verification === 'high' && offer.verification.confidenceScore >= 90);
+      
+      // Status filter
+      const matchesStatus = 
+        filters.status === 'all' || 
+        (filters.status === 'active' && 
+          (!offer.expirationDate || new Date(offer.expirationDate) > new Date())) ||
+        (filters.status === 'expiring' && 
+          offer.expirationDate && 
+          new Date(offer.expirationDate).getTime() - Date.now() <= 7 * 24 * 60 * 60 * 1000);
+      
+      // Search query
+      const matchesSearch = !searchQuery || 
+        offer.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        offer.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        offer.address.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      return matchesRegion && 
+             matchesCity &&
+             matchesCategory && 
+             matchesVerification &&
+             matchesStatus &&
+             matchesSearch;
     });
   };
 
@@ -228,6 +265,21 @@ type InventoryFilter = {
         </div>
       )}
 
+      <div className="flex items-center gap-2 overflow-x-auto pb-2">
+        {REGION_FILTERS.map((filter) => (
+          <button
+            key={filter.value}
+            onClick={() => setFilters({...filters, region: filter.value as BayAreaRegion})}
+            className={`whitespace-nowrap rounded-full px-4 py-2 text-sm ${
+              filters.region === filter.value
+                ? 'bg-white/10 border border-white/20 text-white'
+                : 'border border-white/10 text-white/60 hover:bg-white/5'
+            }`}
+          >
+            {filter.label}
+          </button>
+        ))}
+      </div>
       <div className="flex flex-wrap gap-2 mt-4">
         {['Palo Alto', 'Redwood City', 'Sunnyvale', 'San Jose'].map(city => (
           <button
@@ -255,17 +307,22 @@ type InventoryFilter = {
             <div className="space-y-4">
               <div>
                 <label className="block text-xs text-white/60 mb-1">Region</label>
-                <select
-                  value={filters.region}
-                  onChange={(e) => setFilters({...filters, region: e.target.value as BayAreaRegion})}
-                  className="w-full glass-input"
-                >
-                  <option value="">All Regions</option>
-                  <option value="South Bay">South Bay</option>
-                  <option value="Peninsula">Peninsula</option>
-                  <option value="East Bay">East Bay</option>
-                  <option value="North Bay">North Bay</option>
-                </select>
+                <div className="relative">
+                  <select
+                    value={filters.region}
+                    onChange={(e) => setFilters({...filters, region: e.target.value as BayAreaRegion})}
+                    className="w-full glass-input appearance-none pr-8"
+                  >
+                    {REGION_FILTERS.map((filter) => (
+                      <option key={filter.value} value={filter.value}>
+                        {filter.label}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                    <ChevronDownIcon className="h-4 w-4 text-white/60" />
+                  </div>
+                </div>
               </div>
 
               <div>
@@ -327,9 +384,21 @@ type InventoryFilter = {
               Inventory Stats
             </h3>
             <div className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-white/60">Total Offers</span>
-                <span className="font-medium text-white">{bayAreaStaticOffers.length}</span>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div className="rounded-lg border border-white/10 bg-white/5 p-3">
+                  <div className="text-xs text-white/60">Total Offers</div>
+                  <div className="mt-1 text-lg font-medium">
+                    {bayAreaStaticOffers.length}
+                  </div>
+                </div>
+                {REGION_FILTERS.filter(f => f.value).map(region => (
+                  <div key={region.value} className="rounded-lg border border-white/10 bg-white/5 p-3">
+                    <div className="text-xs text-white/60">{region.label}</div>
+                    <div className="mt-1 text-lg font-medium">
+                      {bayAreaStaticOffers.filter(o => o.region === region.value).length}
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-white/60">Verified</span>
@@ -461,7 +530,17 @@ type InventoryFilter = {
                     </div>
                   </div>
 
-                  <div className="mt-4 flex items-center justify-between">
+                  <div className="mt-4 flex items-center gap-2">
+                    <span className="text-xs px-2 py-1 rounded-full bg-white/5 border border-white/10">
+                      {offer.region}
+                    </span>
+                    {offer.daysUntilExpiration !== undefined && offer.daysUntilExpiration <= 7 && (
+                      <span className="text-xs px-2 py-1 rounded-full bg-amber-500/10 border border-amber-400/20 text-amber-400">
+                        Ending Soon
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-2 flex items-center justify-between">
                     <span className={`text-xs px-2 py-1 rounded-full ${
                       offer.category === 'free-first-wash' 
                         ? 'bg-cyan-500/15 text-cyan-400' 
