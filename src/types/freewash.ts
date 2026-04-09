@@ -19,15 +19,26 @@ export type StaticOffer = {
   offerHint: string;
   signupRequired: boolean;
   verified: boolean;
+  verificationScore: number;
+  verificationDetails: {
+    sourceType: 'official' | 'user-submitted' | 'partner';
+    verificationMethod: 'manual' | 'automated' | 'partner-api';
+    lastVerifiedAt: string;
+  };
   source: OfferSource;
   tags: string[];
   expirationDate?: string;
   daysUntilExpiration?: number;
   isExpired?: boolean;
-  verificationScore: number;
   distance?: number;
-  lastVerifiedAt: string;
+  routeOptimization: {
+    majorRoads: string[];
+    commonRoutes: string[];
+    peakTimes: string[];
+  };
   accessibilityFeatures: string[];
+  redemptionInstructions: string;
+  offerLimitations?: string;
 };
 
 export type Location = {

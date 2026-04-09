@@ -31,35 +31,46 @@ export default function MapPage() {
     try {
       setLoading(true);
       
-      // Calculate distances and filter offers
-      const mappedLocations = bayAreaStaticOffers
+      // Get verified offers along potential routes
+      const verifiedOffers = bayAreaStaticOffers
+        .map(offer => verifyOffer(offer))
+        .filter(offer => offer.verified);
+      
+      // Calculate route scores for common Bay Area routes
+      const commonRoutes = [
+        { origin: [lat, lng], destination: [37.7749, -122.4194] }, // SF
+        { origin: [lat, lng], destination: [37.3382, -121.8863] }, // San Jose
+        { origin: [lat, lng], destination: [37.5621, -122.3264] }, // Redwood City
+      ];
+      
+      const mappedLocations = verifiedOffers
         .map(offer => {
-          // Calculate distance if coordinates exist
-          let distance = Infinity;
-          if (offer.latitude && offer.longitude) {
-            const R = 6371; // Earth's radius in km
-            const dLat = (offer.latitude - lat) * (Math.PI / 180);
-            const dLon = (offer.longitude - lng) * (Math.PI / 180);
-            const a = 
-              Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(lat * (Math.PI / 180)) * 
-              Math.cos(offer.latitude * (Math.PI / 180)) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            distance = R * c;
-          }
+          // Calculate distance and route alignment scores
+          const distance = haversine([lat, lng], [offer.latitude, offer.longitude]);
+          const routeScores = commonRoutes.map(route => 
+            calculateRouteScore(offer, route)
+          );
+          const bestRouteScore = Math.min(...routeScores);
           
           return {
             ...offer,
             distance_in_km: distance,
+            route_score: bestRouteScore,
             offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
-            lat: offer.latitude || 37.7749, // Fallback to SF coordinates
-            lng: offer.longitude || -122.4194
+            lat: offer.latitude,
+            lng: offer.longitude,
+            is_route_aligned: bestRouteScore < 5 // km off route
           };
         })
-        .filter(offer => offer.distance_in_km <= 50) // Within 50km radius
-        .sort((a, b) => a.distance_in_km - b.distance_in_km) // Sort by distance
-        .slice(0, 50); // Limit to 50 results
+        .filter(offer => offer.distance_in_km <= 50)
+        .sort((a, b) => {
+          // Prioritize route-aligned offers, then closest
+          if (a.is_route_aligned !== b.is_route_aligned) {
+            return a.is_route_aligned ? -1 : 1;
+          }
+          return a.distance_in_km - b.distance_in_km;
+        })
+        .slice(0, 50);
         
       setLocations(mappedLocations);
       captureEvent("map_locations_loaded", {
