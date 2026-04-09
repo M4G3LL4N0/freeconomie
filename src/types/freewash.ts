@@ -111,6 +111,40 @@ export type FilterOption = {
   count: number;
 };
 
+export type CategoryLabel = {
+  text: string;
+  bg: string;
+  border: string;
+  textColor: string;
+};
+
+export const CATEGORY_LABELS: Record<RouteCategory, CategoryLabel> = {
+  'free-first-wash': {
+    text: 'First Wash',
+    bg: 'bg-cyan-500/12',
+    border: 'border-cyan-400/25',
+    textColor: 'text-cyan-400'
+  },
+  'free-membership-trial': {
+    text: 'Membership Trial',
+    bg: 'bg-violet-500/12',
+    border: 'border-violet-400/25', 
+    textColor: 'text-violet-400'
+  },
+  'promotional-offer': {
+    text: 'Promo',
+    bg: 'bg-orange-500/12',
+    border: 'border-orange-400/25',
+    textColor: 'text-orange-400'
+  },
+  'grand-opening': {
+    text: 'Grand Opening',
+    bg: 'bg-emerald-500/12',
+    border: 'border-emerald-400/25',
+    textColor: 'text-emerald-400'
+  }
+};
+
 export type LocationFilters = {
   lat: number;
   lng: number;

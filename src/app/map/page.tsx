@@ -187,6 +187,19 @@ export default function MapPage() {
                   </p>
                 )}
 
+                {offer?.category && (
+                  <div className="mt-2">
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      CATEGORY_LABELS[offer.category].bg
+                    } ${
+                      CATEGORY_LABELS[offer.category].border
+                    } ${
+                      CATEGORY_LABELS[offer.category].textColor
+                    }`}>
+                      {CATEGORY_LABELS[offer.category].text}
+                    </span>
+                  </div>
+                )}
                 {offer?.businessHours && (
                   <div className="mt-2 text-xs text-white/70">
                     <strong>Hours:</strong> {offer.businessHours}

@@ -372,8 +372,9 @@ type InventoryFilter = {
                     className="w-full glass-input"
                   >
                     <option value="">All Types</option>
-                    <option value="free-first-wash">First Wash Free</option>
-                    <option value="free-membership-trial">Membership Trial</option>
+                    {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
+                      <option key={key} value={key}>{label.text}</option>
+                    ))}
                   </select>
                 </div>
 
@@ -563,12 +564,14 @@ type InventoryFilter = {
                     )}
                   </div>
                   <div className="mt-2 flex items-center justify-between">
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      offer.category === 'free-first-wash' 
-                        ? 'bg-cyan-500/15 text-cyan-400' 
-                        : 'bg-violet-500/15 text-violet-400'
+                    <span className={`text-xs px-3 py-1 rounded-full border whitespace-nowrap ${
+                      CATEGORY_LABELS[offer.category].bg
+                    } ${
+                      CATEGORY_LABELS[offer.category].border
+                    } ${
+                      CATEGORY_LABELS[offer.category].textColor
                     }`}>
-                      {offer.category === 'free-first-wash' ? 'First Wash' : 'Membership Trial'}
+                      {CATEGORY_LABELS[offer.category].text}
                     </span>
                     {offer.expirationDate && (
                       <span className={`text-xs px-2 py-1 rounded-full ${
