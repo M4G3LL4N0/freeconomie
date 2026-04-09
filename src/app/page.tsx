@@ -71,8 +71,8 @@ const stats: Stat[] = [
     label: "Verified Offers" 
   },
   { 
-    value: bayAreaCities.length.toString(), 
-    label: "Bay Area Cities" 
+    value: "Launch Cities", 
+    label: "Palo Alto, Redwood City, Sunnyvale, San Jose, San Mateo, Hayward" 
   },
   { 
     value: "Peninsula", 
