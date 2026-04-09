@@ -7,6 +7,7 @@ export default function OffersListPage() {
   const [categoryFilter, setCategoryFilter] = useState<string>("");
   const [sortBy, setSortBy] = useState<"distance" | "expiration" | "rating">("distance");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [verificationFilter, setVerificationFilter] = useState<string>("all");
 
   const filterOffers = (offers: StaticOffer[]) => {
     return offers.filter(offer => {
@@ -137,6 +138,19 @@ export default function OffersListPage() {
                   <option value="">All Types</option>
                   <option value="free-first-wash">Free First Wash</option>
                   <option value="free-membership-trial">Membership Trial</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs text-white/60 mb-1">Verification</label>
+                <select
+                  value={verificationFilter}
+                  onChange={(e) => setVerificationFilter(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                >
+                  <option value="all">All Offers</option>
+                  <option value="verified">Verified Only</option>
+                  <option value="high">High Confidence (90%+)</option>
                 </select>
               </div>
             </div>
