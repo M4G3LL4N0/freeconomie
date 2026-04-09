@@ -51,7 +51,7 @@ export default function OffersListPage() {
 
   const filteredOffers = bayAreaStaticOffers
     .filter(offer => {
-      // Focus on core launch cities
+      // Core launch cities filter
       const launchCities = new Set([
         "Palo Alto",
         "Redwood City", 
@@ -63,7 +63,8 @@ export default function OffersListPage() {
         "Morgan Hill"
       ]);
       
-      const matchesRegion = !regionFilter || offer.region === regionFilter;
+      const matchesRegion = !regionFilter || 
+        (regionFilter === "Hayward" ? offer.city === "Hayward" : offer.region === regionFilter);
       const matchesCategory = !categoryFilter || offer.category === categoryFilter;
       const matchesSearch = !searchQuery || 
         offer.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -122,6 +123,7 @@ export default function OffersListPage() {
                   <option value="East Bay">East Bay</option>
                   <option value="North Bay">North Bay</option>
                   <option value="Hayward">Hayward Only</option>
+                  <option value="Hayward">Hayward Only</option>
                 </select>
               </div>
 
@@ -174,19 +176,14 @@ export default function OffersListPage() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredOffers.map((offer) => (
-              <div
-                key={offer.id}
-                className="rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:bg-white/10 transition-colors"
-              >
+              <div className="rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
                 <div className="p-4">
                   <div className="flex items-start justify-between">
                     <h3 className="font-medium text-white">{offer.businessName}</h3>
                     {offer.verification && (
                       <div className="flex items-center gap-1 text-xs text-emerald-400">
                         <VerifiedIcon className="h-3 w-3" />
-                        <span>Verified {offer.verification.verifiedAt}</span>
-                        <span className="text-white/40">•</span>
-                        <span>{offer.verification.verificationMethod.replace('-', ' ')}</span>
+                        <span>Verified {new Date(offer.verification.verifiedAt).toLocaleDateString()}</span>
                       </div>
                     )}
                   </div>
@@ -194,40 +191,31 @@ export default function OffersListPage() {
                   
                   <div className="mt-4 flex items-center gap-2 text-xs text-white/60">
                     <MapPinIcon className="h-3 w-3" />
-                    <span>
-                      {offer.city}, {offer.region}
-                    </span>
+                    <span>{offer.city}, {offer.region}</span>
                   </div>
 
                   <div className="mt-4 text-sm text-white/70">
                     {offer.summary}
                   </div>
 
-                  <div className="mt-4 text-xs text-white/60">
-                    <h4 className="font-medium text-white/80">How to redeem:</h4>
-                    <p className="mt-1">{offer.redemptionInstructions}</p>
-                    {offer.restrictions && (
-                      <p className="mt-1 text-amber-300">Note: {offer.restrictions}</p>
-                    )}
-                  </div>
+                  {offer.redemptionInstructions && (
+                    <div className="mt-4 text-xs text-white/50">
+                      <h4 className="font-medium text-white/80">How to redeem:</h4>
+                      <p className="mt-1">{offer.redemptionInstructions}</p>
+                    </div>
+                  )}
+
+                  {offer.restrictions && (
+                    <p className="mt-2 text-xs text-amber-300">Note: {offer.restrictions}</p>
+                  )}
 
                   <div className="mt-4 flex flex-wrap gap-2">
                     {offer.tags.map((tag) => (
                       <span
                         key={tag}
                         className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-white/60"
-                        aria-label={`Tag: ${tag}`}
                       >
                         {tag}
-                      </span>
-                    ))}
-                    {offer.accessibilityFeatures?.map((feature) => (
-                      <span
-                        key={feature}
-                        className="inline-flex items-center rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2 py-0.5 text-xs text-emerald-300"
-                        aria-label={`Accessibility feature: ${feature}`}
-                      >
-                        {feature}
                       </span>
                     ))}
                     {offer.expirationDate && (
