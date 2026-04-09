@@ -33,6 +33,49 @@ function VerificationScoreBadge({ score }: { score: number }) {
 }
 import { useState } from "react";
 
+type CityFilterProps = {
+  cities: BayAreaCity[];
+  selectedCity: BayAreaCity | '';
+  onSelect: (city: BayAreaCity | '') => void;
+};
+
+function CityFilterShell({ cities, selectedCity, onSelect }: CityFilterProps) {
+  return (
+    <div className="bg-white/5 rounded-xl border border-white/10 p-4">
+      <h3 className="text-sm font-medium text-white/80 mb-4">Cities</h3>
+      <div className="relative">
+        <select
+          value={selectedCity}
+          onChange={(e) => onSelect(e.target.value as BayAreaCity | '')}
+          className="w-full glass-input appearance-none bg-gradient-to-b from-white/5 to-white/3 backdrop-blur-lg"
+        >
+          <option value="">All Cities</option>
+          {cities.map(city => (
+            <option key={city} value={city}>{city}</option>
+          ))}
+        </select>
+        <ChevronDownIcon className="absolute right-3 top-3 h-4 w-4 text-white/60 pointer-events-none" />
+      </div>
+      
+      <div className="mt-3 flex flex-wrap gap-2">
+        {['Palo Alto', 'Redwood City', 'San Jose', 'Sunnyvale'].map(city => (
+          <button
+            key={city}
+            onClick={() => onSelect(city === selectedCity ? '' : city as BayAreaCity)}
+            className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+              city === selectedCity
+                ? 'bg-white/10 border-white/20 text-white'
+                : 'border-white/10 text-white/60 hover:bg-white/5'
+            }`}
+          >
+            {city}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const REGION_FILTERS = [
   { value: "", label: "All Regions" },
   { value: "South Bay", label: "South Bay" },
@@ -223,7 +266,7 @@ type InventoryFilter = {
               : 'border border-white/10 text-white/60 hover:bg-white/5'
           }`}
         >
-          <span>Cities</span>
+          <span>Cities {filters.city && `(${filters.city})`}</span>
           <ChevronDownIcon className={`h-4 w-4 transition-transform ${
             activeFilter === FilterType.CITY ? 'rotate-180' : ''
           }`} />
@@ -232,24 +275,33 @@ type InventoryFilter = {
 
       {activeFilter === FilterType.CITY && (
         <div className="glass-panel rounded-xl p-4 mb-6">
-          <h3 className="text-sm font-medium text-white/80 mb-3">Filter by City</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-60 overflow-y-auto">
-            {getCityOptions().map(city => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-60 overflow-y-auto">
+            {Array.from(new Set(bayAreaStaticOffers.map(o => o.city))).map(city => (
               <button
-                key={city.value}
+                key={city}
                 onClick={() => {
-                  setSearchQuery(city.value);
+                  setFilters({...filters, city});
                   setActiveFilter(null);
                 }}
-                className="text-left text-sm px-3 py-2 rounded-lg hover:bg-white/5 transition-colors"
+                className={`text-left text-sm px-3 py-2 rounded-lg transition-colors ${
+                  city === filters.city
+                    ? 'bg-white/15 border border-white/15'
+                    : 'border border-white/10 hover:bg-white/5'
+                }`}
               >
-                <div className="flex justify-between items-center">
-                  <span>{city.label}</span>
-                  <span className="text-xs text-white/40">{city.count}</span>
-                </div>
+                {city}
               </button>
             ))}
           </div>
+          <button 
+            onClick={() => {
+              setFilters({...filters, city: ''});
+              setActiveFilter(null);
+            }}
+            className="mt-3 text-xs text-white/60 hover:text-white/80"
+          >
+            Clear filter
+          </button>
         </div>
       )}
 
@@ -305,76 +357,38 @@ type InventoryFilter = {
             </h3>
             
             <div className="space-y-4">
-              <div>
-                <label className="block text-xs text-white/60 mb-1">Region</label>
-                <div className="relative">
+              <CityFilterShell 
+                cities={Array.from(new Set(bayAreaStaticOffers.map(o => o.city)))} 
+                selectedCity={filters.city}
+                onSelect={(city) => setFilters({...filters, city})}
+              />
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs text-white/60 mb-1">Offer Type</label>
                   <select
-                    value={filters.region}
-                    onChange={(e) => setFilters({...filters, region: e.target.value as BayAreaRegion})}
-                    className="w-full glass-input appearance-none pr-8"
+                    value={filters.category}
+                    onChange={(e) => setFilters({...filters, category: e.target.value as RouteCategory})}
+                    className="w-full glass-input"
                   >
-                    {REGION_FILTERS.map((filter) => (
-                      <option key={filter.value} value={filter.value}>
-                        {filter.label}
-                      </option>
-                    ))}
+                    <option value="">All Types</option>
+                    <option value="free-first-wash">First Wash Free</option>
+                    <option value="free-membership-trial">Membership Trial</option>
                   </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-                    <ChevronDownIcon className="h-4 w-4 text-white/60" />
-                  </div>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-xs text-white/60 mb-1">City</label>
-                <select
-                  value={filters.city}
-                  onChange={(e) => setFilters({...filters, city: e.target.value as BayAreaCity})}
-                  className="w-full glass-input"
-                >
-                  <option value="">All Cities</option>
-                  {Array.from(new Set(bayAreaStaticOffers.map(o => o.city))).map(city => (
-                    <option key={city} value={city}>{city}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs text-white/60 mb-1">Offer Type</label>
-                <select
-                  value={filters.category}
-                  onChange={(e) => setFilters({...filters, category: e.target.value as RouteCategory})}
-                  className="w-full glass-input"
-                >
-                  <option value="">All Types</option>
-                  <option value="free-first-wash">Free First Wash</option>
-                  <option value="free-membership-trial">Membership Trial</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs text-white/60 mb-1">Verification</label>
-                <select
-                  value={filters.verification}
-                  onChange={(e) => setFilters({...filters, verification: e.target.value as 'verified' | 'all'})}
-                  className="w-full glass-input"
-                >
-                  <option value="verified">Verified Only</option>
-                  <option value="all">All Offers</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs text-white/60 mb-1">Status</label>
-                <select
-                  value={filters.status}
-                  onChange={(e) => setFilters({...filters, status: e.target.value as 'active' | 'expired' | 'all'})}
-                  className="w-full glass-input"
-                >
-                  <option value="active">Active</option>
-                  <option value="expired">Expired</option>
-                  <option value="all">All</option>
-                </select>
+                <div>
+                  <label className="block text-xs text-white/60 mb-1">Verification</label>
+                  <select
+                    value={filters.verification}
+                    onChange={(e) => setFilters({...filters, verification: e.target.value as typeof filters.verification})}
+                    className="w-full glass-input"
+                  >
+                    <option value="all">All</option>
+                    <option value="verified">Verified (80%+)</option>
+                    <option value="high">High (90%+)</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
