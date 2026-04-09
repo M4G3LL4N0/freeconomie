@@ -590,6 +590,17 @@ type InventoryFilter = {
                       Copy Address
                     </button>
                   </div>
+                  
+                  <div className="mt-4 text-xs text-white/60">
+                    <div className="flex items-center gap-2">
+                      <span>Verified by: {offer.verification.verifiedBy}</span>
+                      <span>•</span>
+                      <span>{new Date(offer.verification.verifiedAt).toLocaleDateString()}</span>
+                    </div>
+                    {offer.verificationNotes && (
+                      <p className="mt-1 italic">Note: {offer.verificationNotes}</p>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
