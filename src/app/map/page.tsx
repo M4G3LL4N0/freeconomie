@@ -31,9 +31,21 @@ export default function MapPage() {
     try {
       setLoading(true);
       
-      // Filter and map verified offers
+      // Focus on core launch geography
+      const launchCities = new Set([
+        "Palo Alto",
+        "Redwood City",
+        "Sunnyvale", 
+        "San Jose",
+        "San Mateo",
+        "San Leandro"
+      ]);
+
       const verifiedLocations = bayAreaStaticOffers
-        .filter(offer => offer.verification.confidenceScore >= 80)
+        .filter(offer => 
+          launchCities.has(offer.city) &&
+          offer.verification.confidenceScore >= 80
+        )
         .map(offer => ({
           id: offer.id,
           name: offer.businessName,
@@ -44,17 +56,8 @@ export default function MapPage() {
           details: offer.summary,
           expires_at: offer.expirationDate || '',
           verified_at: offer.source.checkedAt,
-          verification_score: 100 // Fully verified
+          verification_score: offer.verification.confidenceScore
         }));
-        .filter(offer => offer.distance_in_km <= 50)
-        .sort((a, b) => {
-          // Prioritize route-aligned offers, then closest
-          if (a.is_route_aligned !== b.is_route_aligned) {
-            return a.is_route_aligned ? -1 : 1;
-          }
-          return a.distance_in_km - b.distance_in_km;
-        })
-        .slice(0, 50);
         
       setLocations(mappedLocations);
       captureEvent("map_locations_loaded", {

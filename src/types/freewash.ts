@@ -1,47 +1,67 @@
-export type OfferSource = {
-  name: string;
-  url: string;
-  checkedAt: string;
-};
+export type BayAreaRegion = 
+  | "South Bay" 
+  | "Peninsula"
+  | "East Bay"
+  | "North Bay"
+  | "Outer Bay";
+
+export type BayAreaCity = typeof bayAreaCities[number];
+
+export type VerificationMethod = 
+  | "official-site" 
+  | "phone-confirmation"
+  | "in-person-visit"
+  | "third-party-confirmation";
 
 export type VerificationStatus = {
-  verifiedAt: string;
-  verifiedBy: string;
-  verificationMethod: 'official-site' | 'phone-confirmation' | 'in-person';
-  confidenceScore: number;
+  verifiedAt: string; // ISO date
+  verifiedBy: string; // 'system' | 'admin@freewashfinder.com' | userId
+  verificationMethod: VerificationMethod;
+  confidenceScore: number; // 0-100
+  lastCheck: string; // ISO date
+  flags: {
+    requiresSignup: boolean;
+    requiresPurchase: boolean;
+    limitedTime: boolean;
+    locationSpecific: boolean;
+  };
 };
 
-export type VerificationStatus = {
-  verifiedAt: string;
-  verifiedBy: string;
-  verificationMethod: 'official-site' | 'phone-confirmation' | 'in-person';
-  confidenceScore: number;
-};
+export type RouteCategory = 
+  | "free-first-wash"
+  | "free-membership-trial"
+  | "promotional-offer"
+  | "grand-opening";
 
 export type StaticOffer = {
-  id: string;
+  id: string; // 'businessname-city-year'
   businessName: string;
   offerTitle: string;
-  city: string;
+  city: BayAreaCity;
   state: "CA";
   address: string;
-  region: "South Bay" | "Peninsula" | "East Bay" | "North Bay" | "Outer Bay";
+  region: BayAreaRegion;
   latitude: number;
   longitude: number;
-  category: "free-first-wash" | "free-membership-trial";
+  category: RouteCategory;
   summary: string;
   offerHint: string;
   signupRequired: boolean;
-  verified: boolean;
+  verification: VerificationStatus;
+  redemptionInstructions: string;
+  lastVerifiedAt: string;
+  accessibilityFeatures: string[];
+  restrictions?: string;
+  offerType: 'first-time' | 'membership-trial' | 'promotional';
+  tags: string[];
+  expirationDate?: string;
+  rating?: number;
+  distance?: number;
   source: {
     name: string;
     url: string;
     checkedAt: string;
   };
-  tags: string[];
-  expirationDate?: string;
-  rating?: number;
-  distance?: number;
 };
 
 export type Location = {
@@ -55,6 +75,7 @@ export type Location = {
   expires_at: string;
   created_at: string;
   distance_in_km: number;
+  verification_score: number;
 };
 
 export type LocationFilters = {
@@ -63,4 +84,5 @@ export type LocationFilters = {
   radius?: number;
   offer_type?: 'wash' | 'trial' | 'promo' | 'all';
   limit?: number;
+  city?: BayAreaCity;
 };

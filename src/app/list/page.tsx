@@ -49,8 +49,17 @@ export default function OffersListPage() {
   };
 
   const filteredOffers = bayAreaStaticOffers
-    .filter(offer => offer.verified)
     .filter(offer => {
+      // Focus on core launch cities
+      const launchCities = new Set([
+        "Palo Alto",
+        "Redwood City", 
+        "Sunnyvale",
+        "San Jose",
+        "San Mateo",
+        "San Leandro"
+      ]);
+      
       const matchesRegion = !regionFilter || offer.region === regionFilter;
       const matchesCategory = !categoryFilter || offer.category === categoryFilter;
       const matchesSearch = !searchQuery || 
@@ -58,7 +67,10 @@ export default function OffersListPage() {
         offer.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
         offer.address.toLowerCase().includes(searchQuery.toLowerCase());
       
-      return matchesRegion && matchesCategory && matchesSearch;
+      return launchCities.has(offer.city) && 
+             matchesRegion && 
+             matchesCategory && 
+             matchesSearch;
     })
     .map(offer => ({
       ...offer,

@@ -66,10 +66,22 @@ type Stat = {
 };
 
 const stats: Stat[] = [
-  { value: `${bayAreaStaticOffers.filter(o => o.verified).length}`, label: "Verified Offers" },
-  { value: "100%", label: "Official Sources" },
-  { value: bayAreaStaticOffers.filter(o => o.verified).length + " Locations", label: "Bay Area Coverage" },
-  { value: "Daily", label: "Verification Updates" }
+  { 
+    value: `${bayAreaStaticOffers.filter(o => o.verification.confidenceScore >= 80).length}`, 
+    label: "Verified Offers" 
+  },
+  { 
+    value: "Launch Cities", 
+    label: "Palo Alto, Redwood City, Sunnyvale, San Jose, San Mateo, San Leandro" 
+  },
+  { 
+    value: bayAreaStaticOffers.filter(o => o.verification.confidenceScore >= 80).length + " Locations", 
+    label: "Bay Area Coverage" 
+  },
+  { 
+    value: "Daily", 
+    label: "Verification Updates" 
+  }
 ];
 
 type ExpansionItem = {
