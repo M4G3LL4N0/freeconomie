@@ -71,7 +71,7 @@ export default function MapPage() {
         
         {locations.map((location) => (
           <Marker key={location.id} position={[location.lat, location.lng]}>
-            <Popup className="rounded-xl border border-white/10 bg-[#091425]/94 backdrop-blur-lg">
+            <Popup className="rounded-xl border border-white/10 glass-panel backdrop-blur-[12px]">
               <div className="space-y-2 p-2">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-cyan-300" />
