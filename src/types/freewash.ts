@@ -18,13 +18,6 @@ export type VerificationStatus = {
   verifiedBy: string; // 'system' | 'admin@freewashfinder.com' | userId
   verificationMethod: VerificationMethod;
   confidenceScore: number; // 0-100
-  lastCheck: string; // ISO date
-  flags: {
-    requiresSignup: boolean;
-    requiresPurchase: boolean;
-    limitedTime: boolean;
-    locationSpecific: boolean;
-  };
 };
 
 export type RouteCategory = 

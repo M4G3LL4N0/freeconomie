@@ -79,17 +79,7 @@ export default function OffersListPage() {
         : undefined,
       isExpired: offer.expirationDate 
         ? new Date(offer.expirationDate) < new Date()
-        : false,
-      verificationScore: offer.verification.confidenceScore,
-      lastVerifiedAt: offer.lastVerifiedAt,
-      accessibilityFeatures: offer.accessibilityFeatures,
-      verification_badge: (
-        <span className="inline-flex items-center gap-1 text-xs text-emerald-400">
-          <VerifiedIcon className="h-3 w-3" />
-          Verified {new Date(offer.lastVerifiedAt).toLocaleDateString()}
-        </span>
-      ),
-      verification_details: `Verified via ${offer.verification.verificationMethod}`
+        : false
     }))
     .sort((a, b) => {
       if (sortBy === "distance") {

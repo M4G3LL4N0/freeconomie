@@ -50,12 +50,12 @@ export default function MapPage() {
           id: offer.id,
           name: offer.businessName,
           address: offer.address,
-          lat: offer.latitude!,
-          lng: offer.longitude!,
-          offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
+          lat: offer.latitude,
+          lng: offer.longitude,
+          offer_type: offer.category,
           details: offer.summary,
           expires_at: offer.expirationDate || '',
-          verified_at: offer.source.checkedAt,
+          verified_at: offer.verification.verifiedAt,
           verification_score: offer.verification.confidenceScore
         }));
         

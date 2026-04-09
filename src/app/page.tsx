@@ -71,12 +71,12 @@ const stats: Stat[] = [
     label: "Verified Offers" 
   },
   { 
-    value: "Launch Cities", 
-    label: "Palo Alto, Redwood City, Sunnyvale, San Jose, San Mateo, San Leandro" 
+    value: bayAreaCities.length.toString(), 
+    label: "Bay Area Cities" 
   },
   { 
-    value: bayAreaStaticOffers.filter(o => o.verification.confidenceScore >= 80).length + " Locations", 
-    label: "Bay Area Coverage" 
+    value: "Peninsula", 
+    label: "Launch Region" 
   },
   { 
     value: "Daily", 
