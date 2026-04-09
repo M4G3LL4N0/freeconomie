@@ -1,4 +1,5 @@
 import { themeClasses } from "@/app/page";
+import WaitlistForm from "./WaitlistForm";
 
 export default function WaitlistSection() {
   return (
@@ -19,19 +20,7 @@ export default function WaitlistSection() {
             </p>
           </div>
 
-          <form className="mt-8 flex max-w-2xl flex-col gap-4 sm:flex-row">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="min-w-0 flex-1 rounded-full border border-white/10 bg-[#091323]/94 px-5 py-4 text-sm text-white outline-none placeholder:text-white/28 focus:border-cyan-300/40"
-            />
-            <button
-              type="submit"
-              className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.26)] transition hover:scale-[1.02]"
-            >
-              Join Waitlist
-            </button>
-          </form>
+          <WaitlistForm />
         </div>
       </div>
     </section>
