@@ -57,7 +57,8 @@ export default function OffersListPage() {
         "Sunnyvale",
         "San Jose",
         "San Mateo",
-        "San Leandro"
+        "San Leandro",
+        "Hayward"
       ]);
       
       const matchesRegion = !regionFilter || offer.region === regionFilter;
