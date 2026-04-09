@@ -678,15 +678,30 @@ type InventoryFilter = {
       <div className="mt-6 rounded-lg border border-white/10 bg-white/5 p-4 text-sm text-white/60">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1">
-            <VerifiedBadge confidenceScore={95} verifiedAt={new Date().toISOString()} className="text-xs" />
+            <VerifiedBadge 
+              confidenceScore={95} 
+              verifiedAt={new Date().toISOString()} 
+              lastCheckedAt={new Date().toISOString()}
+              className="text-xs"
+            />
             <span>High Confidence (90-100%)</span>
           </div>
           <div className="flex items-center gap-1">
-            <VerifiedBadge confidenceScore={85} verifiedAt={new Date().toISOString()} className="text-xs" />
+            <VerifiedBadge 
+              confidenceScore={85} 
+              verifiedAt={new Date().toISOString()} 
+              lastCheckedAt={new Date().toISOString()}
+              className="text-xs"
+            />
             <span>Medium Confidence (80-89%)</span>
           </div>
           <div className="flex items-center gap-1">
-            <VerifiedBadge confidenceScore={70} verifiedAt={new Date().toISOString()} className="text-xs" />
+            <VerifiedBadge 
+              confidenceScore={70} 
+              verifiedAt={new Date().toISOString()} 
+              lastCheckedAt={new Date().toISOString()}
+              className="text-xs"
+            />
             <span>Needs Review (Below 80%)</span>
           </div>
         </div>
