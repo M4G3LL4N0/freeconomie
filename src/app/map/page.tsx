@@ -33,7 +33,7 @@ export default function MapPage() {
       
       // Filter and map verified offers
       const verifiedLocations = bayAreaStaticOffers
-        .filter(offer => offer.verified)
+        .filter(offer => offer.verification.confidenceScore >= 80)
         .map(offer => ({
           id: offer.id,
           name: offer.businessName,
