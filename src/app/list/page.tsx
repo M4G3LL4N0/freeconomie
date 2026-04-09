@@ -167,11 +167,13 @@ export default function OffersListPage() {
                 <div className="p-4">
                   <div className="flex items-start justify-between">
                     <h3 className="font-medium text-white">{offer.businessName}</h3>
-                    {offer.verified && (
-                      <span className="inline-flex items-center gap-1 text-xs text-cyan-400">
+                    {offer.verification && (
+                      <div className="flex items-center gap-1 text-xs text-emerald-400">
                         <VerifiedIcon className="h-3 w-3" />
-                        Verified
-                      </span>
+                        <span>Verified {offer.verification.verifiedAt}</span>
+                        <span className="text-white/40">•</span>
+                        <span>{offer.verification.verificationMethod.replace('-', ' ')}</span>
+                      </div>
                     )}
                   </div>
                   <p className="mt-1 text-sm text-white/80">{offer.offerTitle}</p>
@@ -185,6 +187,14 @@ export default function OffersListPage() {
 
                   <div className="mt-4 text-sm text-white/70">
                     {offer.summary}
+                  </div>
+
+                  <div className="mt-4 text-xs text-white/60">
+                    <h4 className="font-medium text-white/80">How to redeem:</h4>
+                    <p className="mt-1">{offer.redemptionInstructions}</p>
+                    {offer.restrictions && (
+                      <p className="mt-1 text-amber-300">Note: {offer.restrictions}</p>
+                    )}
                   </div>
 
                   <div className="mt-4 flex flex-wrap gap-2">

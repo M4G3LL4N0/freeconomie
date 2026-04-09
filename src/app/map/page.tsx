@@ -175,11 +175,30 @@ export default function MapPage() {
           <Marker key={location.id} position={[location.lat, location.lng]}>
             <Popup className="rounded-xl border border-white/10 glass-panel backdrop-blur-[12px]">
               <div className="space-y-3 p-3">
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-cyan-300" />
-                  <h3 className="font-semibold text-white">{location.name}</h3>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="font-semibold text-white">{location.name}</h3>
+                    <p className="text-sm text-white/80 mt-1">{location.address}</p>
+                  </div>
+                  {location.verified && (
+                    <span className="inline-flex items-center gap-1 text-xs text-emerald-400 bg-emerald-900/20 px-2 py-1 rounded-full">
+                      <VerifiedIcon className="h-3 w-3" />
+                      Verified
+                    </span>
+                  )}
                 </div>
-                <p className="text-sm text-white/80">{location.address}</p>
+
+                <div className="text-sm text-white/70">
+                  <p className="font-medium">Offer:</p>
+                  <p>{location.summary}</p>
+                </div>
+
+                {location.redemptionInstructions && (
+                  <div className="text-sm text-white/70">
+                    <p className="font-medium">How to redeem:</p>
+                    <p>{location.redemptionInstructions}</p>
+                  </div>
+                )}
                 {location.expires_at && (
                   <p className="text-sm text-emerald-400">
                     Valid until: {new Date(location.expires_at).toLocaleDateString()}
