@@ -72,7 +72,7 @@ const stats: Stat[] = [
   },
   { 
     value: "Launch Cities", 
-    label: "Palo Alto, Redwood City, Sunnyvale, San Jose, San Mateo, Hayward" 
+    label: "Palo Alto, Redwood City, Sunnyvale, San Jose, San Mateo, Santa Clara" 
   },
   { 
     value: "Peninsula", 

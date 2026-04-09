@@ -2,6 +2,70 @@ import { StaticOffer } from "../types/freewash";
 
 export const bayAreaStaticOffers: StaticOffer[] = [
   {
+    id: "zipthru-santa-clara-2024",
+    businessName: "Zip Thru Express Car Wash",
+    offerTitle: "Free Car Wash Promotion",
+    city: "Santa Clara",
+    state: "CA",
+    address: "3740 El Camino Real, Santa Clara, CA 95051",
+    latitude: 37.3503,
+    longitude: -121.9952,
+    region: "South Bay",
+    category: "free-first-wash",
+    summary: "New customers receive a complimentary basic wash when signing up for email notifications",
+    offerHint: "Must provide email and phone number at kiosk",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-15",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "official-site",
+      confidenceScore: 95
+    },
+    redemptionInstructions: "1. Visit location\n2. Use promo code 'FREEWASH2024' at kiosk\n3. Provide email address",
+    lastVerifiedAt: "2024-05-20",
+    accessibilityFeatures: ["ADA accessible", "Touchless payment"],
+    restrictions: "One per household, valid ID required",
+    offerType: "first-time",
+    tags: ["verified", "official-promo", "south-bay"],
+    source: {
+      name: "Zip Thru Express Car Wash",
+      url: "https://www.zipthru.com/",
+      checkedAt: "2026-04-08",
+    }
+  },
+  {
+    id: "autopride-santa-clara-2024",
+    businessName: "Auto Pride Car Wash",
+    offerTitle: "First Wash Free",
+    city: "Santa Clara",
+    state: "CA",
+    address: "3740 El Camino Real, Santa Clara, CA 95051",
+    latitude: 37.3503,
+    longitude: -121.9952,
+    region: "South Bay",
+    category: "free-first-wash",
+    summary: "New customers receive a complimentary basic wash",
+    offerHint: "Must download mobile app and create account",
+    signupRequired: true,
+    verification: {
+      verifiedAt: "2024-05-12",
+      verifiedBy: "FreeWash Team",
+      verificationMethod: "official-site",
+      confidenceScore: 92
+    },
+    redemptionInstructions: "1. Download mobile app\n2. Create account\n3. Redeem free wash at location",
+    lastVerifiedAt: "2024-05-19",
+    accessibilityFeatures: ["Mobile app", "Contactless payment"],
+    restrictions: "One per household",
+    offerType: "first-time",
+    tags: ["verified", "mobile-app", "south-bay"],
+    source: {
+      name: "Auto Pride Car Wash",
+      url: "https://www.autopridecarwash.com/",
+      checkedAt: "2026-04-08",
+    }
+  },
+  {
     id: "autopride-palo-alto-2024",
     businessName: "Auto Pride Car Wash",
     offerTitle: "First-Time Customer Free Wash",
