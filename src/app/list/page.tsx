@@ -84,7 +84,10 @@ export default function OffersListPage() {
         : undefined,
       isExpired: offer.expirationDate 
         ? new Date(offer.expirationDate) < new Date()
-        : false
+        : false,
+      verificationScore: offer.verification.confidenceScore,
+      verificationDetails: `Verified via ${offer.verification.verificationMethod.replace('-', ' ')}`,
+      verificationDate: new Date(offer.verification.verifiedAt).toLocaleDateString()
     }))
     .sort((a, b) => {
       if (sortBy === "distance") {
@@ -94,7 +97,7 @@ export default function OffersListPage() {
         const bExpiry = b.expirationDate ? new Date(b.expirationDate).getTime() : Infinity;
         return aExpiry - bExpiry;
       } else if (sortBy === "rating") {
-        return (b.rating || 0) - (a.rating || 0);
+        return (b.verificationScore || 0) - (a.verificationScore || 0);
       }
       return 0;
     });
@@ -123,8 +126,6 @@ export default function OffersListPage() {
                   <option value="Peninsula">Peninsula</option>
                   <option value="East Bay">East Bay</option>
                   <option value="North Bay">North Bay</option>
-                  <option value="Hayward">Hayward Only</option>
-                  <option value="Hayward">Hayward Only</option>
                 </select>
               </div>
 
