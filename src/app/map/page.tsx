@@ -7,6 +7,7 @@ import { MapPin, RefreshCw, Search } from "lucide-react";
 import LoadingState from "@/components/freewash-finder/LoadingState";
 import { captureEvent } from "@/lib/analytics";
 import { toast } from "react-hot-toast";
+import { bayAreaStaticOffers } from "@/lib/freewash-data";
 
 function MapControls({ onRefresh }: { onRefresh: () => void }) {
   const map = useMapEvents({
@@ -58,10 +59,21 @@ export default function MapPage() {
 
   const handleSearch = async (query: string) => {
     try {
-      const response = await fetch(`/api/locations/search?q=${encodeURIComponent(query)}`);
-      if (!response.ok) throw new Error('Search failed');
-      const data = await response.json();
-      setLocations(data);
+      const results = bayAreaStaticOffers.filter(offer =>
+        offer.businessName.toLowerCase().includes(query.toLowerCase()) ||
+        offer.city.toLowerCase().includes(query.toLowerCase())
+      ).map(offer => ({
+        ...offer,
+        offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
+        lat: offer.latitude || 37.7749,
+        lng: offer.longitude || -122.4194
+      }));
+      
+      setLocations(results);
+      captureEvent("map_search", {
+        query,
+        count: results.length
+      });
     } catch (error) {
       toast.error('Search failed');
       captureEvent('search_error', { query, error: error.message });
