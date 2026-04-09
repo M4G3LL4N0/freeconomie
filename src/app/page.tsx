@@ -67,12 +67,12 @@ type Stat = {
 
 const stats: Stat[] = [
   { 
-    value: bayAreaStaticOffers.filter(o => o.city === "Brentwood" && o.verification.confidenceScore >= 80).length.toString(),
-    label: "Brentwood Offers" 
+    value: bayAreaStaticOffers.filter(o => o.city === "Morgan Hill" && o.verification.confidenceScore >= 80).length.toString(),
+    label: "Morgan Hill Offers" 
   },
   { 
     value: "Launch Cities", 
-    label: "Palo Alto, Redwood City, Sunnyvale, San Jose, San Mateo, Santa Clara, Brentwood" 
+    label: "Palo Alto, Redwood City, Sunnyvale, San Jose, San Mateo, Santa Clara, Brentwood, Morgan Hill" 
   },
   { 
     value: bayAreaStaticOffers.filter(o => o.verification.confidenceScore >= 80).length + " Locations", 
