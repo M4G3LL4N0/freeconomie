@@ -1,264 +1,89 @@
-"use client";
+import SectionShell from "@/components/freewash-finder/SectionShell";
+import { bayAreaStaticOffers } from "@/lib/bay-area-offers";
 
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import { useEffect, useState } from "react";
-import { MapPin, RefreshCw, Search } from "lucide-react";
-import LoadingState from "@/components/freewash-finder/LoadingState";
-import { captureEvent } from "@/lib/analytics";
-import { toast } from "react-hot-toast";
-import { bayAreaStaticOffers } from "@/lib/freewash-data";
-
-function MapControls({ onRefresh }: { onRefresh: () => void }) {
-  const map = useMapEvents({
-    moveend() {
-      captureEvent("map_moved", {
-        center: map.getCenter(),
-        zoom: map.getZoom()
-      });
-    }
-  });
-
-  return null;
-}
+const featured = bayAreaStaticOffers.slice(0, 6);
 
 export default function MapPage() {
-  const [locations, setLocations] = useState<Location[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [center, setCenter] = useState([37.7749, -122.4194]);
-
-  const fetchLocations = async (lat: number, lng: number) => {
-    try {
-      setLoading(true);
-      
-      // Focus on core launch geography
-      const launchCities = new Set([
-        "Palo Alto",
-        "Redwood City",
-        "Sunnyvale", 
-        "San Jose",
-        "Santa Clara",
-        "San Mateo",
-        "Brentwood",
-        "Morgan Hill"
-      ]);
-
-      const verifiedLocations = bayAreaStaticOffers
-        .filter(offer => 
-          launchCities.has(offer.city) &&
-          offer.verification.confidenceScore >= 80
-        )
-        .map(offer => ({
-          id: offer.id,
-          name: offer.businessName,
-          address: offer.address,
-          lat: offer.latitude,
-          lng: offer.longitude,
-          offer_type: offer.category,
-          details: offer.summary,
-          expires_at: offer.expirationDate || '',
-          verified_at: offer.verification.verifiedAt,
-          verification_score: offer.verification.confidenceScore
-        }));
-        
-      setLocations(mappedLocations);
-      captureEvent("map_locations_loaded", {
-        count: mappedLocations.length,
-        center: [lat, lng]
-      });
-    } catch (error) {
-      toast.error("Failed to load locations");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          setCenter([pos.coords.latitude, pos.coords.longitude]);
-          fetchLocations(pos.coords.latitude, pos.coords.longitude);
-        },
-        () => {
-          fetchLocations(center[0], center[1]);
-        }
-      );
-    }
-  }, []);
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = async (query: string) => {
-    try {
-      const results = bayAreaStaticOffers
-        .filter(offer =>
-          offer.businessName.toLowerCase().includes(query.toLowerCase()) ||
-          offer.city.toLowerCase().includes(query.toLowerCase()) ||
-          offer.address.toLowerCase().includes(query.toLowerCase())
-        )
-        .map(offer => ({
-          id: offer.id,
-          name: offer.businessName,
-          address: offer.address,
-          lat: offer.latitude || 37.7749,
-          lng: offer.longitude || -122.4194,
-          offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
-          details: offer.summary,
-          expires_at: offer.expirationDate || '',
-          created_at: new Date().toISOString(),
-          distance_in_km: 0
-        }));
-      
-      setLocations(results);
-      captureEvent("map_search", {
-        query,
-        count: results.length
-      });
-    } catch (error) {
-      toast.error('Search failed');
-      captureEvent('search_error', { query, error: error.message });
-    }
-  };
-
   return (
-    <div className="relative h-[calc(100vh-80px)]">
-      <div className="absolute top-4 left-4 right-4 z-[1000] flex flex-col gap-4">
-        <RouteIntelligencePanel
-          origin="Current Location"
-          destination="Redwood City"
-          optimizedRoute={{
-            distance: "5.2 miles",
-            time: "12 min",
-            washes: 3
-          }}
-          theme="cyan"
-        />
-        <div className="glass-panel backdrop-blur-xl rounded-xl overflow-hidden border border-white/15">
-          <div className="flex items-center px-4 py-3 gap-3">
-            <Search className="h-4 w-4 text-white/60" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch(searchQuery)}
-              placeholder="Search locations..."
-              className="bg-transparent border-none outline-none text-white placeholder-white/50 text-sm w-48 focus:ring-0"
-            />
+    <main className="min-h-screen bg-[#06111f] pt-10 text-white">
+      <SectionShell
+        eyebrow="Map View"
+        title="Bay Area route discovery, starting with static verified launch data."
+        description="This is the product scaffold for route-aware free wash discovery. Live mapping comes next; for now, the interface is driven by verified static Bay Area inventory."
+      >
+        <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(13,28,52,0.96),rgba(20,34,68,0.88)_38%,rgba(25,24,52,0.84)_100%)] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.42)]">
+            <div className="mb-5 flex flex-wrap gap-2">
+              {["Verified Only", "Peninsula", "South Bay", "East Bay", "On Route"].map((pill) => (
+                <span
+                  key={pill}
+                  className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs text-white/70"
+                >
+                  {pill}
+                </span>
+              ))}
+            </div>
+
+            <div className="relative h-[520px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.16),transparent_18%),radial-gradient(circle_at_70%_30%,rgba(168,85,247,0.14),transparent_18%),linear-gradient(180deg,rgba(9,18,36,0.96),rgba(7,12,24,0.98))]">
+              <div className="absolute inset-0 opacity-[0.14] [background-image:linear-gradient(rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:48px_48px]" />
+
+              <div className="absolute left-[22%] top-[28%] h-4 w-4 rounded-full bg-cyan-300 shadow-[0_0_22px_rgba(103,232,249,0.85)]" />
+              <div className="absolute left-[36%] top-[42%] h-4 w-4 rounded-full bg-orange-300 shadow-[0_0_22px_rgba(253,186,116,0.85)]" />
+              <div className="absolute left-[52%] top-[34%] h-4 w-4 rounded-full bg-fuchsia-300 shadow-[0_0_22px_rgba(244,114,182,0.85)]" />
+              <div className="absolute left-[60%] top-[52%] h-4 w-4 rounded-full bg-cyan-300 shadow-[0_0_22px_rgba(103,232,249,0.85)]" />
+              <div className="absolute left-[74%] top-[46%] h-4 w-4 rounded-full bg-violet-300 shadow-[0_0_22px_rgba(196,181,253,0.85)]" />
+
+              <div className="absolute left-[23%] top-[29%] h-[2px] w-[31%] rotate-[16deg] bg-gradient-to-r from-cyan-300/70 to-fuchsia-300/60" />
+              <div className="absolute left-[50%] top-[40%] h-[2px] w-[18%] rotate-[29deg] bg-gradient-to-r from-fuchsia-300/70 to-cyan-300/60" />
+              <div className="absolute left-[36%] top-[42%] h-[2px] w-[39%] rotate-[4deg] bg-gradient-to-r from-orange-300/70 to-violet-300/60" />
+
+              <div className="absolute bottom-4 left-4 right-4 rounded-[1.25rem] border border-white/10 bg-[#091221]/88 p-4 backdrop-blur-xl">
+                <div className="text-xs uppercase tracking-[0.2em] text-white/42">
+                  Example Routes
+                </div>
+                <div className="mt-3 grid gap-3 md:grid-cols-3">
+                  {[
+                    "Mountain View → Redwood City",
+                    "Palo Alto → San Mateo",
+                    "Sunnyvale → Santa Clara",
+                  ].map((route) => (
+                    <div
+                      key={route}
+                      className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/74"
+                    >
+                      {route}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-4">
+            {featured.map((offer) => (
+              <div
+                key={offer.id}
+                className="rounded-[1.5rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div className="text-sm font-semibold text-white">{offer.businessName}</div>
+                  <span className="rounded-full border border-cyan-300/20 bg-cyan-400/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-cyan-200">
+                    Verified
+                  </span>
+                </div>
+                <div className="mt-3 text-lg font-semibold text-white">{offer.offerTitle}</div>
+                <div className="mt-2 text-sm text-white/62">
+                  {offer.city} · {offer.region}
+                </div>
+                <p className="mt-3 text-sm leading-6 text-white/62">{offer.summary}</p>
+                <div className="mt-4 text-xs uppercase tracking-[0.18em] text-white/40">
+                  Last checked {offer.source.checkedAt}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
-      <MapContainer
-        center={center}
-        zoom={13}
-        className="h-full w-full"
-        aria-label="Interactive map of free car wash locations"
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        <MapControls onRefresh={() => fetchLocations(center[0], center[1])} />
-        
-        {locations.map((location) => (
-          <Marker key={location.id} position={[location.lat, location.lng]}>
-            <Popup className="rounded-xl border border-white/10 glass-panel backdrop-blur-[12px] min-w-[300px]">
-              <div className="space-y-3 p-3">
-                <div className="flex items-center gap-2">
-                  <VerifiedBadge 
-                    confidenceScore={location.verification_score}
-                    verifiedAt={location.verified_at}
-                    lastCheckedAt={location.lastVerifiedAt}
-                    size="md"
-                    interactive
-                  />
-                  <SourceBadge
-                    sourceName={offer.source.name}
-                    verificationMethod={offer.verification.verificationMethod}
-                    className="text-xs"
-                  />
-                  <h3 className="font-semibold text-white">{location.name}</h3>
-                </div>
-                <p className="text-sm text-white/80">{location.address}</p>
-                
-                {location.expires_at && (
-                  <p className="text-sm text-emerald-400">
-                    Valid until: {new Date(location.expires_at).toLocaleDateString()}
-                  </p>
-                )}
-
-                {offer.signupType !== 'none' && (
-                  <div className="mt-2">
-                    <SignupBadge 
-                      type={offer.signupType}
-                      tooltip={offer.signupDetails}
-                      className="text-xs"
-                    />
-                  </div>
-                )}
-                {offer?.category && (
-                  <div className="mt-2">
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      CATEGORY_LABELS[offer.category].bg
-                    } ${
-                      CATEGORY_LABELS[offer.category].border
-                    } ${
-                      CATEGORY_LABELS[offer.category].textColor
-                    }`}>
-                      {CATEGORY_LABELS[offer.category].text}
-                    </span>
-                  </div>
-                )}
-                {offer?.businessHours && (
-                  <div className="mt-2 text-xs text-white/70">
-                    <strong>Hours:</strong> {offer.businessHours}
-                  </div>
-                )}
-                
-                {offer?.phoneNumber && (
-                  <div className="mt-1 text-xs text-white/70">
-                    <strong>Phone:</strong> {offer.phoneNumber}
-                  </div>
-                )}
-                
-                {offer?.amenities?.length > 0 && (
-                  <div className="mt-2">
-                    <div className="text-xs font-medium text-white/80">Amenities:</div>
-                    <div className="mt-1 flex flex-wrap gap-1">
-                      {offer.amenities.slice(0, 3).map(amenity => (
-                        <span 
-                          key={amenity}
-                          className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/10"
-                        >
-                          {amenity}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <a
-                  href={offer?.source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/90 hover:bg-white/10 backdrop-blur-sm transition-colors"
-                >
-                  Verify Offer
-                </a>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-
-      {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-[1000]">
-          <LoadingState 
-            message="Finding nearby washes..." 
-            className="bg-white/10 p-8"
-          />
-        </div>
-      )}
-    </div>
+      </SectionShell>
+    </main>
   );
 }
