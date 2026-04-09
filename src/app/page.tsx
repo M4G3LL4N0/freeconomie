@@ -280,14 +280,12 @@ export default function Home() {
                   </div>
 
                   <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-                    {stats.map((item) => (
-                      <div
-                        key={item.value}
-                        className="rounded-xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-3 backdrop-blur-xl sm:rounded-2xl sm:p-4"
-                      >
-                        <div className="text-sm font-semibold text-white sm:text-base">{item.value}</div>
-                        <div className="mt-1 text-xs leading-normal text-white/54 sm:text-sm sm:leading-5">{item.label}</div>
-                      </div>
+                    {stats.map((stat) => (
+                      <StatCard 
+                        key={stat.value}
+                        value={stat.value}
+                        label={stat.label}
+                      />
                     ))}
                   </div>
                 </div>
@@ -412,31 +410,15 @@ export default function Home() {
         <section id="platform" className="px-6 pb-20 sm:px-8 lg:px-10">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {premiumCards.map((card) => {
-                const c = themeClasses(card.theme);
-                return (
-                  <article
-                    key={card.title}
-                    aria-labelledby={`card-${card.theme}-heading`}
-                    className={`relative overflow-hidden rounded-[1.8rem] border border-white/10 glass-panel p-[1px] transition-all hover:scale-[1.02] hover:shadow-[0_24px_80px_rgba(0,0,0,0.4)]`}
-                  >
-                    <div className={`absolute inset-0 rounded-[calc(1.8rem-1px)] bg-gradient-to-br ${c.medium}`} />
-                    <div className="relative h-full rounded-[calc(1.8rem-1px)] bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-[8px]">
-                      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${c.heavy}`} />
-                      <div className={`absolute right-[-2rem] top-[-2rem] h-24 w-24 rounded-full blur-3xl ${c.orb}`} />
-                      <div className="relative space-y-6 p-8">
-                        <span className="inline-block text-[11px] uppercase tracking-[0.24em] text-white/42">
-                          {card.eyebrow}
-                        </span>
-                        <h3 className="text-2xl font-bold tracking-tight text-white">
-                          {card.title}
-                        </h3>
-                        <p className="text-base leading-7 text-white/70">{card.body}</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              {premiumCards.map((card) => (
+                <Card
+                  key={card.title}
+                  title={card.title}
+                  description={card.body}
+                  label={card.eyebrow}
+                  theme={card.theme}
+                />
+              ))}
             </div>
           </div>
         </section>
