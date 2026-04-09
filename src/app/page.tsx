@@ -251,40 +251,41 @@ export default function Home() {
                   </div>
 
                   <h1 className="hero-headline mt-7 max-w-4xl text-5xl font-bold text-white sm:text-6xl lg:text-7xl">
-                    Find free value with a{" "}
-                    <span className="bg-gradient-to-r from-cyan-300 via-white to-orange-300 bg-clip-text text-transparent">
-                      smarter route layer.
+                    Free car washes with 
+                    <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-white to-orange-300 bg-clip-text text-transparent">
+                      route-aware intelligence
                     </span>
                   </h1>
 
-                  <p className="mt-7 max-w-3xl text-lg leading-[1.8] text-white/72">
-                    FreeWash Finder turns scattered free offers into a premium discovery system
-                    built around movement, verification, timing, and route-aligned execution.
+                  <p className="mt-5 max-w-3xl text-lg leading-[1.8] text-white/72 sm:mt-6">
+                    FreeWash Finder filters expired promos and aligns verified offers with your 
+                    real movement patterns for frictionless free value.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                     <a
                       href="#waitlist"
-                      className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.02]"
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.02] hover:shadow-[0_14px_50px_rgba(59,130,246,0.4)]"
                     >
                       Get Early Access
+                      <span className="ml-2 opacity-80">👉</span>
                     </a>
                     <a
-                      href="#signals"
-                      className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
+                      href="#platform"
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
                     >
-                      Explore the System
+                      How It Works
                     </a>
                   </div>
 
-                  <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                  <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
                     {stats.map((item) => (
                       <div
                         key={item.value}
-                        className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-4 backdrop-blur-xl"
+                        className="rounded-xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-3 backdrop-blur-xl sm:rounded-2xl sm:p-4"
                       >
-                        <div className="text-sm font-semibold text-white">{item.value}</div>
-                        <div className="mt-1 text-xs leading-5 text-white/54">{item.label}</div>
+                        <div className="text-sm font-semibold text-white sm:text-base">{item.value}</div>
+                        <div className="mt-1 text-xs leading-normal text-white/54 sm:text-sm sm:leading-5">{item.label}</div>
                       </div>
                     ))}
                   </div>
