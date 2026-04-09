@@ -52,7 +52,7 @@ export default function WaitlistForm() {
           {...register("email")}
         />
         {errors.email && (
-          <p className="mt-3 text-xs text-rose-400">{errors.email.message}</p>
+          <p className="mt-1.5 text-xs leading-5 text-rose-400">{errors.email.message}</p>
         )}
       </div>
       <button

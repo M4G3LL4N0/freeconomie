@@ -250,14 +250,14 @@ export default function Home() {
                     Premium consumer utility, not coupon clutter
                   </div>
 
-                  <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
+                  <h1 className="hero-headline mt-7 max-w-4xl text-5xl font-bold text-white sm:text-6xl lg:text-7xl">
                     Find free value with a{" "}
                     <span className="bg-gradient-to-r from-cyan-300 via-white to-orange-300 bg-clip-text text-transparent">
                       smarter route layer.
                     </span>
                   </h1>
 
-                  <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
+                  <p className="mt-7 max-w-3xl text-lg leading-[1.8] text-white/72">
                     FreeWash Finder turns scattered free offers into a premium discovery system
                     built around movement, verification, timing, and route-aligned execution.
                   </p>
@@ -392,9 +392,9 @@ export default function Home() {
                           <div className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${c.pill}`}>
                             {item.label}
                           </div>
-                          <h3 className="mt-4 text-xl font-semibold text-white">{item.title}</h3>
-                          <p className="mt-3 text-sm leading-6 text-white/62">{item.description}</p>
-                          <div className="mt-4 text-xs uppercase tracking-[0.18em] text-white/40">
+                          <h3 className="mt-4 text-xl font-semibold leading-snug text-white">{item.title}</h3>
+                          <p className="mt-3 text-sm leading-[1.7] text-white/62">{item.description}</p>
+                          <div className="text-label mt-4 text-white/40">
                             {item.meta}
                           </div>
                         </div>
