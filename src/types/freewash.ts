@@ -18,7 +18,9 @@ export type BayAreaCity =
   | "Burlingame"
   | "San Mateo"
   | "Hayward"
-  | "San Leandro";
+  | "San Leandro"
+  | "Brentwood"
+  | "Morgan Hill";
 
 export type VerificationMethod = 
   | "official-site" 

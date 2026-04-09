@@ -67,6 +67,10 @@ type Stat = {
 
 const stats: Stat[] = [
   { 
+    value: bayAreaStaticOffers.filter(o => o.city === "Brentwood" && o.verification.confidenceScore >= 80).length.toString(),
+    label: "Brentwood Offers" 
+  },
+  { 
     value: bayAreaStaticOffers.filter(o => o.city === "Morgan Hill" && o.verification.confidenceScore >= 80).length.toString(),
     label: "Morgan Hill Offers" 
   },
