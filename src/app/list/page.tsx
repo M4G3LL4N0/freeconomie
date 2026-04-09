@@ -1,5 +1,5 @@
 import { bayAreaStaticOffers } from '@/lib/freewash-data';
-import { FilterIcon, VerifiedIcon } from "@/components/icons";
+import { ChevronDownIcon, FilterIcon, VerifiedIcon } from "@/components/icons";
 import { MapPin } from 'lucide-react';
 
 function InventoryStatusBadge({ status, count }: { status: string; count: number }) {
@@ -67,9 +67,7 @@ type InventoryFilter = {
         (regionFilter === "Hayward" ? offer.city === "Hayward" : offer.region === regionFilter);
       const matchesCategory = !categoryFilter || offer.category === categoryFilter;
       const matchesSearch = !searchQuery || 
-        offer.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        offer.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        offer.address.toLowerCase().includes(searchQuery.toLowerCase());
+        offer.city.toLowerCase() === searchQuery.toLowerCase();
       
       return matchesRegion && matchesCategory && matchesSearch;
     });
@@ -161,8 +159,90 @@ type InventoryFilter = {
       }
     });
 
+  const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
+
+  const getCityOptions = (): FilterOption[] => {
+    const cityCounts: Record<string, number> = {};
+    
+    bayAreaStaticOffers.forEach(offer => {
+      cityCounts[offer.city] = (cityCounts[offer.city] || 0) + 1;
+    });
+
+    return Object.entries(cityCounts).map(([city, count]) => ({
+      value: city,
+      label: city,
+      count
+    })).sort((a, b) => b.count - a.count);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <div className="flex flex-wrap gap-2 mb-6">
+        <button
+          onClick={() => setActiveFilter(activeFilter === FilterType.CITY ? null : FilterType.CITY)}
+          className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm ${
+            activeFilter === FilterType.CITY
+              ? 'bg-white/10 border border-white/20 text-white'
+              : 'border border-white/10 text-white/60 hover:bg-white/5'
+          }`}
+        >
+          <span>Cities</span>
+          <ChevronDownIcon className={`h-4 w-4 transition-transform ${
+            activeFilter === FilterType.CITY ? 'rotate-180' : ''
+          }`} />
+        </button>
+      </div>
+
+      {activeFilter === FilterType.CITY && (
+        <div className="glass-panel rounded-xl p-4 mb-6">
+          <h3 className="text-sm font-medium text-white/80 mb-3">Filter by City</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-60 overflow-y-auto">
+            {getCityOptions().map(city => (
+              <button
+                key={city.value}
+                onClick={() => {
+                  setSearchQuery(city.value);
+                  setActiveFilter(null);
+                }}
+                className="text-left text-sm px-3 py-2 rounded-lg hover:bg-white/5 transition-colors"
+              >
+                <div className="flex justify-between items-center">
+                  <span>{city.label}</span>
+                  <span className="text-xs text-white/40">{city.count}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {searchQuery && (
+        <div className="flex items-center gap-2 mb-4 px-3 py-1.5 rounded-lg bg-white/5">
+          <span className="text-sm text-white/80">Filtered by: {searchQuery}</span>
+          <button 
+            onClick={() => setSearchQuery('')} 
+            className="text-white/50 hover:text-white"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-2 mt-4">
+        {['Palo Alto', 'Redwood City', 'Sunnyvale', 'San Jose'].map(city => (
+          <button
+            key={city}
+            onClick={() => setSearchQuery(city)}
+            className={`text-xs px-3 py-1 rounded-full ${
+              searchQuery === city
+                ? 'bg-white/10 border border-white/15 text-white'
+                : 'border border-white/10 text-white/60 hover:bg-white/5'
+            }`}
+          >
+            {city}
+          </button>
+        ))}
+      </div>
       <div className="flex flex-col md:flex-row gap-6">
         {/* Filters sidebar */}
         <div className="w-full md:w-72 space-y-6">

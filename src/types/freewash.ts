@@ -97,6 +97,20 @@ export type Location = {
   verification_score: number;
 };
 
+export enum FilterType {
+  REGION = 'region',
+  CITY = 'city', 
+  CATEGORY = 'category',
+  VERIFICATION = 'verification',
+  STATUS = 'status'
+}
+
+export type FilterOption = {
+  value: string;
+  label: string;
+  count: number;
+};
+
 export type LocationFilters = {
   lat: number;
   lng: number;
