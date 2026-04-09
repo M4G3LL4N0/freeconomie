@@ -49,7 +49,8 @@ export default function OffersListPage() {
   };
 
   const filteredOffers = bayAreaStaticOffers
-    .filter(offer => offer.verified && {
+    .filter(offer => offer.verified)
+    .filter(offer => {
       const matchesRegion = !regionFilter || offer.region === regionFilter;
       const matchesCategory = !categoryFilter || offer.category === categoryFilter;
       const matchesSearch = !searchQuery || 

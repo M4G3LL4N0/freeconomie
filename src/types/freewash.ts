@@ -32,22 +32,16 @@ export type StaticOffer = {
   summary: string;
   offerHint: string;
   signupRequired: boolean;
-  verification: VerificationStatus;
-  redemptionInstructions: string;
-  lastVerifiedAt: string;
-  accessibilityFeatures: string[];
-  restrictions?: string;
-  offerType: 'first-time' | 'membership-trial' | 'promotional';
-  tags: string[];
-  expirationDate?: string;
-  daysUntilExpiration?: number;
-  isExpired?: boolean;
-  distance?: number;
+  verified: boolean;
   source: {
     name: string;
     url: string;
     checkedAt: string;
   };
+  tags: string[];
+  expirationDate?: string;
+  rating?: number;
+  distance?: number;
 };
 
 export type Location = {

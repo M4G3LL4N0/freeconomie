@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     // Filter offers based on location and radius
     const filteredOffers = bayAreaStaticOffers
       .filter(offer => {
-        if (!offer.latitude || !offer.longitude || !offer.verification) return false;
+        if (!offer.latitude || !offer.longitude) return false;
         
         // Calculate distance in meters using Haversine formula
         const R = 6371e3; // Earth's radius in meters
@@ -48,8 +48,8 @@ export async function GET(request: Request) {
         id: offer.id,
         name: offer.businessName,
         address: offer.address,
-        lat: offer.latitude!,
-        lng: offer.longitude!,
+        lat: offer.latitude,
+        lng: offer.longitude,
         offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
         details: offer.summary,
         expires_at: offer.expirationDate || '',
@@ -64,24 +64,12 @@ export async function GET(request: Request) {
       radius: input.radius,
       count: filteredOffers.length
     });
-    
-    const verifiedOffers = bayAreaStaticOffers
-      .filter(offer => offer.verified)
-      .map(offer => ({
-        ...offer,
-        verification: {
-          source: offer.source.name,
-          url: offer.source.url,
-          checked_at: offer.source.checkedAt,
-          score: 100
-        }
-      }));
 
     return NextResponse.json({
-      locations: verifiedOffers,
+      locations: filteredOffers,
       verification_summary: {
-        total_verified: verifiedOffers.length,
-        last_checked: new Date(Math.max(...verifiedOffers.map(o => new Date(o.source.checkedAt).getTime()))).toISOString()
+        total_verified: bayAreaStaticOffers.filter(o => o.verified).length,
+        last_checked: new Date(Math.max(...bayAreaStaticOffers.map(o => new Date(o.source.checkedAt).getTime()))).toISOString()
       }
     });
   } catch (error) {
