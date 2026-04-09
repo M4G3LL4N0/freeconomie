@@ -510,7 +510,7 @@ type InventoryFilter = {
             {filteredOffers.map((offer) => (
               <div key={offer.id} className="glass-panel rounded-xl overflow-hidden hover:bg-white/5 transition-colors">
                 <div className="p-4">
-                  <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-start justify-between">
                     <div>
                       <h3 className="font-medium text-white">{offer.businessName}</h3>
                       <div className="mt-1 flex items-center gap-2">
@@ -522,12 +522,10 @@ type InventoryFilter = {
                         )}
                       </div>
                     </div>
-                    <div className="flex flex-col items-end">
-                      <VerificationScoreBadge score={offer.verification.confidenceScore} />
-                      <span className="mt-1 text-xs text-white/50">
-                        {new Date(offer.verification.verifiedAt).toLocaleDateString()}
-                      </span>
-                    </div>
+                    <VerifiedBadge 
+                      confidenceScore={offer.verification.confidenceScore}
+                      verifiedAt={offer.verification.verifiedAt}
+                    />
                   </div>
 
                   <div className="mt-4 flex items-center gap-2">
