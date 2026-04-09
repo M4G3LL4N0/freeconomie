@@ -4,7 +4,7 @@ export default function ArtworkPanel({ theme }: { theme: string }) {
   const c = themeClasses(theme);
 
   return (
-    <div className={`relative overflow-hidden rounded-[1.5rem] bg-gradient-to-br ${c.glow} p-[1px]`}>
+    <div className={`relative overflow-hidden rounded-[1.5rem] bg-gradient-to-br ${c.glow} p-[1px] aesthetic-float`}>
       <div className="relative h-56 overflow-hidden rounded-[calc(1.5rem-1px)] bg-[linear-gradient(180deg,rgba(12,18,35,0.94),rgba(7,12,24,0.98))]">
         <div className={`absolute left-[-10%] top-[-8%] h-36 w-36 rounded-full blur-3xl ${c.orb}`} />
         <div className={`absolute right-[8%] top-[18%] h-24 w-24 rounded-full blur-2xl ${c.orb}`} />

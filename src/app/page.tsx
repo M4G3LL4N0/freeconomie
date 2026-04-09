@@ -102,54 +102,54 @@ const expansion: ExpansionItem[] = [
 ];
 
 function themeClasses(theme: string) {
-  const gradients = {
+  const themes = {
     cyan: {
-      glow: "from-cyan-400/50 via-sky-500/40 to-blue-600/30",
-      medium: "from-cyan-400/30 via-sky-500/20 to-blue-600/15",
-      heavy: "from-cyan-400/70 via-sky-500/60 to-blue-600/50",
-      pill: "text-cyan-200 border-cyan-300/25 bg-cyan-400/15",
-      beam: "from-cyan-300/80 via-sky-400/60 to-transparent",
-      orb: "bg-cyan-400/25",
-      text: "text-cyan-300",
-      border: "border-cyan-400/35",
-      bg: "bg-cyan-500/15"
+      text: 'text-cyan-300',
+      border: 'border-cyan-400/35',
+      bg: 'bg-cyan-500/15',
+      glow: 'from-cyan-400/50 via-sky-500/40 to-blue-600/30',
+      medium: 'from-cyan-400/30 via-sky-500/20 to-blue-600/15',
+      heavy: 'from-cyan-400/70 via-sky-500/60 to-blue-600/50',
+      pill: 'text-cyan-200 border-cyan-300/25 bg-cyan-400/15',
+      beam: 'from-cyan-300/80 via-sky-400/60 to-transparent',
+      orb: 'bg-cyan-400/25'
     },
     violet: {
-      glow: "from-violet-400/50 via-purple-500/40 to-fuchsia-600/30",
-      medium: "from-violet-400/30 via-purple-500/20 to-fuchsia-600/15",
-      heavy: "from-violet-400/70 via-purple-500/60 to-fuchsia-600/50",
-      pill: "text-violet-200 border-violet-300/25 bg-violet-400/15",
-      beam: "from-violet-300/80 via-purple-400/60 to-transparent",
-      orb: "bg-violet-400/25",
-      text: "text-violet-300",
-      border: "border-violet-400/35",
-      bg: "bg-violet-500/15"
+      text: 'text-violet-300',
+      border: 'border-violet-400/35',
+      bg: 'bg-violet-500/15',
+      glow: 'from-violet-400/50 via-purple-500/40 to-fuchsia-600/30',
+      medium: 'from-violet-400/30 via-purple-500/20 to-fuchsia-600/15',
+      heavy: 'from-violet-400/70 via-purple-500/60 to-fuchsia-600/50',
+      pill: 'text-violet-200 border-violet-300/25 bg-violet-400/15',
+      beam: 'from-violet-300/80 via-purple-400/60 to-transparent',
+      orb: 'bg-violet-400/25'
     },
     orange: {
-      glow: "from-orange-400/50 via-amber-500/40 to-yellow-600/30",
-      medium: "from-orange-400/30 via-amber-500/20 to-yellow-600/15",
-      heavy: "from-orange-400/70 via-amber-500/60 to-yellow-600/50",
-      pill: "text-orange-200 border-orange-300/25 bg-orange-400/15",
-      beam: "from-orange-300/80 via-amber-400/60 to-transparent",
-      orb: "bg-orange-400/25",
-      text: "text-orange-300",
-      border: "border-orange-400/35",
-      bg: "bg-orange-500/15"
+      text: 'text-orange-300',
+      border: 'border-orange-400/35',
+      bg: 'bg-orange-500/15',
+      glow: 'from-orange-400/50 via-amber-500/40 to-yellow-600/30',
+      medium: 'from-orange-400/30 via-amber-500/20 to-yellow-600/15',
+      heavy: 'from-orange-400/70 via-amber-500/60 to-yellow-600/50',
+      pill: 'text-orange-200 border-orange-300/25 bg-orange-400/15',
+      beam: 'from-orange-300/80 via-amber-400/60 to-transparent',
+      orb: 'bg-orange-400/25'
     },
     emerald: {
-      glow: "from-emerald-400/50 via-teal-500/40 to-cyan-600/30",
-      medium: "from-emerald-400/30 via-teal-500/20 to-cyan-600/15",
-      heavy: "from-emerald-400/70 via-teal-500/60 to-cyan-600/50",
-      pill: "text-emerald-200 border-emerald-300/25 bg-emerald-400/15",
-      beam: "from-emerald-300/80 via-teal-400/60 to-transparent",
-      orb: "bg-emerald-400/25",
-      text: "text-emerald-300",
-      border: "border-emerald-400/35",
-      bg: "bg-emerald-500/15"
+      text: 'text-emerald-300',
+      border: 'border-emerald-400/35',
+      bg: 'bg-emerald-500/15',
+      glow: 'from-emerald-400/50 via-teal-500/40 to-cyan-600/30',
+      medium: 'from-emerald-400/30 via-teal-500/20 to-cyan-600/15',
+      heavy: 'from-emerald-400/70 via-teal-500/60 to-cyan-600/50',
+      pill: 'text-emerald-200 border-emerald-300/25 bg-emerald-400/15',
+      beam: 'from-emerald-300/80 via-teal-400/60 to-transparent',
+      orb: 'bg-emerald-400/25'
     }
   };
 
-  return gradients[theme] || gradients.cyan;
+  return themes[theme] || themes.cyan;
 }
 
 function ArtworkPanel({ theme }: { theme: string }) {
