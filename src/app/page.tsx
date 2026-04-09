@@ -203,8 +203,9 @@ export default function Home() {
           <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_center,white_1px,transparent_1px)] [background-size:28px_28px]" />
         </div>
 
-        <header className="sticky top-0 z-50 border-b border-white/8 bg-[#071120]/70 backdrop-blur-2xl">
+        <header role="banner" className="sticky top-0 z-50 border-b border-white/8 bg-[#071120]/70 backdrop-blur-2xl">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8 lg:px-10">
+            <div role="heading" aria-level={1} className="flex items-center gap-3">
             <div className="flex items-center gap-3">
               <div className="relative h-9 w-9 overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(135deg,rgba(34,211,238,0.22),rgba(249,115,22,0.18),rgba(168,85,247,0.2))]">
                 <div className="absolute inset-[6px] rounded-xl border border-white/10 bg-[#081321]/80 backdrop-blur-xl" />
@@ -414,8 +415,9 @@ export default function Home() {
               {premiumCards.map((card) => {
                 const c = themeClasses(card.theme);
                 return (
-                  <div
+                  <article
                     key={card.title}
+                    aria-labelledby={`card-${card.theme}-heading`}
                     className={`relative overflow-hidden rounded-[1.8rem] border border-white/10 glass-panel p-[1px] transition-all hover:scale-[1.02] hover:shadow-[0_24px_80px_rgba(0,0,0,0.4)]`}
                   >
                     <div className={`absolute inset-0 rounded-[calc(1.8rem-1px)] bg-gradient-to-br ${c.medium}`} />

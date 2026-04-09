@@ -24,30 +24,40 @@ export default function RootLayout({
                 <Link href="/" className="text-lg font-semibold">
                   FreeWash Finder
                 </Link>
-                <div className="flex items-center gap-4">
-                  <ThemeToggle />
-                  <Link 
-                    href="/map" 
-                    className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
-                  >
-                    <MapPin className="h-4 w-4" />
-                    Map
-                  </Link>
-                  <Link 
-                    href="/list" 
-                    className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
-                  >
-                    <List className="h-4 w-4" />
-                    List
-                  </Link>
-                  <Link 
-                    href="/submit" 
-                    className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
-                  >
-                    <PlusCircle className="h-4 w-4" />
-                    Submit
-                  </Link>
-                </div>
+                <nav aria-label="Primary navigation">
+                  <ul className="flex items-center gap-4">
+                    <li>
+                      <ThemeToggle />
+                    </li>
+                    <li>
+                      <Link 
+                        href="/map" 
+                        className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                      >
+                        <MapPin className="h-4 w-4" />
+                        <span>Map</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/list" 
+                        className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                      >
+                        <List className="h-4 w-4" />
+                        <span>List</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/submit" 
+                        className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                      >
+                        <PlusCircle className="h-4 w-4" />
+                        <span>Submit</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </nav>
               </nav>
             </div>
           </header>

@@ -43,13 +43,22 @@ export default function WaitlistForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-8 flex max-w-2xl flex-col gap-6 sm:flex-row">
+    <form 
+      onSubmit={handleSubmit(onSubmit)} 
+      aria-labelledby="waitlist-heading"
+      className="mt-8 flex max-w-2xl flex-col gap-6 sm:flex-row"
+    >
+      <h2 id="waitlist-heading" className="sr-only">Join Waitlist</h2>
       <div className="min-w-0 flex-1">
+        <label htmlFor="waitlist-email" className="sr-only">Email address</label>
         <input
+          id="waitlist-email"
           type="email"
           placeholder="Enter your email"
           className={`w-full rounded-full border-2 ${errors.email ? 'border-rose-400/50' : 'border-white/15'} glass-form-element px-6 py-4 text-sm text-white/90 outline-none transition-all placeholder:text-white/28 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/30`}
           {...register("email")}
+          aria-invalid={errors.email ? "true" : "false"}
+          aria-describedby={errors.email ? "email-error" : undefined}
         />
         {errors.email && (
           <p className="mt-1.5 text-xs leading-5 text-rose-400">{errors.email.message}</p>
