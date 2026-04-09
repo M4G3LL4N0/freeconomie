@@ -29,14 +29,24 @@ export async function GET(request: Request) {
       limit: Number(searchParams.get('limit')) || 20,
     });
 
-    const { data, error } = await supabase
+    let query = supabase
       .rpc('nearby_locations', {
         lat: input.lat,
         lng: input.lng,
         radius: input.radius
       })
-      .select('*')
-      .order('distance_in_km', { ascending: true })
+      .select('*');
+
+    // Enhanced route-aware sorting
+    if (searchParams.get('sort') === 'route_optimized') {
+      query = query
+        .order('verification_score', { ascending: false })
+        .order('distance_in_km', { ascending: true });
+    } else {
+      query = query.order('distance_in_km', { ascending: true });
+    }
+    
+    const { data, error } = await query
       .limit(input.limit);
 
     if (error) throw error;

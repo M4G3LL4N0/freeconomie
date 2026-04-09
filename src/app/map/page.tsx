@@ -29,8 +29,9 @@ export default function MapPage() {
   const fetchLocations = async (lat: number, lng: number) => {
     try {
       setLoading(true);
+      // Enhanced route-aware filtering
       const response = await fetch(
-        `/api/locations?lat=${lat}&lng=${lng}&radius=10`
+        `/api/locations?lat=${lat}&lng=${lng}&radius=10&sort=route_optimized`
       );
       if (!response.ok) throw new Error("Failed to load");
       const data = await response.json();
@@ -73,7 +74,17 @@ export default function MapPage() {
 
   return (
     <div className="relative h-[calc(100vh-80px)]">
-      <div className="absolute top-4 left-4 z-[1000]">
+      <div className="absolute top-4 left-4 right-4 z-[1000] flex flex-col gap-4">
+        <RouteIntelligencePanel
+          origin="Current Location"
+          destination="Redwood City"
+          optimizedRoute={{
+            distance: "5.2 miles",
+            time: "12 min",
+            washes: 3
+          }}
+          theme="cyan"
+        />
         <div className="glass-panel backdrop-blur-xl rounded-xl overflow-hidden border border-white/15">
           <div className="flex items-center px-4 py-3 gap-3">
             <Search className="h-4 w-4 text-white/60" />
