@@ -31,37 +31,21 @@ export default function MapPage() {
     try {
       setLoading(true);
       
-      // Get verified offers along potential routes
-      const verifiedOffers = bayAreaStaticOffers
-        .map(offer => verifyOffer(offer))
-        .filter(offer => offer.verified);
-      
-      // Calculate route scores for common Bay Area routes
-      const commonRoutes = [
-        { origin: [lat, lng], destination: [37.7749, -122.4194] }, // SF
-        { origin: [lat, lng], destination: [37.3382, -121.8863] }, // San Jose
-        { origin: [lat, lng], destination: [37.5621, -122.3264] }, // Redwood City
-      ];
-      
-      const mappedLocations = verifiedOffers
-        .map(offer => {
-          // Calculate distance and route alignment scores
-          const distance = haversine([lat, lng], [offer.latitude, offer.longitude]);
-          const routeScores = commonRoutes.map(route => 
-            calculateRouteScore(offer, route)
-          );
-          const bestRouteScore = Math.min(...routeScores);
-          
-          return {
-            ...offer,
-            distance_in_km: distance,
-            route_score: bestRouteScore,
-            offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
-            lat: offer.latitude,
-            lng: offer.longitude,
-            is_route_aligned: bestRouteScore < 5 // km off route
-          };
-        })
+      // Filter and map verified offers
+      const verifiedLocations = bayAreaStaticOffers
+        .filter(offer => offer.verified)
+        .map(offer => ({
+          id: offer.id,
+          name: offer.businessName,
+          address: offer.address,
+          lat: offer.latitude!,
+          lng: offer.longitude!,
+          offer_type: offer.category === 'free-first-wash' ? 'wash' : 'trial',
+          details: offer.summary,
+          expires_at: offer.expirationDate || '',
+          verified_at: offer.source.checkedAt,
+          verification_score: 100 // Fully verified
+        }));
         .filter(offer => offer.distance_in_km <= 50)
         .sort((a, b) => {
           // Prioritize route-aligned offers, then closest
@@ -175,51 +159,24 @@ export default function MapPage() {
           <Marker key={location.id} position={[location.lat, location.lng]}>
             <Popup className="rounded-xl border border-white/10 glass-panel backdrop-blur-[12px]">
               <div className="space-y-3 p-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-semibold text-white">{location.name}</h3>
-                    <p className="text-sm text-white/80 mt-1">{location.address}</p>
-                  </div>
-                  {location.verified && (
-                    <span className="inline-flex items-center gap-1 text-xs text-emerald-400 bg-emerald-900/20 px-2 py-1 rounded-full">
-                      <VerifiedIcon className="h-3 w-3" />
-                      Verified
-                    </span>
-                  )}
+                <div className="flex items-center gap-2">
+                  <VerifiedIcon className="h-4 w-4 text-emerald-400" />
+                  <h3 className="font-semibold text-white">{location.name}</h3>
                 </div>
-
-                <div className="text-sm text-white/70">
-                  <p className="font-medium">Offer:</p>
-                  <p>{location.summary}</p>
-                </div>
-
-                {location.redemptionInstructions && (
-                  <div className="text-sm text-white/70">
-                    <p className="font-medium">How to redeem:</p>
-                    <p>{location.redemptionInstructions}</p>
-                  </div>
-                )}
+                <p className="text-sm text-white/80">{location.address}</p>
                 {location.expires_at && (
                   <p className="text-sm text-emerald-400">
                     Valid until: {new Date(location.expires_at).toLocaleDateString()}
                   </p>
                 )}
-                <button 
-                  onClick={() => {
-                    fetch('/api/favorites', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({ locationId: location.id })
-                    })
-                    .then(() => toast.success('Saved to favorites'))
-                    .catch(() => toast.error('Failed to save'));
-                  }}
+                <a
+                  href={bayAreaStaticOffers.find(o => o.id === location.id)?.source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/90 hover:bg-white/10 backdrop-blur-sm transition-colors"
                 >
-                  Save to Favorites
-                </button>
+                  Verify Offer
+                </a>
               </div>
             </Popup>
           </Marker>

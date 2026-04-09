@@ -49,7 +49,7 @@ export default function OffersListPage() {
   };
 
   const filteredOffers = bayAreaStaticOffers
-    .filter(offer => {
+    .filter(offer => offer.verified && {
       const matchesRegion = !regionFilter || offer.region === regionFilter;
       const matchesCategory = !categoryFilter || offer.category === categoryFilter;
       const matchesSearch = !searchQuery || 
@@ -67,9 +67,15 @@ export default function OffersListPage() {
       isExpired: offer.expirationDate 
         ? new Date(offer.expirationDate) < new Date()
         : false,
-      verificationScore: 100, // Static offers are fully verified
-      lastVerifiedAt: new Date().toISOString(),
-      accessibilityFeatures: [] // Initialize empty array
+      verificationScore: 100,
+      lastVerifiedAt: offer.source.checkedAt,
+      verification_badge: (
+        <span className="inline-flex items-center gap-1 text-xs text-emerald-400">
+          <VerifiedIcon className="h-3 w-3" />
+          Verified {new Date(offer.source.checkedAt).toLocaleDateString()}
+        </span>
+      ),
+      verification_details: `Verified from ${offer.source.name} official site`
     }))
     .sort((a, b) => {
       if (sortBy === "distance") {

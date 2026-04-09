@@ -66,10 +66,10 @@ type Stat = {
 };
 
 const stats: Stat[] = [
-  { value: "100%", label: "Premium positioning" },
-  { value: "Route-Aware", label: "Built around movement" },
-  { value: "Verified", label: "Signal over clutter" },
-  { value: "Scalable", label: "Beyond car washes" },
+  { value: `${bayAreaStaticOffers.filter(o => o.verified).length}`, label: "Verified Offers" },
+  { value: "100%", label: "Official Sources" },
+  { value: bayAreaStaticOffers.filter(o => o.verified).length + " Locations", label: "Bay Area Coverage" },
+  { value: "Daily", label: "Verification Updates" }
 ];
 
 type ExpansionItem = {

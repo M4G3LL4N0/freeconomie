@@ -65,7 +65,25 @@ export async function GET(request: Request) {
       count: filteredOffers.length
     });
     
-    return NextResponse.json(filteredOffers);
+    const verifiedOffers = bayAreaStaticOffers
+      .filter(offer => offer.verified)
+      .map(offer => ({
+        ...offer,
+        verification: {
+          source: offer.source.name,
+          url: offer.source.url,
+          checked_at: offer.source.checkedAt,
+          score: 100
+        }
+      }));
+
+    return NextResponse.json({
+      locations: verifiedOffers,
+      verification_summary: {
+        total_verified: verifiedOffers.length,
+        last_checked: new Date(Math.max(...verifiedOffers.map(o => new Date(o.source.checkedAt).getTime()))).toISOString()
+      }
+    });
   } catch (error) {
     // Maintain existing error handling
     captureEvent("locations_error", { 
