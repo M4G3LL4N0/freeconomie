@@ -28,15 +28,28 @@ export type VerificationMethod =
   | "partner-feed";   // Verified partners only
 
 export type VerificationStatus = {
-  verifiedAt: string; // ISO date
-  verifiedBy: string; // 'system' | 'admin@freewashfinder.com' | userId
-  verificationMethod: VerificationMethod;
-  confidenceScore: number; // 0-100
-  systemRating?: {
-    valueScore: number; // 0-100 quality rating  
-    demandSignal: number; // 0-100 user interest
-    routeDensity: number; // 0-100 nearby value density
-  }
+  verifiedAt: string;
+  verifiedBy: string; // 'system' | 'admin@freeconomie.com' | userId
+  verificationMethod: 
+    | "official-site" 
+    | "phone-confirmation"
+    | "in-person-check" 
+    | "partner-feed"
+    | "community-report";
+  confidenceScore: number;
+  verificationNotes?: string;
+  lastChecked?: string;
+  freshnessScore?: number;
+  valueAssessment?: {
+    amount: number;
+    currency: string;
+    confidence: number;
+  };
+  submissionSource?: {
+    ip?: string;
+    userAgent?: string;
+    referrer?: string;
+  };
 };
 
 export type FreeconomyCategory =

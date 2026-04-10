@@ -22,7 +22,10 @@ function getVerificationDetails(offer: StaticOffer): VerificationDetails {
   return maybeDetails ?? {};
 }
 
-export function calculateVerificationScore(offer: FreeconomyOffer & LocalOffer): OSMetrics {
+export function calculateVerificationScore(offer: FreeconomyOffer): {
+  confidenceScore: number;
+  verificationStatus: VerificationStatus;
+} {
   let score = 0;
   const osMetrics = {
     valueScore: 0,
