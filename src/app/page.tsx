@@ -64,14 +64,14 @@ export default function Home() {
                   </div>
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
-                    The operating system for{" "}
+                    The Intelligence Layer for{" "}
                     <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
-                      free value discovery
+                      High-Value Free
                     </span>
                   </h1>
 
                   <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
-                    Freeconomie launches with verified Bay Area free car washes while building the intelligence layer for all high-value free offerings - from premium trials to corporate perks to public goods.
+                    Freeconomie combines rigorous verification, route-aware discovery, and premium curation to surface only the highest-value free offerings - starting with car washes and expanding to trials, perks, and public goods.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
