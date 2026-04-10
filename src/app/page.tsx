@@ -49,7 +49,7 @@ export default function Home() {
               href="#waitlist"
               className="rounded-full border border-white/10 bg-white/6 px-5 py-2.5 text-sm font-semibold text-white/92 backdrop-blur-xl transition hover:bg-white/10"
             >
-              Join Early Access
+              Join Waitlist
             </a>
           </div>
         </header>
@@ -170,6 +170,23 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="waitlist" className="px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24 bg-[linear-gradient(180deg,rgba(6,17,31,0.94)_0%,rgba(3,10,20,1)_100%)]">
+          <div className="mx-auto max-w-4xl">
+            <div className="text-center">
+              <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                Join the Freeconomie Waitlist
+              </h2>
+              <p className="mt-4 text-lg leading-8 text-white/70">
+                Get early access to premium verified free opportunities beyond car washes - trials, samples, and public goods.
+              </p>
+            </div>
+            
+            <div className="mt-10">
+              <WaitlistForm />
             </div>
           </div>
         </section>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
-import { MapPin, List, PlusCircle, Sun, Moon } from "lucide-react";
+import { MapPin, List, PlusCircle, Sun, Moon, Home } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 
 export const metadata: Metadata = {
@@ -38,29 +38,38 @@ export default function RootLayout({
                     </li>
                     <li>
                       <Link 
+                        href="/" 
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5 data-[active=true]:bg-white/10"
+                      >
+                        <Home className="h-4 w-4" />
+                        <span className="sr-only sm:not-sr-only">Home</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
                         href="/map" 
-                        className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5 data-[active=true]:bg-white/10"
                       >
                         <MapPin className="h-4 w-4" />
-                        <span>Map</span>
+                        <span className="sr-only sm:not-sr-only">Map</span>
                       </Link>
                     </li>
                     <li>
                       <Link 
                         href="/list" 
-                        className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5 data-[active=true]:bg-white/10"
                       >
                         <List className="h-4 w-4" />
-                        <span>List</span>
+                        <span className="sr-only sm:not-sr-only">List</span>
                       </Link>
                     </li>
                     <li>
                       <Link 
                         href="/submit" 
-                        className="flex items-center gap-1 hover:text-foreground/80 data-[active=true]:text-foreground data-[active=true]:font-medium"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5 data-[active=true]:bg-white/10"
                       >
                         <PlusCircle className="h-4 w-4" />
-                        <span>Submit</span>
+                        <span className="sr-only sm:not-sr-only">Submit</span>
                       </Link>
                     </li>
                   </ul>
