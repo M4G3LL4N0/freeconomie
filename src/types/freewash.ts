@@ -22,12 +22,10 @@ export type BayAreaCity =
   | "Brentwood"
   | "Morgan Hill";
 
-export type VerificationMethod = 
-  | "official-site" 
-  | "phone-confirmation"
-  | "in-person-check"
-  | "staff-confirmation"
-  | "user-reports";
+export type VerificationMethod =
+  | "official-site"   // Primary verification
+  | "in-person-check" // Highest confidence
+  | "partner-feed";   // Verified partners only
 
 export type VerificationStatus = {
   verifiedAt: string; // ISO date
@@ -37,19 +35,10 @@ export type VerificationStatus = {
 };
 
 export type FreeconomyCategory = 
-  | "free-car-wash" // Keep existing
-  | "free-trial"    // High-value trials (software/services)
-  | "community-exchange" // Skill/time swaps
-  | "corporate-perk" // Employee benefits
-  | "public-good"   // Government/community programs
-  // Backwards compatible aliases
-  | "free-trials" 
-  | "free-samples"
-  | "free-sample"
-  | "community-shares"
-  | "grand-openings"
-  | "no-strings-freebies"
-  | "promotional-offer";
+  | "free-car-wash" // Existing anchor category
+  | "free-trial"    // Membership trials ($40+ estimated value)
+  | "corporate-perk" // Premium perks (no coupons)
+  | "public-good";   // Municipal/community programs
 
 export type ValueEstimate = {
   amount: number;
