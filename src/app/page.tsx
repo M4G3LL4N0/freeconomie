@@ -64,15 +64,15 @@ export default function Home() {
                   </div>
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
-                    Premium Free Car Washes in{" "}
+                    Premium Free Value in{" "}
                     <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
                       the Bay Area
                     </span>
                   </h1>
 
                   <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
-                    Freeconomie launches with rigorously verified free car wash offers across the Bay Area. 
-                    Our premium verification system ensures only legitimate, high-value opportunities are shown.
+                    Starting with rigorously verified free car washes, Freeconomie surfaces high-value free opportunities - 
+                    from trials to perks to public goods. Our premium verification system ensures only legitimate offers.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
