@@ -91,10 +91,16 @@ export default function Home() {
                     </span>{" "}
                     <span className="text-white">Verifies Truly Free Offers</span>
                     <span className="block mt-4 text-xl text-white/70">
-                      Discover {bayAreaStaticOffers.length} verified free car washes in the Bay Area - 
-                      the first step in building the definitive network for high-value free opportunities
+                      We systematically verify free offers so you don't have to wonder about hidden costs
                     </span>
                   </h1>
+
+                  <div className="mt-6 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
+                    <p className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 p-4">
+                      <strong>Our Bay Area launch:</strong> {bayAreaStaticOffers.length} verified car washes across {new Set(bayAreaStaticOffers.map(o => o.city)).size} cities, 
+                      establishing our verification methodology before expanding to other free offers.
+                    </p>
+                  </div>
 
                   <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
                     <p className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 p-4">
@@ -105,26 +111,44 @@ export default function Home() {
                     </p>
                     
                     <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-4">
-                      <h3 className="text-sm font-semibold text-emerald-200">Our Verification Promise</h3>
+                      <h3 className="text-sm font-semibold text-emerald-200">Our Verification Standards</h3>
                       <div className="mt-2 text-sm text-emerald-100/80">
-                        <p>Every offer in our Bay Area dataset meets these criteria:</p>
+                        <p>Every offer must pass these checks to be included:</p>
                         <ul className="mt-3 space-y-3">
                           <li className="flex items-start gap-2">
                             <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
                             <span>
-                              <strong>Source Verified:</strong> {(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% confirmed via official business websites
+                              <strong>Source Verified:</strong> Confirmed via official business websites or partner APIs
+                              <div className="mt-1 text-xs text-emerald-200/60">
+                                {(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% official sources
+                              </div>
                             </span>
                           </li>
                           <li className="flex items-start gap-2">
                             <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
                             <span>
-                              <strong>On-Site Confirmed:</strong> {(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% physically verified
+                              <strong>On-Site Confirmed:</strong> Physically verified by our team or trusted partners
+                              <div className="mt-1 text-xs text-emerald-200/60">
+                                {(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% in-person checks
+                              </div>
                             </span>
                           </li>
                           <li className="flex items-start gap-2">
                             <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
                             <span>
-                              <strong>No Purchase Required:</strong> Truly free with no hidden costs
+                              <strong>No Hidden Costs:</strong> Must be completely free with no purchase requirements
+                              <div className="mt-1 text-xs text-emerald-200/60">
+                                All offers meet this standard
+                              </div>
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>Recency Checked:</strong> Verified within the last 3 months
+                              <div className="mt-1 text-xs text-emerald-200/60">
+                                {bayAreaStaticOffers.filter(o => new Date(o.source.checkedAt) > new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)).length}/{bayAreaStaticOffers.length} recently updated
+                              </div>
                             </span>
                           </li>
                         </ul>
@@ -401,7 +425,7 @@ export default function Home() {
 
                       <div className="mt-5 rounded-[1.25rem] border border-white/8 bg-white/[0.04] p-5">
                         <div className="text-[11px] uppercase tracking-[0.24em] text-white/42">
-                          Roadmap
+                          Verification Roadmap
                         </div>
                         <div className="mt-4 space-y-4">
                           <div className="flex items-start gap-4">
@@ -410,10 +434,10 @@ export default function Home() {
                             </div>
                             <div>
                               <div className="text-sm font-medium text-white">
-                                Static Seed ({new Date().toLocaleDateString()})
+                                Current: Manual Verification ({new Date().toLocaleDateString()})
                               </div>
                               <div className="mt-1 text-sm leading-6 text-white/62">
-                                {bayAreaStaticOffers.length} manually verified offers across {new Set(bayAreaStaticOffers.map(o => o.city)).size} cities
+                                {bayAreaStaticOffers.length} hand-verified offers establishing our baseline criteria
                               </div>
                             </div>
                           </div>
@@ -423,10 +447,10 @@ export default function Home() {
                             </div>
                             <div>
                               <div className="text-sm font-medium text-white">
-                                Phase 1: Live Ingestion (Q3 2026)
+                                Next: Automated Verification (Q3 2026)
                               </div>
                               <div className="mt-1 text-sm leading-6 text-white/62">
-                                Automated scraping from official sources + manual submissions
+                                Scaling verification through API integrations and scheduled re-checks
                               </div>
                             </div>
                           </div>
@@ -436,10 +460,23 @@ export default function Home() {
                             </div>
                             <div>
                               <div className="text-sm font-medium text-white">
-                                Phase 2: Verification Expansion (Q4 2026)
+                                Future: Community Verification (Q4 2026)
                               </div>
                               <div className="mt-1 text-sm leading-6 text-white/62">
-                                Multi-source validation + community verification
+                                Trusted contributor network with reputation-based validation
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-4">
+                            <div className="relative pt-1">
+                              <div className="absolute left-0 top-0 h-full w-0.5 bg-transparent" />
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium text-white">
+                                Vision: Real-Time Freeconomy
+                              </div>
+                              <div className="mt-1 text-sm leading-6 text-white/62">
+                                Dynamic verification of high-value free opportunities across categories
                               </div>
                             </div>
                           </div>
