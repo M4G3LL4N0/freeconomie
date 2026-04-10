@@ -89,13 +89,28 @@ export default function RouteIntelligencePanel({
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[10px] text-white/70">
-            ${valueDensity}/mi value density
-          </span>
-          <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[10px] text-white/70">
-            OS Score: {Math.round((valueDensity/100) * 90)}
-          </span>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-sm text-white/65">
+              <Route className="h-4 w-4 text-cyan-300" />
+              <span>${valuePerMile.toFixed(2)}/mi value density</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-white/65">
+              <Clock className="h-4 w-4 text-cyan-300" />
+              <span>{timeSavings} min optimized</span>
+            </div>
+          </div>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-sm text-white/65">
+              <span className="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
+              <span>Premium Score: {routeEfficiencyScore}/100</span>
+            </div>
+            {detourMinutes > 0 && (
+              <div className="flex items-center gap-2 text-sm text-amber-200">
+                <span>+{detourMinutes} min detour</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
