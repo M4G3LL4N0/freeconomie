@@ -49,7 +49,7 @@ export default function Home() {
               href="#waitlist"
               className="rounded-full border border-white/10 bg-white/6 px-5 py-2.5 text-sm font-semibold text-white/92 backdrop-blur-xl transition hover:bg-white/10"
             >
-              Join Waitlist
+              Join Early Access
             </a>
           </div>
         </header>

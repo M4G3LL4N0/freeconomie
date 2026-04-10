@@ -69,7 +69,7 @@ export default function WaitlistForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="mt-8 flex max-w-2xl flex-col gap-4 sm:flex-row">
+    <form onSubmit={onSubmit} className="mt-8 flex max-w-3xl flex-col gap-4 sm:flex-row">
       <div className="flex-1">
         <label htmlFor="waitlist-email" className="sr-only">
           Email address
@@ -100,9 +100,9 @@ export default function WaitlistForm() {
       <button
         type="submit"
         disabled={loading}
-        className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.26)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-8 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.26)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {loading ? "Joining..." : "Join Waitlist"}
+        {loading ? "Joining..." : "Get Early Access"}
       </button>
     </form>
   );
