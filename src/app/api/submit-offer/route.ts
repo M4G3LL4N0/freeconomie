@@ -1,94 +1,96 @@
-import { createClient } from '@supabase/supabase-js';
-import { NextResponse } from 'next/server';
-import { z } from 'zod';
-import { captureEvent } from "@/lib/analytics";
-import { showSuccess, showError, showLoading } from "@/lib/notifications";
+import { NextRequest, NextResponse } from "next/server";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_KEY!
-);
+type SubmitOfferPayload = {
+  businessName?: string;
+  offerTitle?: string;
+  city?: string;
+  state?: string;
+  address?: string;
+  offerDescription?: string;
+  signupRequired?: boolean;
+  offerUrl?: string;
+  notes?: string;
+  email?: string;
+};
 
-const schema = z.object({
-  name: z.string().min(2),
-  address: z.string().min(5),
-  lat: z.number().min(-90).max(90),
-  lng: z.number().min(-180).max(180),
-  offer_type: z.enum(['wash', 'trial', 'promo']),
-  details: z.string().min(10),
-  expires_at: z.string().optional(),
-  user_id: z.string().uuid().optional(),
-});
-
-export async function POST(request: Request) {
+function isValidUrl(value: string) {
+  if (!value.trim()) return true;
   try {
-    // Show loading state immediately
-    if (typeof window !== 'undefined') {
-      showLoading("Verifying your submission...");
-    }
-    const body = await request.json();
-    const data = schema.parse({
-      ...body,
-      lat: parseFloat(body.lat),
-      lng: parseFloat(body.lng)
-    });
+    new URL(value);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
-    // Verify coordinates are valid numbers
-    if (isNaN(data.lat) || isNaN(data.lng)) {
-      throw new Error('Invalid coordinates');
-    }
+function isValidEmail(value: string) {
+  if (!value.trim()) return true;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
 
-    // Optional: Verify address with Google Maps API if key is configured
-    if (process.env.GOOGLE_MAPS_API_KEY) {
-      const geocodeResponse = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${data.lat},${data.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`
+export async function POST(req: NextRequest) {
+  try {
+    const body = (await req.json()) as SubmitOfferPayload;
+
+    const businessName = body.businessName?.trim() || "";
+    const offerTitle = body.offerTitle?.trim() || "";
+    const city = body.city?.trim() || "";
+    const state = body.state?.trim() || "";
+    const address = body.address?.trim() || "";
+    const offerDescription = body.offerDescription?.trim() || "";
+    const signupRequired = Boolean(body.signupRequired);
+    const offerUrl = body.offerUrl?.trim() || "";
+    const notes = body.notes?.trim() || "";
+    const email = body.email?.trim() || "";
+
+    if (!businessName || !offerTitle || !city || !state || !offerDescription) {
+      return NextResponse.json(
+        { error: "Missing required fields." },
+        { status: 400 }
       );
-      const geocodeData = await geocodeResponse.json();
-      
-      if (!geocodeData.results?.length) {
-        captureEvent('offer_submission_address_unverified', {
-          address: data.address,
-          coordinates: `${data.lat},${data.lng}`
-        });
-      }
     }
 
-    const { error } = await supabase
-      .from('submissions')
-      .insert({
-        ...data,
-        status: 'pending_review',
-        submitted_at: new Date().toISOString(),
-        verification_metadata: {
-          verified_by: null,
-          reasons: []
-        }
-      });
-
-    if (error) {
-      captureEvent("offer_error", { 
-        error: error.message,
-        code: error.code 
-      });
-      throw error;
+    if (!isValidUrl(offerUrl)) {
+      return NextResponse.json(
+        { error: "Invalid offer URL." },
+        { status: 400 }
+      );
     }
-    
-    showSuccess("Offer submitted for review!");
-    captureEvent("offer_submitted", { type: data.offer_type });
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    showError("Submission failed. Please check your details.");
-    captureEvent("offer_error", { 
-      error: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined
-    });
+
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: "Invalid email address." },
+        { status: 400 }
+      );
+    }
+
+    const submission = {
+      id: crypto.randomUUID(),
+      businessName,
+      offerTitle,
+      city,
+      state,
+      address,
+      offerDescription,
+      signupRequired,
+      offerUrl,
+      notes,
+      email,
+      createdAt: new Date().toISOString(),
+    };
+
     return NextResponse.json(
-      { error: "Submission failed. Please try again later." },
+      {
+        success: true,
+        message: "Offer submitted successfully.",
+        submission,
+      },
+      { status: 200 }
+    );
+  } catch {
+    return NextResponse.json(
+      { error: "Invalid request body." },
       { status: 400 }
     );
-  } finally {
-    if (typeof window !== 'undefined') {
-      toast.dismiss(); // Clear any loading toasts
-    }
   }
 }
