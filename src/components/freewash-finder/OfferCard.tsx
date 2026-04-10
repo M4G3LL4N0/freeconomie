@@ -1,76 +1,58 @@
 "use client";
 
+import { MapPin } from "lucide-react";
 import { StaticOffer } from "@/types/freewash";
 import { VerificationBadge } from "./VerificationBadge";
-import { MapPinIcon } from "@/components/icons";
 import { captureEvent } from "@/lib/analytics";
 
 interface OfferCardProps {
   offer: StaticOffer;
-  onClick?: () => void;
-  className?: string;
 }
 
-export function OfferCard({ offer, onClick, className = "" }: OfferCardProps) {
+export default function OfferCard({ offer }: OfferCardProps) {
   return (
-    <div 
-      className={`glass-panel rounded-xl overflow-hidden border border-white/10 hover:bg-white/5 transition-colors ${className}`}
-      onClick={onClick}
-    >
-      <div className="p-4">
-        <div className="flex items-start justify-between">
-          <div>
-            <h3 className="font-medium text-white">{offer.businessName}</h3>
-            <p className="mt-1 text-sm text-white/80">{offer.city}, {offer.region}</p>
-          </div>
-          <VerificationBadge 
-            confidenceScore={offer.verification.confidenceScore}
-            verifiedAt={offer.verification.verifiedAt}
-            lastCheckedAt={offer.lastVerifiedAt}
-            size="sm"
-          />
+    <div className="rounded-[1.5rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.24)]">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <VerificationBadge />
+          <h3 className="mt-4 text-xl font-semibold text-white">{offer.businessName}</h3>
+          <div className="mt-2 text-sm text-white/65">{offer.offerTitle}</div>
         </div>
 
-        <div className="mt-4 flex items-center gap-2">
-          <span className={`text-xs px-3 py-1 rounded-full border ${
-            CATEGORY_LABELS[offer.category].bg
-          } ${
-            CATEGORY_LABELS[offer.category].border
-          } ${
-            CATEGORY_LABELS[offer.category].textColor
-          }`}>
-            {CATEGORY_LABELS[offer.category].text}
+        <button
+          type="button"
+          onClick={() => captureEvent("offer_card_clicked", { offerId: offer.id })}
+          className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs text-white/70"
+        >
+          View
+        </button>
+      </div>
+
+      <div className="mt-4 flex items-center gap-2 text-sm text-white/60">
+        <MapPin className="h-4 w-4" />
+        <span>
+          {offer.city}, {offer.state}
+        </span>
+      </div>
+
+      <div className="mt-2 text-sm text-white/50">{offer.address}</div>
+
+      <p className="mt-4 text-sm leading-7 text-white/62">{offer.summary}</p>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {offer.tags?.map((tag) => (
+          <span
+            key={tag}
+            className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/70"
+          >
+            {tag}
           </span>
-          {offer.expirationDate && (
-            <span className={`text-xs px-2 py-1 rounded-full ${
-              new Date(offer.expirationDate) < new Date()
-                ? 'bg-red-500/15 text-red-400'
-                : 'bg-emerald-500/15 text-emerald-400'
-            }`}>
-              {new Date(offer.expirationDate).toLocaleDateString()}
-            </span>
-          )}
-        </div>
+        ))}
+      </div>
 
-        <div className="mt-4 text-sm text-white/70">
-          {offer.summary}
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          {offer.tags.map((tag) => (
-            <span
-              key={tag}
-              className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-white/60"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-4 flex items-center justify-between text-xs text-white/60">
-          <span>Source: {offer.source.name}</span>
-          <span>Checked: {new Date(offer.source.checkedAt).toLocaleDateString()}</span>
-        </div>
+      <div className="mt-5 flex items-center justify-between gap-4 text-xs uppercase tracking-[0.18em] text-white/40">
+        <span>{offer.region}</span>
+        <span>Last checked {offer.source.checkedAt}</span>
       </div>
     </div>
   );

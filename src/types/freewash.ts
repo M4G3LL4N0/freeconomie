@@ -57,7 +57,7 @@ export type StaticOffer = {
   summary: string;
   offerHint: string;
   signupRequired: boolean;
-  signupType: SignupType;
+  signupType?: SignupType;
   signupDetails?: string;
   verification: VerificationStatus;
   redemptionInstructions: string;
