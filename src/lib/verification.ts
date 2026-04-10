@@ -1,86 +1,45 @@
-import type { StaticOffer } from "@/types/freewash";
+import type { FreeconomyOffer } from "@/types/freewash";
 
-type VerificationDetails = {
-  sourceType?: "official" | "partner" | "user" | "scraped" | "unknown";
-  verificationMethod?:
-    | "partner-api"
-    | "manual-review"
-    | "official-site"
-    | "phone-call"
-    | "scrape-check"
-    | "unknown";
-  verifiedAt?: string;
-  confidenceScore?: number;
-  notes?: string;
-};
-
-function getVerificationDetails(offer: StaticOffer): VerificationDetails {
-  const maybeDetails = (offer as StaticOffer & {
-    verificationDetails?: VerificationDetails;
-  }).verificationDetails;
-
-  return maybeDetails ?? {};
-}
-
-export function calculateVerificationScore(offer: FreeconomyOffer): {
-  confidenceScore: number;
-  verificationStatus: VerificationStatus;
-} {
+export function calculateVerificationScore(offer: FreeconomyOffer): number {
   let score = 0;
-  const osMetrics = {
-    valueScore: 0,
-    routeDensity: 0,
-    freshnessScore: 0
-  };
-  const details = getVerificationDetails(offer);
-
+  
   // Source Type Weighting
-  if (details.sourceType === "official") score += 50;
-  else if (details.sourceType === "partner") score += 40;
-  else if (details.sourceType === "user") score += 20;
+  if (offer.source.type === "official") score += 50;
+  else if (offer.source.type === "partner") score += 40;
+  else if (offer.source.type === "user") score += 20;
 
   // Verification Method Weighting
-  if (details.verificationMethod === "partner-api") score += 40;
-  else if (details.verificationMethod === "official-site") score += 30;
-  else if (details.verificationMethod === "in-person-visit") score += 50;
-  else if (details.verificationMethod === "phone-call") score += 30;
-  else if (details.verificationMethod === "manual-review") score += 20;
+  if (offer.verification?.verificationMethod === "official-site") score += 30;
+  else if (offer.verification?.verificationMethod === "phone-confirmation") score += 30;
+  else if (offer.verification?.verificationMethod === "in-person-check") score += 50;
 
   // Recency Multiplier (exponential decay)
-  if (details.verifiedAt) {
-    const verifiedTime = new Date(details.verifiedAt).getTime();
-    if (!Number.isNaN(verifiedTime)) {
-      const daysOld = (Date.now() - verifiedTime) / (1000 * 60 * 60 * 24);
-      if (daysOld <= 1) score *= 1.0;
-      else if (daysOld <= 7) score *= 0.95;
-      else if (daysOld <= 30) score *= 0.85;
-      else if (daysOld <= 90) score *= 0.70;
-      else score *= 0.50;
-    }
+  if (offer.verification?.verifiedAt) {
+    const daysOld = (Date.now() - new Date(offer.verification.verifiedAt).getTime()) / (1000 * 60 * 60 * 24);
+    if (daysOld <= 1) score *= 1.0;
+    else if (daysOld <= 7) score *= 0.95;
+    else if (daysOld <= 30) score *= 0.85;
+    else if (daysOld <= 90) score *= 0.70;
+    else score *= 0.50;
   }
 
-  // Confidence Score Adjustment
-  if (typeof details.confidenceScore === "number") {
-    score = Math.min(100, score + details.confidenceScore);
+  // Value Modifier
+  if (offer.valueEstimate?.amount) {
+    score += Math.min(offer.valueEstimate.amount / 5, 10); // +10 max for high-value offers
   }
 
-  // Add value-based modifier
-  const valueModifier = offer.valueEstimate 
-    ? Math.min(offer.valueEstimate / 50, 10) // +10 max for high-value offers
-    : 0;
-    
-  // Cap at 100 and ensure minimum of 0
-  // Calculate OS metrics
-  osMetrics.valueScore = Math.min(100, Math.round(
-    (score * 0.6) + 
-    (valueModifier * 20) +
-    (getFreshnessScore(offer.source.checkedAt) * 20)
-  ));
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
 
-  return {
-    confidenceScore: Math.max(0, Math.min(100, Math.round(score + valueModifier))),
-    ...osMetrics
-  };
+export function isPremiumVerified(offer: FreeconomyOffer): boolean {
+  return calculateVerificationScore(offer) >= 85;
+}
+
+export function isVerifiedStack(offer: FreeconomyOffer): boolean {
+  return !!offer.stackableValue && 
+    offer.stackableValue.components.every(comp => 
+      comp.verified && comp.valueEstimate >= 10
+    );
 }
 
 export function isHighConfidenceOffer(offer: StaticOffer): boolean {

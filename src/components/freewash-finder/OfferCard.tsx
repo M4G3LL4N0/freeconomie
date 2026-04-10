@@ -16,7 +16,21 @@ export default function OfferCard({ offer }: OfferCardProps) {
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <VerificationBadge verification={offer.verification} />
+            <div className="flex items-center gap-2">
+              <VerificationBadge verification={offer.verification} />
+              {offer.verification?.confidenceScore && (
+                <div className="flex items-center gap-1 text-xs text-white/60">
+                  <span 
+                    className={`inline-block h-2 w-2 rounded-full ${
+                      offer.verification.confidenceScore > 90 ? 'bg-emerald-400' :
+                      offer.verification.confidenceScore > 70 ? 'bg-amber-400' : 
+                      'bg-rose-400'
+                    }`}
+                  />
+                  <span>{offer.verification.confidenceScore}%</span>
+                </div>
+              )}
+            </div>
             <SourceBadge sourceType={offer.source.type} />
           </div>
           <h3 className="mt-3 text-xl font-semibold text-white">{offer.businessName}</h3>

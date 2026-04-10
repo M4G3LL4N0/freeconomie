@@ -1,18 +1,14 @@
-import { env } from "@/env";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import type { VerificationStatus } from "@/types/freewash";
 
-type VerificationBadgeProps = {
+interface VerificationBadgeProps {
   verification?: VerificationStatus;
   label?: string;
-};
+}
 
-export function VerificationBadge({
-  verification,
-  label,
-}: VerificationBadgeProps) {
+export function VerificationBadge({ verification, label }: VerificationBadgeProps) {
   const score = verification?.confidenceScore ?? 0;
-  const method = verification?.verificationMethod;
-
+  
   const getBadgeConfig = (score: number) => {
     if (score >= 95) {
       return {
@@ -39,7 +35,7 @@ export function VerificationBadge({
       return {
         className: "border-white/10 bg-white/6 text-white/70",
         icon: "?",
-        text: "Unverified", 
+        text: "Unverified",
         tooltip: "Not yet verified"
       };
     }
@@ -61,9 +57,9 @@ export function VerificationBadge({
       </TooltipTrigger>
       <TooltipContent side="top" className="max-w-[240px]">
         <p>{badge.tooltip}</p>
-        {method && (
+        {verification?.verificationMethod && (
           <p className="mt-1 text-xs opacity-80">
-            Method: {method.replace(/-/g, ' ')}
+            Method: {verification.verificationMethod.replace(/-/g, ' ')}
           </p>
         )}
         <small className="block mt-1 text-xs opacity-70">
@@ -71,23 +67,5 @@ export function VerificationBadge({
         </small>
       </TooltipContent>
     </Tooltip>
-      default:
-        return "Verification method: " + (method || "unknown");
-    }
-  };
-
-  const { className, text } = env.NEXT_PUBLIC_BETA_ROUTE_INTEL 
-    ? getEnhancedBadgeStyle(score) 
-    : getBadgeStyle(score);
-
-  return (
-    <span
-      className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${className}`}
-      title={`Confidence score: ${score}%`}
-    >
-      {label ?? text}
-    </span>
   );
 }
-
-export default VerificationBadge;
