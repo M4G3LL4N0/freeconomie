@@ -22,7 +22,7 @@ function getVerificationDetails(offer: StaticOffer): VerificationDetails {
   return maybeDetails ?? {};
 }
 
-export function calculateVerificationScore(offer: FreeconomyOffer): OSMetrics {
+export function calculateVerificationScore(offer: FreeconomyOffer & LocalOffer): OSMetrics {
   let score = 0;
   const osMetrics = {
     valueScore: 0,
@@ -84,12 +84,26 @@ export function isHighConfidenceOffer(offer: StaticOffer): boolean {
   return calculateVerificationScore(offer) >= 70;
 }
 
-export function isPremiumOffer(offer: FreeconomyOffer): boolean {
+export function calculateLocalRelevance(offer: FreeconomyOffer & LocalOffer): number {
+  const baseScore = calculateVerificationScore(offer).confidenceScore;
+  const localityModifiers = {
+    walkingDistance: 15,
+    neighborhoodPosted: 10, 
+    communityEndorsed: 20
+  };
+  
+  return Math.min(100, 
+    baseScore + 
+    (offer.walkingDistance ? localityModifiers.walkingDistance : 0) +
+    (offer.neighborhood ? localityModifiers.neighborhoodPosted : 0)
+  );
+}
+
+export function isPremiumOffer(offer: FreeconomyOffer & LocalOffer): boolean {
   return (
-    offer.verification?.confidenceScore >= 80 ||
-    (offer.valueEstimate?.amount || 0) >= 25 ||
-    offer.category === "corporate-perk" ||
-    offer.category === "public-good"
+    calculateLocalRelevance(offer) >= 70 ||
+    (offer.valueEstimate?.amount || 0) >= 10 ||
+    offer.category === "free-car-wash"
   );
 }
 import { VerificationStatus } from "@/types/freewash";

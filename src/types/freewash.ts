@@ -39,11 +39,18 @@ export type VerificationStatus = {
   }
 };
 
-export type FreeconomyCategory = 
-  | "free-car-wash" // Anchor category (keeps existing functionality)
-  | "premium-trial" // High-value trials (software/services >$40)
-  | "corporate-perk" // Employee benefits
-  | "public-good";   // Municipal programs
+export type FreeconomyCategory =
+  | "free-car-wash"       // Keep existing car wash category
+  | "community-meal"      // Free meals/food shares
+  | "skill-exchange"      // Time/skill trades
+  | "public-resource";    // Library tools, park equipment etc.
+
+export type LocalOffer = {
+  hyperlocalScore: number; // 0-100 based on neighborhood relevance
+  walkingDistance?: boolean;
+  valuePerUse?: number;    // Estimated $ value per use
+  neighborhood?: string;
+};
 
 export type ValueEstimate = {
   amount: number;

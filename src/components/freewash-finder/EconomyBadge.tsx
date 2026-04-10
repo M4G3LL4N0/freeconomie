@@ -5,17 +5,17 @@ const categoryVariants = {
     text: "Car Wash",
     className: "border-cyan-300/20 bg-cyan-400/10 text-cyan-200"
   },
-  "premium-trial": {
-    text: "Premium Trial",
-    className: "border-violet-300/20 bg-violet-400/10 text-violet-200" 
+  "community-meal": {
+    text: "Community Meal",
+    className: "border-amber-300/20 bg-amber-400/10 text-amber-100"
   },
-  "corporate-perk": {
-    text: "Employee Perk",  
-    className: "border-amber-300/20 bg-amber-400/10 text-amber-200"
+  "skill-exchange": {
+    text: "Skill Trade",
+    className: "border-purple-300/20 bg-purple-400/10 text-purple-100"
   },
-  "public-good": {
-    text: "Public Good",
-    className: "border-blue-300/20 bg-blue-400/10 text-blue-200"
+  "public-resource": {
+    text: "Public Resource",
+    className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200"
   }
 };
 
