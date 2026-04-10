@@ -65,6 +65,11 @@ export type RouteCategory = FreeconomyCategory;
 export type SignupType = 'email' | 'phone' | 'credit-card' | 'app' | 'membership' | 'none';
 
 export type FreeconomyOffer = {
+  systemMetrics: {
+    lastVerified: string;  
+    freshnessScore: number; // 0-100 based on age
+    routePriority?: number; // Suggested optimization score
+  };
   economyType: FreeconomyCategory;
   valueEstimate?: number; // USD value of the free offering
   restrictions?: string[];

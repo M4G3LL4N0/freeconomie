@@ -43,6 +43,18 @@ export default function OfferCard({ offer }: OfferCardProps) {
         >
           View
         </button>
+        {offer.systemMetrics && (
+          <div className="flex items-center gap-1 text-xs text-white/60">
+            <span 
+              className={`inline-block h-2 w-2 rounded-full ${
+                offer.systemMetrics.freshnessScore > 75 ? 'bg-emerald-400' :
+                offer.systemMetrics.freshnessScore > 50 ? 'bg-amber-400' : 
+                'bg-rose-400'
+              }`}
+            />
+            <span>OS {offer.systemMetrics.freshnessScore}</span>
+          </div>
+        )}
       </div>
 
       <div className="mt-4 flex items-center gap-2 text-sm text-white/60">
