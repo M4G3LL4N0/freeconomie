@@ -1,16 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
+import { captureEvent } from "@/lib/analytics";
+import { isPremiumOffer } from "@/lib/verification";
 
 type SubmitOfferPayload = {
-  businessName?: string;
-  offerTitle?: string;
-  city?: string;
-  state?: string;
-  address?: string;
-  offerDescription?: string;
-  signupRequired?: boolean;
+  businessName: string;
+  offerTitle: string;
+  city: string;
+  state: string;
+  address: string;
+  offerDescription: string;
+  signupRequired: boolean;
   offerUrl?: string;
   notes?: string;
-  email?: string;
+  email: string;
+  valueEstimate?: number;
+  verification?: {
+    confidenceScore: number;
+  };
+  tags?: string[];
+  category?: string;
 };
 
 function isValidUrl(value: string) {
@@ -43,10 +51,36 @@ export async function POST(req: NextRequest) {
     const notes = body.notes?.trim() || "";
     const email = body.email?.trim() || "";
 
-    if (!businessName || !offerTitle || !city || !state || !offerDescription) {
+    // Required field validation
+    const requiredFields = ['businessName', 'offerTitle', 'city', 'state', 'offerDescription', 'email'];
+    for (const field of requiredFields) {
+      if (!body[field as keyof SubmitOfferPayload]) {
+        return NextResponse.json(
+          { error: `Missing required field: ${field}` },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Premium content guardrails
+    if ((body.valueEstimate || 0) < 15) {
       return NextResponse.json(
-        { error: "Missing required fields." },
-        { status: 400 }
+        { error: "Minimum value requirement: $15" },
+        { status: 403 }
+      );
+    }
+
+    if (body.tags?.includes('coupon') || body.tags?.includes('limited-time')) {
+      return NextResponse.json(
+        { error: "Coupon-style and limited-time offers are not accepted" },
+        { status: 403 }
+      );
+    }
+
+    if (!body.verification?.confidenceScore || body.verification.confidenceScore < 80) {
+      return NextResponse.json(
+        { error: "Minimum verification confidence score: 80%" },
+        { status: 403 }
       );
     }
 
@@ -79,11 +113,35 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     };
 
+    const premiumStatus = isPremiumOffer({
+      ...submission,
+      verification: {
+        confidenceScore: body.verification?.confidenceScore || 0,
+        verifiedAt: new Date().toISOString(),
+        verificationMethod: 'user-submitted'
+      },
+      valueEstimate: {
+        amount: body.valueEstimate || 0,
+        currency: 'USD'
+      },
+      category: body.category as any
+    });
+
+    captureEvent('offer_submitted', {
+      businessName: submission.businessName,
+      valueEstimate: submission.valueEstimate,
+      isPremium: premiumStatus,
+      category: body.category
+    });
+
     return NextResponse.json(
       {
         success: true,
-        message: "Offer submitted successfully.",
+        message: premiumStatus 
+          ? "Premium offer submitted successfully" 
+          : "Offer submitted for review",
         submission,
+        isPremium: premiumStatus
       },
       { status: 200 }
     );
