@@ -5,9 +5,9 @@ const categoryVariants = {
     text: "Car Wash",
     className: "border-cyan-300/20 bg-cyan-400/10 text-cyan-200"
   },
-  "free-trial": {
-    text: "Premium Trial", 
-    className: "border-violet-300/20 bg-violet-400/10 text-violet-200"
+  "premium-trial": {
+    text: "Premium Trial",
+    className: "border-violet-300/20 bg-violet-400/10 text-violet-200" 
   },
   "corporate-perk": {
     text: "Employee Perk",  

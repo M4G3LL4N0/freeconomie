@@ -35,10 +35,17 @@ export type VerificationStatus = {
 };
 
 export type FreeconomyCategory = 
-  | "free-car-wash" // Existing anchor category
-  | "free-trial"    // Membership trials ($40+ estimated value)
-  | "corporate-perk" // Premium perks (no coupons)
-  | "public-good";   // Municipal/community programs
+  | "free-car-wash" // Anchor category
+  | "premium-trial" // High-value trials (software/services >$40)
+  | "corporate-perk" // Employee benefits
+  | "public-good";   // Municipal programs
+
+export type ValueEstimate = {
+  amount: number;
+  currency: "USD";
+  source: "system" | "partner" | "user";
+  confidence: number; // 0-100
+};
 
 export type ValueEstimate = {
   amount: number;
