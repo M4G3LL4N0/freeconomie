@@ -1,23 +1,44 @@
 type VerificationBadgeProps = {
-  verified?: boolean;
+  score?: number;
   label?: string;
 };
 
 export function VerificationBadge({
-  verified = true,
+  score = 100,
   label,
 }: VerificationBadgeProps) {
-  const text = label ?? (verified ? "Verified" : "Unverified");
+  const getBadgeStyle = (score: number) => {
+    if (score >= 90) {
+      return {
+        className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200",
+        text: "Highly Verified"
+      };
+    } else if (score >= 70) {
+      return {
+        className: "border-cyan-300/20 bg-cyan-400/10 text-cyan-200", 
+        text: "Verified"
+      };
+    } else if (score >= 50) {
+      return {
+        className: "border-amber-300/20 bg-amber-400/10 text-amber-200",
+        text: "Partially Verified"
+      };
+    } else {
+      return {
+        className: "border-white/10 bg-white/6 text-white/70",
+        text: "Unverified"
+      };
+    }
+  };
+
+  const { className, text } = getBadgeStyle(score);
 
   return (
     <span
-      className={
-        verified
-          ? "inline-flex rounded-full border border-cyan-300/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-200"
-          : "inline-flex rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70"
-      }
+      className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${className}`}
+      title={`Confidence score: ${score}%`}
     >
-      {text}
+      {label ?? text}
     </span>
   );
 }

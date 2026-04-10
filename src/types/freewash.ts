@@ -44,47 +44,77 @@ export type RouteCategory =
 export type SignupType = 'email' | 'phone' | 'credit-card' | 'app' | 'membership' | 'none';
 
 export type StaticOffer = {
-  id: string; // 'businessname-city-year'
+  // Core identification
+  id: string;
   businessName: string;
   offerTitle: string;
-  city: BayAreaCity;
-  state: "CA";
-  address: string;
-  region: BayAreaRegion;
-  latitude: number;
-  longitude: number;
+  
+  // Location data
+  location: {
+    address: string;
+    city: BayAreaCity;
+    state: "CA";
+    region: BayAreaRegion;
+    coordinates: {
+      latitude: number;
+      longitude: number;
+    };
+    distance?: number;
+  };
+
+  // Offer details
   category: RouteCategory;
   summary: string;
   offerHint: string;
-  signupRequired: boolean;
-  signupType?: SignupType;
-  signupDetails?: string;
-  verification: VerificationStatus;
   redemptionInstructions: string;
-  lastVerifiedAt: string;
-  accessibilityFeatures: string[];
   restrictions?: string;
-  offerType: 'first-time' | 'membership-trial' | 'promotional';
-  tags: string[];
   expirationDate?: string;
-  rating?: number;
-  distance?: number;
+  tags: string[];
+  
+  // Verification
+  verification: VerificationStatus & {
+    lastVerifiedAt: string;
+    lastVerifiedBy?: string;
+    verificationNotes?: string;
+  };
+
+  // Requirements
+  requirements: {
+    signup: {
+      required: boolean;
+      type?: SignupType;
+      details?: string;
+    };
+    limitations?: string[];
+  };
+
+  // Business info
+  businessInfo: {
+    hours?: string;
+    phone?: string;
+    website?: string;
+    amenities?: string[];
+    washTypes?: string[];
+    averageWaitTime?: string;
+    loyaltyProgram?: boolean;
+    paymentMethods?: string[];
+    photos?: string[];
+  };
+
+  // Source tracking
   source: {
     name: string;
     url: string;
     checkedAt: string;
+    type: 'official' | 'user-submitted' | 'scraped';
   };
-  businessHours?: string;
-  phoneNumber?: string;
-  website?: string;
-  amenities?: string[];
-  washTypes?: string[];
-  averageWaitTime?: string;
-  loyaltyProgram?: boolean;
-  paymentMethods?: string[];
-  photoUrls?: string[];
-  lastVerifiedBy?: string;
-  verificationNotes?: string;
+
+  // Analytics
+  metadata?: {
+    rating?: number;
+    popularity?: number;
+    lastViewed?: string;
+  };
 };
 
 export type Location = {
