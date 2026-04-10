@@ -41,9 +41,9 @@ export type VerificationStatus = {
 
 export type FreeconomyCategory =
   | "free-car-wash"       // Keep existing car wash category
-  | "community-meal"      // Free meals/food shares
-  | "skill-exchange"      // Time/skill trades
-  | "public-resource";    // Library tools, park equipment etc.
+  | "grand-opening"       // New grand opening category
+  | "premium-trial"      // Premium trial offers
+  | "corporate-perk";     // Corporate perk offers
 
 export type LocalOffer = {
   hyperlocalScore: number; // 0-100 based on neighborhood relevance
@@ -66,6 +66,14 @@ export type TrialOffer = {
   requiresPaymentMethod: boolean;
   autoRenews: boolean;
   valueEstimate: number; // USD
+};
+
+export type GrandOpeningOffer = {
+  openingDate: string;
+  durationDays: number;
+  organizer: string;
+  estimatedAttendance?: number;
+  valuePerPerson: number;
 };
 
 export type FreeconomyOffer = {

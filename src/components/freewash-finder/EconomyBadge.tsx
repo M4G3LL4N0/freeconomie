@@ -21,6 +21,11 @@ const categoryVariants = {
     text: "Public Resource",
     className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200"
   },
+  "grand-opening": {
+    text: "Grand Opening",
+    className: "border-amber-300/20 bg-amber-400/10 text-amber-200",
+    icon: "🎉"
+  },
   "corporate-perk": {
     text: "Employee Perk",
     className: "border-amber-300/20 bg-amber-400/10 text-amber-200"
