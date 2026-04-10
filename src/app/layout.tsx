@@ -5,8 +5,8 @@ import { MapPin, List, PlusCircle, Sun, Moon } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 
 export const metadata: Metadata = {
-  title: "Freeconomie | Premium Free Value Discovery",
-  description: "Discover verified high-value free offerings - starting with premium car washes and expanding to trials, perks, and public goods.",
+  title: "FreeWash Finder | Verified Bay Area Car Washes",
+  description: "Discover premium verified free car washes in the Bay Area. Part of the Freeconomie network - surfacing high-value free opportunities with rigorous verification.",
 };
 
 export default function RootLayout({
@@ -28,7 +28,8 @@ export default function RootLayout({
             <div className="container mx-auto px-6 py-4">
               <nav className="flex items-center justify-between gap-6">
                 <Link href="/" className="text-lg font-semibold">
-                  FreeWash Finder
+                  <span className="font-semibold">FreeWash Finder</span>
+                  <span className="text-white/50"> by Freeconomie</span>
                 </Link>
                 <nav aria-label="Primary navigation">
                   <ul className="flex items-center gap-4">

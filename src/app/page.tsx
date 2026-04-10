@@ -60,19 +60,20 @@ export default function Home() {
               <div className="relative grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
                 <div>
                   <div className="inline-flex items-center rounded-full border border-white/10 bg-white/6 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.26em] text-white/68 backdrop-blur-xl">
-                    Launching with {bayAreaStaticOffers.length} verified Bay Area car washes
+                    Verified Bay Area Car Washes · Static Seed Data
                   </div>
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
-                    Premium Free Value in{" "}
+                    Verified Free Car Washes in{" "}
                     <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
                       the Bay Area
                     </span>
+                    <span className="block mt-4 text-xl text-white/70">Part of the Freeconomie network - surfacing premium verified free opportunities</span>
                   </h1>
 
                   <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
-                    Starting with rigorously verified free car washes, Freeconomie surfaces high-value free opportunities - 
-                    from trials to perks to public goods. Our premium verification system ensures only legitimate offers.
+                    Discover premium verified free car washes across the Bay Area. Each offer has been manually verified through official sources and site visits. 
+                    FreeWash Finder is your trusted guide to high-value free opportunities, starting with car washes and expanding to trials, perks, and public goods.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -129,8 +130,13 @@ export default function Home() {
                           >
                             <div className="flex items-center justify-between gap-4">
                               <div>
-                                <div className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-200">
-                                  {item.city}
+                                <div className="flex items-center gap-2">
+                                  <div className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-200">
+                                    {item.city}
+                                  </div>
+                                  <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">
+                                    Verified {new Date(item.verifiedAt).toLocaleDateString()}
+                                  </div>
                                 </div>
                                 <h3 className="mt-3 text-base font-semibold text-white">
                                   {item.businessName}
@@ -138,6 +144,9 @@ export default function Home() {
                                 <p className="mt-2 text-sm leading-6 text-white/60">
                                   {item.offerTitle} · {item.summary}
                                 </p>
+                                <div className="mt-2 text-xs text-white/50">
+                                  Source: {item.source.type === "official" ? "Official Site" : "Verified Partner"}
+                                </div>
                               </div>
                               <div className="shrink-0 rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs font-medium text-white/74">
                                 {item.region}
@@ -152,7 +161,9 @@ export default function Home() {
                           Live Next
                         </div>
                         <p className="mt-2 text-sm leading-6 text-white/62">
-                          Static verified Bay Area data now. Scraper-import pipeline and re-checking system next.
+                          Our static seed data includes {bayAreaStaticOffers.length} manually verified Bay Area car washes. 
+                          Each offer has been confirmed through official sources and site visits. 
+                          Live updates and automated re-verification coming soon.
                         </p>
                       </div>
                     </div>
