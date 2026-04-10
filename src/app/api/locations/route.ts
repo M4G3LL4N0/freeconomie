@@ -54,11 +54,11 @@ export async function GET(request: Request) {
     // Enhanced filtering logic
     const filteredOffers = bayAreaStaticOffers.filter(offer => {
       // Premium value and verification filters
-      const isLocalPremium = 
-        (offer.hyperlocalScore || 0) > 70 &&
-        (offer.valuePerUse || 0) >= 10;
+      const isPremiumTrial = 
+        offer.trialDetails?.valueEstimate >= 25 && 
+        (offer.verification?.confidenceScore || 0) >= 80;
         
-      if (!isLocalPremium && offer.category !== "free-car-wash") return false;
+      if (!isPremiumTrial && offer.category !== "free-car-wash") return false;
       // Location filtering
       if (!offer.latitude || !offer.longitude) return false;
       

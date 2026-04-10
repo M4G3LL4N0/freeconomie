@@ -100,11 +100,21 @@ export function calculateLocalRelevance(offer: FreeconomyOffer & LocalOffer): nu
 }
 
 export function isPremiumOffer(offer: FreeconomyOffer & LocalOffer): boolean {
+  const isPremiumTrial = offer.trialDetails?.valueEstimate >= 25 &&
+    calculateVerificationScore(offer) >= 80;
+  
   return (
+    isPremiumTrial ||
     calculateLocalRelevance(offer) >= 70 ||
     (offer.valueEstimate?.amount || 0) >= 10 ||
     offer.category === "free-car-wash"
   );
+}
+
+export function isHighValueTrial(offer: FreeconomyOffer): boolean {
+  return !!offer.trialDetails && 
+    offer.trialDetails.valueEstimate >= 25 &&
+    calculateVerificationScore(offer) >= 80;
 }
 import { VerificationStatus } from "@/types/freewash";
 

@@ -60,6 +60,14 @@ export type ValueEstimate = {
   lastUpdated?: string;
 };
 
+export type TrialOffer = {
+  trialType: 'membership' | 'software' | 'service';
+  trialDuration: number; // Days
+  requiresPaymentMethod: boolean;
+  autoRenews: boolean;
+  valueEstimate: number; // USD
+};
+
 export type FreeconomyOffer = {
   systemMetrics: {
     lastVerified: string;  
@@ -69,6 +77,7 @@ export type FreeconomyOffer = {
   economyType: FreeconomyCategory;
   valueEstimate?: ValueEstimate;
   restrictions?: string[];
+  trialDetails?: TrialOffer; // New optional field
 };
 
 export type ValueEstimate = {
