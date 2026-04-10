@@ -68,12 +68,14 @@ export default function Home() {
                       Freeconomie
                     </span>{" "}
                     <span className="text-white">Network Launch</span>
-                    <span className="block mt-4 text-xl text-white/70">Starting with verified free car washes in the Bay Area</span>
+                    <span className="block mt-4 text-xl text-white/70">Discover premium verified free opportunities - starting with car washes in the Bay Area</span>
                   </h1>
 
                   <div className="mt-7 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
                     <p>
-                      Freeconomie surfaces premium verified free opportunities - from car washes to trials, samples, and public goods. 
+                      Freeconomie is building the definitive network for premium verified free opportunities - from car washes to trials, samples, and public goods. 
+                    </p>
+                    <p>
                       Our Bay Area launch features {bayAreaStaticOffers.length} manually verified free car washes, each confirmed through:
                     </p>
                     <ul className="space-y-2 pl-5 list-disc">
@@ -82,8 +84,13 @@ export default function Home() {
                       <li>Partner API integrations where available</li>
                     </ul>
                     <p>
-                      This is our static seed dataset - live updates, automated verification, and route intelligence coming soon.
+                      This static seed dataset represents our initial proof-of-concept. We're actively working to bring you:
                     </p>
+                    <ul className="space-y-2 pl-5 list-disc">
+                      <li>Live updates and automated verification</li>
+                      <li>Route intelligence for optimized freeconomie trips</li>
+                      <li>Expanded categories beyond car washes</li>
+                    </ul>
                   </div>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
