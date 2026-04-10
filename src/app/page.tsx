@@ -88,23 +88,33 @@ export default function Home() {
                       Freeconomie
                     </span>{" "}
                     <span className="text-white">Verifies Free Opportunities</span>
-                    <span className="block mt-4 text-xl text-white/70">Discover high-value free offers with rigorous verification - starting with {bayAreaStaticOffers.length} Bay Area car washes</span>
+                    <span className="block mt-4 text-xl text-white/70">
+                      Discover {bayAreaStaticOffers.length} verified free car washes in the Bay Area - 
+                      the first step in building the definitive network for high-value free offers
+                    </span>
                   </h1>
 
                   <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
                     <p>
-                      Freeconomie is building the definitive network for high-value free opportunities - from car washes to trials, samples, and public goods - with rigorous verification standards.
+                      Freeconomie surfaces and verifies truly free offers - starting with car washes and expanding to trials, samples, and public goods. 
+                      Our Bay Area launch dataset is hand-verified with rigorous standards.
                     </p>
                     
                     <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-4">
-                      <h3 className="text-sm font-semibold text-emerald-200">Verification Criteria</h3>
+                      <h3 className="text-sm font-semibold text-emerald-200">Verification Standards</h3>
                       <div className="mt-2 text-sm text-emerald-100/80">
-                        <p>Every offer must meet these standards:</p>
+                        <p>Every offer in our Bay Area dataset meets these criteria:</p>
                         <ul className="mt-3 space-y-3">
                           <li className="flex items-start gap-2">
                             <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
                             <span>
-                              <strong>Source Validation:</strong> Verified via official business websites or partner APIs
+                              <strong>Source Verified:</strong> {(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% confirmed via official business websites
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>On-Site Confirmed:</strong> {(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% physically verified
                             </span>
                           </li>
                           <li className="flex items-start gap-2">
@@ -113,66 +123,11 @@ export default function Home() {
                               <strong>No Purchase Required:</strong> Truly free with no hidden costs
                             </span>
                           </li>
-                          <li className="flex items-start gap-2">
-                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                            <span>
-                              <strong>Recency:</strong> Verified within last 90 days
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                  <div className="mt-7 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
-                    <p>
-                      Freeconomie is building the definitive network for high-value free opportunities - from car washes to trials, samples, and public goods - with rigorous verification standards.
-                    </p>
-                    
-                    <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-4">
-                      <h3 className="text-sm font-semibold text-emerald-200">Rigorous Verification Standards</h3>
-                      <div className="mt-2 text-sm text-emerald-100/80">
-                        <p>Every offer in Freeconomie undergoes multi-step verification:</p>
-                        <ul className="mt-3 space-y-3">
-                          <li className="flex items-start gap-2">
-                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                            <span>
-                              <strong>Source Validation:</strong> {(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% verified via official business websites and documentation
-                            </span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                            <span>
-                              <strong>Physical Verification:</strong> {(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% confirmed through on-site visits
-                            </span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                            <span>
-                              <strong>Automated Monitoring:</strong> Partner API integrations provide real-time status updates
-                            </span>
-                          </li>
-                        </ul>
-                        <p className="mt-4 text-xs text-emerald-200/70">
-                          Our static seed dataset represents the foundation for automated verification systems. Each entry includes:
-                        </p>
-                        <ul className="mt-3 space-y-3">
-                          <li className="flex items-start gap-2">
-                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                            <span>Source documentation (screenshots, URLs)</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                            <span>Verification method metadata</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                            <span>Expiration monitoring markers</span>
-                          </li>
                         </ul>
                       </div>
                     </div>
                     <p>
-                      This hand-verified dataset powers our launch - next we're building:
+                      This static dataset establishes our verification framework for future expansion:
                     </p>
                     <ul className="space-y-2 pl-5 list-disc">
                       <li>Live updates and automated verification</li>
@@ -186,20 +141,20 @@ export default function Home() {
                       href="/list"
                       className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.02]"
                     >
-                      Browse Verified Washes
+                      Browse All Washes
                     </Link>
                     <Link
                       href="/map"
                       className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
                     >
-                      View on Map
+                      Explore Map
                     </Link>
-                    <a
-                      href="#waitlist"
+                    <Link
+                      href="/submit"
                       className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
                     >
-                      Join Freeconomie
-                    </a>
+                      Submit New Offer
+                    </Link>
                   </div>
 
                   <div className="mt-10 rounded-xl border border-white/10 bg-white/6 p-6">
