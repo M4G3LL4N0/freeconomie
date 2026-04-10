@@ -14,13 +14,19 @@ export default function OfferCard({ offer }: OfferCardProps) {
     <div className="rounded-[1.5rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.24)]">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <VerificationBadge score={offer.verification?.confidenceScore} />
-          <h3 className="mt-4 text-xl font-semibold text-white">{offer.businessName}</h3>
-          <div className="mt-2 flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <VerificationBadge verification={offer.verification} />
+            <SourceBadge sourceType={offer.source.type} />
+          </div>
+          <h3 className="mt-3 text-xl font-semibold text-white">{offer.businessName}</h3>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
             <span className="text-sm text-white/65">{offer.offerTitle}</span>
             {offer.signupRequired && (
               <SignupBadge type={offer.signupType || "email"} />
             )}
+            <span className="text-xs text-white/42">
+              {offer.city}, {offer.region}
+            </span>
           </div>
 
         <button

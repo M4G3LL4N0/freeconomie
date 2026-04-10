@@ -1,33 +1,55 @@
+import type { VerificationStatus } from "@/types/freewash";
+
 type VerificationBadgeProps = {
-  score?: number;
+  verification?: VerificationStatus;
   label?: string;
 };
 
 export function VerificationBadge({
-  score = 100,
+  verification,
   label,
 }: VerificationBadgeProps) {
+  const score = verification?.confidenceScore ?? 0;
+  const method = verification?.verificationMethod;
+
   const getBadgeStyle = (score: number) => {
     if (score >= 90) {
       return {
         className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200",
-        text: "Highly Verified"
+        text: "Highly Verified",
+        icon: "✓✓",
       };
     } else if (score >= 70) {
       return {
-        className: "border-cyan-300/20 bg-cyan-400/10 text-cyan-200", 
-        text: "Verified"
+        className: "border-cyan-300/20 bg-cyan-400/10 text-cyan-200",
+        text: "Verified", 
+        icon: "✓",
       };
     } else if (score >= 50) {
       return {
         className: "border-amber-300/20 bg-amber-400/10 text-amber-200",
-        text: "Partially Verified"
+        text: "Partially Verified",
+        icon: "~",
       };
     } else {
       return {
         className: "border-white/10 bg-white/6 text-white/70",
-        text: "Unverified"
+        text: "Unverified",
+        icon: "?",
       };
+    }
+  };
+
+  const getMethodTooltip = () => {
+    switch(method) {
+      case "official-site":
+        return "Verified via official website";
+      case "phone-confirmation": 
+        return "Phone verified";
+      case "in-person-visit":
+        return "In-person verification";
+      default:
+        return "Verification method: " + (method || "unknown");
     }
   };
 

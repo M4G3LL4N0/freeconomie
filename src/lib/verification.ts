@@ -56,3 +56,36 @@ export function calculateVerificationScore(offer: StaticOffer): number {
 export function isHighConfidenceOffer(offer: StaticOffer): boolean {
   return calculateVerificationScore(offer) >= 70;
 }
+import { VerificationStatus } from "@/types/freewash";
+
+export function getVerificationIcon(status?: VerificationStatus): string {
+  if (!status) return "?";
+
+  switch (status.verificationMethod) {
+    case "official-site":
+      return "🌐";
+    case "phone-confirmation":
+      return "📞"; 
+    case "in-person-visit":
+      return "👤";
+    default:
+      return "✓";
+  }
+}
+
+export function formatVerificationDate(status?: VerificationStatus): string {
+  if (!status?.verifiedAt) return "Not verified";
+  
+  const date = new Date(status.verifiedAt);
+  return `Verified ${date.toLocaleDateString()}`;
+}
+
+export function shouldReverify(status?: VerificationStatus): boolean {
+  if (!status?.verifiedAt) return true;
+  
+  const verifiedDate = new Date(status.verifiedAt);
+  const now = new Date();
+  const monthsOld = (now.getTime() - verifiedDate.getTime()) / (1000 * 60 * 60 * 24 * 30);
+  
+  return monthsOld > 3; // Reverify if older than 3 months
+}
