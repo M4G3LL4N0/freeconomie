@@ -92,6 +92,14 @@ export type RouteCategory = FreeconomyCategory;
 
 export type SignupType = 'email' | 'phone' | 'credit-card' | 'app' | 'membership' | 'none';
 
+export type PerkOffer = {
+  perkType: 'corporate' | 'membership' | 'community';
+  provider: string;
+  eligibility?: string[];
+  redemptionMethod: 'code' | 'app' | 'in-person';
+  valueEstimate: number;
+};
+
 export type FreeconomyOffer = {
   systemMetrics: {
     lastVerified: string;  
@@ -99,7 +107,8 @@ export type FreeconomyOffer = {
     routePriority?: number; // Suggested optimization score
   };
   economyType: FreeconomyCategory;
-  valueEstimate?: number; // USD value of the free offering
+  valueEstimate?: number;
+  perkDetails?: PerkOffer; // New optional field
   restrictions?: string[];
   // Core identification
   id: string;

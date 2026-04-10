@@ -102,9 +102,12 @@ export function calculateLocalRelevance(offer: FreeconomyOffer & LocalOffer): nu
 export function isPremiumOffer(offer: FreeconomyOffer & LocalOffer): boolean {
   const isPremiumTrial = offer.trialDetails?.valueEstimate >= 25 &&
     calculateVerificationScore(offer) >= 80;
+  const isVerifiedPerk = offer.perkDetails?.valueEstimate >= 15 &&
+    calculateVerificationScore(offer) >= 75;
   
   return (
     isPremiumTrial ||
+    isVerifiedPerk ||
     calculateLocalRelevance(offer) >= 70 ||
     (offer.valueEstimate?.amount || 0) >= 10 ||
     offer.category === "free-car-wash"
