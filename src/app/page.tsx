@@ -82,19 +82,55 @@ export default function Home() {
               <div className="relative grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
                 <div>
                   <div className="inline-flex items-center rounded-full border border-white/10 bg-white/6 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.26em] text-white/68 backdrop-blur-xl">
-                    Freeconomie Launch Product · Static Seed Data
+                    Bay Area Launch · Static Seed Data
                   </div>
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
                     <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
                       Freeconomie
                     </span>{" "}
-                    <span className="text-white">Verifies Free Opportunities</span>
+                    <span className="text-white">Verifies Truly Free Offers</span>
                     <span className="block mt-4 text-xl text-white/70">
                       Discover {bayAreaStaticOffers.length} verified free car washes in the Bay Area - 
-                      the first step in building the definitive network for high-value free offers
+                      the first step in building the definitive network for high-value free opportunities
                     </span>
                   </h1>
+
+                  <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
+                    <p className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 p-4">
+                      Freeconomie is building the definitive verification network for high-value free opportunities. 
+                      Our Bay Area launch dataset of {bayAreaStaticOffers.length} car washes establishes the foundation for 
+                      a system that surfaces and validates truly free offers - no hidden costs, no purchase requirements, 
+                      just verified value.
+                    </p>
+                    
+                    <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-4">
+                      <h3 className="text-sm font-semibold text-emerald-200">Our Verification Promise</h3>
+                      <div className="mt-2 text-sm text-emerald-100/80">
+                        <p>Every offer in our Bay Area dataset meets these criteria:</p>
+                        <ul className="mt-3 space-y-3">
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>Source Verified:</strong> {(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% confirmed via official business websites
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>On-Site Confirmed:</strong> {(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% physically verified
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>No Purchase Required:</strong> Truly free with no hidden costs
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                   
                   <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
                     <p className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 p-4">
@@ -171,12 +207,48 @@ export default function Home() {
                     >
                       View Verified Map
                     </Link>
-                    <a
-                      href="#waitlist"
+                    <Link
+                      href="/submit"
                       className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
                     >
-                      Join Waitlist
-                    </a>
+                      Submit New Offer
+                    </Link>
+                  </div>
+
+                  <div className="mt-8 rounded-xl border border-white/10 bg-white/6 p-6">
+                    <h3 className="text-sm font-semibold text-white">Verification Methodology</h3>
+                    <div className="mt-4 space-y-4 text-sm text-white/72">
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1 h-2 w-2 rounded-full bg-cyan-400/80"></div>
+                        <div>
+                          <p className="font-medium">Source Verification</p>
+                          <p className="mt-1 text-xs text-white/60">
+                            {(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% confirmed via official business websites
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1 h-2 w-2 rounded-full bg-violet-400/80"></div>
+                        <div>
+                          <p className="font-medium">On-Site Confirmation</p>
+                          <p className="mt-1 text-xs text-white/60">
+                            {(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% physically verified
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1 h-2 w-2 rounded-full bg-orange-400/80"></div>
+                        <div>
+                          <p className="font-medium">Community Reports</p>
+                          <p className="mt-1 text-xs text-white/60">
+                            {(bayAreaStaticOffers.filter(o => o.source.type === "user").length / bayAreaStaticOffers.length * 100).toFixed(0)}% validated by community submissions
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-4 text-xs text-white/50">
+                      Current verification status: Static Seed ({new Date().toLocaleDateString()}) - {bayAreaStaticOffers.length} verified offers
+                    </div>
                   </div>
 
                   <div className="mt-10 rounded-xl border border-white/10 bg-white/6 p-6">
