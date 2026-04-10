@@ -37,6 +37,8 @@ export type VerificationStatus = {
     | "partner-feed"
     | "community-report";
   confidenceScore: number;
+  stackVerified?: boolean;
+  componentsVerified?: string[];
   verificationNotes?: string;
   lastChecked?: string;
   freshnessScore?: number;
@@ -53,12 +55,19 @@ export type VerificationStatus = {
 };
 
 export type FreeconomyCategory =
-  | "free-car-wash"       // Keep existing car wash category
-  | "saas-trial"          // New SaaS trial category
-  | "premium-trial"       // Premium trial offers
-  | "corporate-perk"      // Corporate perk offers
-  | "grand-opening"       // Grand opening offers
+  | "free-car-wash"       // Anchor category
+  | "premium-trial"       // High-value trials  
+  | "corporate-perk"      // Employee benefits
+  | "public-good"         // Municipal programs
+  | "stackable"           // Combo offers
   | "ai-trial";           // AI tool trials
+
+export type StackComponent = {
+  id: string;
+  name: string;
+  valueEstimate: number;
+  verified: boolean;
+};
 
 export type LocalOffer = {
   hyperlocalScore: number; // 0-100 based on neighborhood relevance
