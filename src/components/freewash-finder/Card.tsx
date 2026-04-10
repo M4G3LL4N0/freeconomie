@@ -1,13 +1,44 @@
-import { themeClasses } from "@/app/page";
+function themeClasses(theme: string) {
+  switch (theme) {
+    case "cyan":
+      return {
+        glow: "from-cyan-400/30 via-sky-500/20 to-blue-600/25",
+        pill: "text-cyan-200 border-cyan-300/20 bg-cyan-400/10",
+        orb: "bg-cyan-400/20",
+      };
+    case "violet":
+      return {
+        glow: "from-fuchsia-400/30 via-violet-500/20 to-indigo-600/25",
+        pill: "text-fuchsia-200 border-fuchsia-300/20 bg-fuchsia-400/10",
+        orb: "bg-fuchsia-400/20",
+      };
+    case "orange":
+      return {
+        glow: "from-orange-400/30 via-pink-500/20 to-rose-600/25",
+        pill: "text-orange-100 border-orange-300/20 bg-orange-400/10",
+        orb: "bg-orange-400/20",
+      };
+    case "emerald":
+      return {
+        glow: "from-emerald-400/30 via-teal-500/20 to-cyan-600/25",
+        pill: "text-emerald-100 border-emerald-300/20 bg-emerald-400/10",
+        orb: "bg-emerald-400/20",
+      };
+    default:
+      return {
+        glow: "from-cyan-400/30 via-sky-500/20 to-blue-600/25",
+        pill: "text-cyan-200 border-cyan-300/20 bg-cyan-400/10",
+        orb: "bg-cyan-400/20",
+      };
+  }
+}
 
 interface CardProps {
   title: string;
-  description: string;
+  description?: string;
   label?: string;
   meta?: string;
-  theme?: "cyan" | "violet" | "orange" | "emerald";
-  className?: string;
-  children?: React.ReactNode;
+  theme?: string;
 }
 
 export default function Card({
@@ -16,38 +47,30 @@ export default function Card({
   label,
   meta,
   theme = "cyan",
-  className = "",
-  children
 }: CardProps) {
   const c = themeClasses(theme);
-  
+
   return (
-    <article 
-      className={`relative overflow-hidden rounded-[1.8rem] border border-white/10 glass-panel p-[1px] transition-all hover:scale-[1.02] hover:shadow-[0_24px_80px_rgba(0,0,0,0.4)] ${className}`}
-      aria-labelledby={`card-${title}-heading`}
+    <div
+      className={`relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-gradient-to-br ${c.glow} p-[1px]`}
     >
-      <div className={`absolute inset-0 rounded-[calc(1.8rem-1px)] bg-gradient-to-br ${c.medium}`} />
-      <div className="relative h-full rounded-[calc(1.8rem-1px)] bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] backdrop-blur-[8px]">
-        <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${c.heavy}`} />
-        <div className={`absolute right-[-2rem] top-[-2rem] h-24 w-24 rounded-full blur-3xl ${c.orb}`} />
-        <div className="relative space-y-6 p-8">
-          {label && (
-            <span className="inline-block text-[11px] uppercase tracking-[0.24em] text-white/42">
-              {label}
-            </span>
-          )}
-          <h3 id={`card-${title}-heading`} className="text-2xl font-bold tracking-tight text-white">
-            {title}
-          </h3>
-          <p className="text-base leading-7 text-white/70">{description}</p>
-          {meta && (
-            <div className="text-label mt-4 text-white/40">
-              {meta}
-            </div>
-          )}
-          {children}
-        </div>
+      <div className="relative h-full rounded-[calc(1.5rem-1px)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.24)]">
+        <div className={`absolute right-[-1.5rem] top-[-1.5rem] h-20 w-20 rounded-full blur-3xl ${c.orb}`} />
+        {label ? (
+          <div className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${c.pill}`}>
+            {label}
+          </div>
+        ) : null}
+        <h3 className="mt-4 text-xl font-semibold text-white">{title}</h3>
+        {description ? (
+          <p className="mt-3 text-sm leading-6 text-white/62">{description}</p>
+        ) : null}
+        {meta ? (
+          <div className="mt-4 text-xs uppercase tracking-[0.18em] text-white/40">
+            {meta}
+          </div>
+        ) : null}
       </div>
-    </article>
+    </div>
   );
 }
