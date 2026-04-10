@@ -20,6 +20,29 @@ ${Array.from(new Set(bayAreaStaticOffers.map(o => o.businessName))).join(', ')}
 2. Expand verification system
 3. Add real-time route intelligence
 
+## Environment Configuration
+
+Required variables:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+Feature flags (defaults shown):
+```bash
+# Enable experimental route intelligence
+NEXT_PUBLIC_BETA_ROUTE_INTEL=off
+
+# Enable user submissions
+NEXT_PUBLIC_ENABLE_SUBMISSIONS=off  
+
+# Configure available categories
+NEXT_PUBLIC_FREEONOMY_CATEGORIES="free-car-wash,free-membership-trial"
+
+# Default regions to show
+NEXT_PUBLIC_DEFAULT_REGION="South Bay,Peninsula,East Bay"
+```
+
 ## Getting Started
 
 First, run the development server:

@@ -1,3 +1,4 @@
+import { env } from "@/env";
 import type { VerificationStatus } from "@/types/freewash";
 
 type VerificationBadgeProps = {
@@ -64,7 +65,9 @@ export function VerificationBadge({
     }
   };
 
-  const { className, text } = getBadgeStyle(score);
+  const { className, text } = env.NEXT_PUBLIC_BETA_ROUTE_INTEL 
+    ? getEnhancedBadgeStyle(score) 
+    : getBadgeStyle(score);
 
   return (
     <span

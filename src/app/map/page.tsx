@@ -14,7 +14,7 @@ export default function MapPage() {
         <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(13,28,52,0.96),rgba(20,34,68,0.88)_38%,rgba(25,24,52,0.84)_100%)] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.42)]">
             <div className="mb-5 flex flex-wrap gap-2">
-              {["Verified Only", "Peninsula", "South Bay", "East Bay", "On Route"].map((pill) => (
+              {["Verified Only", ...env.NEXT_PUBLIC_DEFAULT_REGION, "On Route"].map((pill) => (
                 <span
                   key={pill}
                   className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs text-white/70"
