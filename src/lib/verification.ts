@@ -135,6 +135,14 @@ export function isHighValueTrial(offer: FreeconomyOffer): boolean {
     offer.trialDetails.valueEstimate >= 25 &&
     calculateVerificationScore(offer) >= 80;
 }
+
+export function isVerifiedFinancialIncentive(offer: FreeconomyOffer): boolean {
+  return !!offer.financialIncentives?.some(i => 
+    i.amount >= 100 &&
+    i.source === 'government' &&
+    calculateVerificationScore(offer) >= 85
+  );
+}
 import { VerificationStatus } from "@/types/freewash";
 
 export function getVerificationIcon(status?: VerificationStatus): string {

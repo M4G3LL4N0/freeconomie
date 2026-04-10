@@ -51,6 +51,16 @@ const categoryVariants = {
     text: "AI Tool Trial",
     className: "border-purple-300/20 bg-purple-400/10 text-purple-200",
     icon: "🤖"
+  },
+  "finance-rebate": {
+    text: "Rebate Available",
+    className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200",
+    icon: "💵"
+  },
+  "tax-credit": {
+    text: "Tax Credit",
+    className: "border-blue-300/20 bg-blue-400/10 text-blue-200",
+    icon: "🏛️"
   }
 };
 

@@ -81,6 +81,16 @@ export type GrandOpeningOffer = {
   valuePerPerson: number;
 };
 
+export type FinancialIncentive = {
+  incentiveType: 'rebate' | 'tax-credit' | 'grant' | 'discount';
+  amount: number;
+  currency: 'USD';
+  eligibility: string[];
+  source: 'government' | 'corporate' | 'non-profit';
+  expiration?: string;
+  applicationUrl?: string;
+};
+
 export type FreeconomyOffer = {
   systemMetrics: {
     lastVerified: string;  
@@ -90,7 +100,8 @@ export type FreeconomyOffer = {
   economyType: FreeconomyCategory;
   valueEstimate?: ValueEstimate;
   restrictions?: string[];
-  trialDetails?: TrialOffer; // New optional field
+  trialDetails?: TrialOffer;
+  financialIncentives?: FinancialIncentive[]; // New optional field
 };
 
 export type ValueEstimate = {
