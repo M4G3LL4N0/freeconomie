@@ -172,8 +172,10 @@ export default function Home() {
                                 <p className="mt-2 text-sm leading-6 text-white/60">
                                   {item.offerTitle} · {item.summary}
                                 </p>
-                                <div className="mt-2 text-xs text-white/50">
-                                  Source: {item.source.type === "official" ? "Official Site" : "Verified Partner"}
+                                <div className="mt-2 flex items-center gap-2 text-xs text-white/50">
+                                  <span>Source: {item.source.type === "official" ? "Official Site" : "Verified Partner"}</span>
+                                  <span>·</span>
+                                  <span>Last Checked: {new Date(item.source.checkedAt).toLocaleDateString()}</span>
                                 </div>
                               </div>
                               <div className="shrink-0 rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs font-medium text-white/74">
