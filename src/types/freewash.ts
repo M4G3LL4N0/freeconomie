@@ -41,9 +41,10 @@ export type VerificationStatus = {
 
 export type FreeconomyCategory =
   | "free-car-wash"       // Keep existing car wash category
-  | "grand-opening"       // New grand opening category
-  | "premium-trial"      // Premium trial offers
-  | "corporate-perk";     // Corporate perk offers
+  | "saas-trial"          // New SaaS trial category
+  | "premium-trial"       // Premium trial offers
+  | "corporate-perk"      // Corporate perk offers
+  | "grand-opening";      // Grand opening offers
 
 export type LocalOffer = {
   hyperlocalScore: number; // 0-100 based on neighborhood relevance
@@ -61,11 +62,13 @@ export type ValueEstimate = {
 };
 
 export type TrialOffer = {
-  trialType: 'membership' | 'software' | 'service';
-  trialDuration: number; // Days
+  trialType: 'membership' | 'saas' | 'service';
+  durationDays: number;
   requiresPaymentMethod: boolean;
   autoRenews: boolean;
-  valueEstimate: number; // USD
+  valueEstimate: number;
+  category?: 'productivity' | 'design' | 'dev-tools';
+  redemptionMethod?: 'app' | 'web' | 'code';
 };
 
 export type GrandOpeningOffer = {

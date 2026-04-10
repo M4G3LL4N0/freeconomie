@@ -5,6 +5,11 @@ const categoryVariants = {
     text: "Car Wash",
     className: "border-cyan-300/20 bg-cyan-400/10 text-cyan-200"
   },
+  "saas-trial": {
+    text: "SaaS Trial",
+    className: "border-sky-300/20 bg-sky-400/10 text-sky-200",
+    icon: "💻"
+  },
   "premium-trial": {
     text: "Premium Trial",
     className: "border-violet-300/20 bg-violet-400/10 text-violet-200"

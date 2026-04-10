@@ -104,14 +104,23 @@ export function isPremiumOffer(offer: FreeconomyOffer & LocalOffer): boolean {
     calculateVerificationScore(offer) >= 80;
   const isVerifiedPerk = offer.perkDetails?.valueEstimate >= 15 &&
     calculateVerificationScore(offer) >= 75;
+  const isPremiumSaaS = isVerifiedSaaSTrial(offer);
   
   return (
     isPremiumTrial ||
     isVerifiedPerk ||
+    isPremiumSaaS ||
     calculateLocalRelevance(offer) >= 70 ||
     (offer.valueEstimate?.amount || 0) >= 10 ||
     offer.category === "free-car-wash"
   );
+}
+
+export function isVerifiedSaaSTrial(offer: FreeconomyOffer): boolean {
+  return !!offer.trialDetails && 
+    offer.trialDetails.trialType === 'saas' &&
+    offer.trialDetails.valueEstimate >= 50 &&
+    calculateVerificationScore(offer) >= 85;
 }
 
 export function isHighValueTrial(offer: FreeconomyOffer): boolean {
