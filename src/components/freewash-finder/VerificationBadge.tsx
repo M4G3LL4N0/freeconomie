@@ -6,8 +6,11 @@ interface VerificationBadgeProps {
   label?: string;
 }
 
-export function VerificationBadge({ verification, label }: VerificationBadgeProps) {
+export function VerificationBadge({ verification, label, qualityFlags }: VerificationBadgeProps & { qualityFlags?: QualityFlags }) {
   const score = verification?.confidenceScore ?? 0;
+  const isPremium = qualityFlags 
+    ? Object.values(qualityFlags).every(v => v === false || v === undefined || (typeof v === 'number' && v >= 15))
+    : false;
   
   const getBadgeConfig = (score: number) => {
     if (score >= 95) {
@@ -55,13 +58,17 @@ export function VerificationBadge({ verification, label }: VerificationBadgeProp
           </span>
         </span>
       </TooltipTrigger>
-      <TooltipContent side="top" className="max-w-[240px]">
+      <TooltipContent side="top" className="max-w-[280px]">
         <p>{badge.tooltip}</p>
         {verification?.verificationMethod && (
           <p className="mt-1 text-xs opacity-80">
             Method: {verification.verificationMethod.replace(/-/g, ' ')}
           </p>
         )}
+        {isPremium && <p className="mt-2 flex items-center gap-1 text-sm text-emerald-300">
+          <CheckCircle className="h-4 w-4" />
+          <span>Premium Quality Offer</span>
+        </p>}
         <small className="block mt-1 text-xs opacity-70">
           Part of Freeconomie's verified free value network
         </small>

@@ -124,12 +124,22 @@ export type StackableValue = {
   redemptionMethod: 'auto' | 'manual' | 'code';
 };
 
+export type QualityFlags = {
+  isSponsored?: boolean;
+  requiresPurchase?: boolean; 
+  hasTimeLimit?: boolean;
+  affiliateLinks?: boolean;
+  minimumValue?: number; // USD
+};
+
 export type FreeconomyOffer = {
   systemMetrics: {
-    lastVerified: string;  
-    freshnessScore: number; // 0-100 based on age
-    routePriority?: number; // Suggested optimization score
+    lastVerified: string;
+    freshnessScore: number;
+    routePriority?: number;
   };
+  qualityFlags: QualityFlags;
+  rejectionReasons?: string[];
   economyType: FreeconomyCategory;
   valueEstimate?: ValueEstimate;
   restrictions?: string[];
