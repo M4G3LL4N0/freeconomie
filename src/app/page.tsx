@@ -64,14 +64,14 @@ export default function Home() {
                   </div>
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
-                    Find free value with a{" "}
+                    The operating system for{" "}
                     <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
-                      smarter route layer.
+                      free value discovery
                     </span>
                   </h1>
 
                   <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
-                    FreeWash Finder launches with verified Bay Area free-wash offers sourced from official car wash websites and structured into a premium route-aware discovery experience.
+                    Freeconomie launches with verified Bay Area free car washes while building the intelligence layer for all high-value free offerings - from trials to perks to public goods.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
