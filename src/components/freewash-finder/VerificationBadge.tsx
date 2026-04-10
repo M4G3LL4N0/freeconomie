@@ -13,53 +13,61 @@ export function VerificationBadge({
   const score = verification?.confidenceScore ?? 0;
   const method = verification?.verificationMethod;
 
-  const getBadgeStyle = (score: number) => {
+  const getBadgeConfig = (score: number) => {
     if (score >= 95) {
       return {
-        className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200",
-        text: "Gold Verified",
-        icon: "✓✓✓",
-        tooltip: "Official site verification + in-person confirmation"
+        className: "border-amber-300/20 bg-gradient-to-r from-amber-400/25 to-amber-600/10 text-amber-200",
+        icon: "👑",
+        text: "Platinum Verified",
+        tooltip: "In-person verified + official confirmation"
       };
     } else if (score >= 85) {
       return {
-        className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200",
-        text: "Silver Verified",
+        className: "border-emerald-300/20 bg-gradient-to-r from-emerald-400/20 to-emerald-500/10 text-emerald-200",
         icon: "✓✓",
-        tooltip: "Official site + phone confirmation"
+        text: "Gold Verified",
+        tooltip: "Phone verified + official confirmation"
       };
     } else if (score >= 70) {
       return {
-        className: "border-cyan-300/20 bg-cyan-400/10 text-cyan-200",
-        text: "Bronze Verified", 
+        className: "border-cyan-300/20 bg-gradient-to-r from-cyan-400/15 to-cyan-500/10 text-cyan-200",
         icon: "✓",
+        text: "Silver Verified",
         tooltip: "Official site verification"
-      };
-    } else if (score >= 50) {
-      return {
-        className: "border-amber-300/20 bg-amber-400/10 text-amber-200",
-        text: "Community Reported",
-        icon: "👥",
-        tooltip: "User-submitted, pending verification"
       };
     } else {
       return {
         className: "border-white/10 bg-white/6 text-white/70",
-        text: "Unverified",
         icon: "?",
+        text: "Unverified", 
         tooltip: "Not yet verified"
       };
     }
   };
 
-  const getMethodTooltip = () => {
-    switch(method) {
-      case "official-site":
-        return "Verified via official website";
-      case "phone-confirmation": 
-        return "Phone verified";
-      case "in-person-visit":
-        return "In-person verification";
+  const badge = getBadgeConfig(score);
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span
+          className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${badge.className}`}
+        >
+          {badge.icon} {label ?? badge.text}
+          <span className="ml-1 text-xs font-normal normal-case opacity-80">
+            {score}%
+          </span>
+        </span>
+      </TooltipTrigger>
+      <TooltipContent side="top" className="max-w-[240px]">
+        <p>{badge.tooltip}</p>
+        {method && (
+          <p className="mt-1 text-xs opacity-80">
+            Method: {method.replace(/-/g, ' ')}
+          </p>
+        )}
+      </TooltipContent>
+    </Tooltip>
       default:
         return "Verification method: " + (method || "unknown");
     }
