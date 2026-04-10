@@ -99,14 +99,9 @@ export default function Home() {
                   <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
                     <p className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 p-4">
                       Freeconomie is building the definitive verification network for high-value free opportunities. 
-                      Starting with car washes, we're creating a system to surface and validate truly free offers - 
-                      no hidden costs, no purchase requirements, just verified value.
-                    </p>
-
-                  <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
-                    <p>
-                      Freeconomie surfaces and verifies truly free offers - starting with car washes and expanding to trials, samples, and public goods. 
-                      Our Bay Area launch dataset is hand-verified with rigorous standards.
+                      Our Bay Area launch dataset of {bayAreaStaticOffers.length} car washes establishes the foundation for 
+                      a system that surfaces and validates truly free offers - no hidden costs, no purchase requirements, 
+                      just verified value.
                     </p>
                     
                     <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-4">
@@ -135,14 +130,32 @@ export default function Home() {
                         </ul>
                       </div>
                     </div>
-                    <p>
-                      This static dataset establishes our verification framework for future expansion:
-                    </p>
-                    <ul className="space-y-2 pl-5 list-disc">
-                      <li>Live updates and automated verification</li>
-                      <li>Route intelligence for optimized freeconomie trips</li>
-                      <li>Expanded categories beyond car washes</li>
-                    </ul>
+                    <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-4">
+                      <h3 className="text-sm font-semibold text-emerald-200">Current Bay Area Coverage</h3>
+                      <div className="mt-2 text-sm text-emerald-100/80">
+                        <p>Our launch dataset includes:</p>
+                        <ul className="mt-3 space-y-3">
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>{bayAreaStaticOffers.length} Verified Offers</strong> across {new Set(bayAreaStaticOffers.map(o => o.city)).size} cities
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>{(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% Official Sources</strong> confirmed via business websites
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>{(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% On-Site Verified</strong> through physical confirmation
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -150,20 +163,20 @@ export default function Home() {
                       href="/list"
                       className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.02]"
                     >
-                      Browse All Washes
+                      Browse Verified Washes
                     </Link>
                     <Link
                       href="/map"
                       className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
                     >
-                      Explore Map
+                      View Verified Map
                     </Link>
-                    <Link
-                      href="/submit"
+                    <a
+                      href="#waitlist"
                       className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
                     >
-                      Submit New Offer
-                    </Link>
+                      Join Waitlist
+                    </a>
                   </div>
 
                   <div className="mt-10 rounded-xl border border-white/10 bg-white/6 p-6">
