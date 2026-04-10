@@ -318,10 +318,10 @@ export default function Home() {
                             </div>
                             <div>
                               <div className="text-sm font-medium text-white">
-                                Live Updates (Q3 2026)
+                                Phase 1: Live Ingestion (Q3 2026)
                               </div>
                               <div className="mt-1 text-sm leading-6 text-white/62">
-                                Automated verification and real-time status updates
+                                Automated scraping from official sources + manual submissions
                               </div>
                             </div>
                           </div>
@@ -331,10 +331,10 @@ export default function Home() {
                             </div>
                             <div>
                               <div className="text-sm font-medium text-white">
-                                Route Intelligence (Q4 2026)
+                                Phase 2: Verification Expansion (Q4 2026)
                               </div>
                               <div className="mt-1 text-sm leading-6 text-white/62">
-                                Optimized routing and expanded categories
+                                Multi-source validation + community verification
                               </div>
                             </div>
                           </div>
