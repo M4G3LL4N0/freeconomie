@@ -1,7 +1,8 @@
 "use client";
 
 import { MapPin } from "lucide-react";
-import { StaticOffer } from "@/types/freewash";
+import type { FreeconomyOffer as StaticOffer } from "@/types/freewash";
+import { EconomyBadge } from "./EconomyBadge";
 import { VerificationBadge } from "./VerificationBadge";
 import { captureEvent } from "@/lib/analytics";
 
@@ -21,6 +22,7 @@ export default function OfferCard({ offer }: OfferCardProps) {
           <h3 className="mt-3 text-xl font-semibold text-white">{offer.businessName}</h3>
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <span className="text-sm text-white/65">{offer.offerTitle}</span>
+            <EconomyBadge category={offer.economyType || "free-car-wash"} />
             {offer.signupRequired && (
               <SignupBadge type={offer.signupType || "email"} />
             )}

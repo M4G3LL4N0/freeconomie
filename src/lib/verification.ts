@@ -22,7 +22,7 @@ function getVerificationDetails(offer: StaticOffer): VerificationDetails {
   return maybeDetails ?? {};
 }
 
-export function calculateVerificationScore(offer: StaticOffer): number {
+export function calculateVerificationScore(offer: FreeconomyOffer): number {
   let score = 0;
   const details = getVerificationDetails(offer);
 
@@ -56,8 +56,13 @@ export function calculateVerificationScore(offer: StaticOffer): number {
     score = Math.min(100, score + details.confidenceScore);
   }
 
+  // Add value-based modifier
+  const valueModifier = offer.valueEstimate 
+    ? Math.min(offer.valueEstimate / 50, 10) // +10 max for high-value offers
+    : 0;
+    
   // Cap at 100 and ensure minimum of 0
-  return Math.max(0, Math.min(100, Math.round(score)));
+  return Math.max(0, Math.min(100, Math.round(score + valueModifier)));
 }
 
 export function isHighConfidenceOffer(offer: StaticOffer): boolean {

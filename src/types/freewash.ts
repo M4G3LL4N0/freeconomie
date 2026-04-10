@@ -25,8 +25,9 @@ export type BayAreaCity =
 export type VerificationMethod = 
   | "official-site" 
   | "phone-confirmation"
-  | "in-person-visit"
-  | "third-party-confirmation";
+  | "in-person-check"
+  | "staff-confirmation"
+  | "user-reports";
 
 export type VerificationStatus = {
   verifiedAt: string; // ISO date
@@ -35,15 +36,23 @@ export type VerificationStatus = {
   confidenceScore: number; // 0-100
 };
 
-export type RouteCategory = 
-  | "free-first-wash"
-  | "free-membership-trial"
-  | "promotional-offer"
-  | "grand-opening";
+export type FreeconomyCategory = 
+  | "free-car-wash"
+  | "free-trials"
+  | "free-samples" 
+  | "community-shares"
+  | "grand-openings"
+  | "no-strings-freebies";
+
+// Backwards compatible alias
+export type RouteCategory = FreeconomyCategory;
 
 export type SignupType = 'email' | 'phone' | 'credit-card' | 'app' | 'membership' | 'none';
 
-export type StaticOffer = {
+export type FreeconomyOffer = {
+  economyType: FreeconomyCategory;
+  valueEstimate?: number; // USD value of the free offering
+  restrictions?: string[];
   // Core identification
   id: string;
   businessName: string;
