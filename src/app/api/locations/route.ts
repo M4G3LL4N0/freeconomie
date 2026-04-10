@@ -43,8 +43,13 @@ export async function GET(request: Request) {
       limit: Number(searchParams.get('limit')) || 20,
     });
 
-    const MIN_PREMIUM_VALUE = 15; // $15 minimum
-    const MIN_CONFIDENCE = 70;    // Bronze verification
+    const MIN_PREMIUM_VALUE = 15; // $15 minimum value threshold
+    const MIN_CONFIDENCE = 70;    // Bronze verification level
+    const PREMIUM_CATEGORIES = [
+      'premium-trial',
+      'corporate-perk',
+      'public-good'
+    ];
 
     // Enhanced filtering logic
     const filteredOffers = bayAreaStaticOffers.filter(offer => {

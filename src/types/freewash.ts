@@ -40,7 +40,7 @@ export type VerificationStatus = {
 };
 
 export type FreeconomyCategory = 
-  | "free-car-wash" // Anchor category
+  | "free-car-wash" // Anchor category (keeps existing functionality)
   | "premium-trial" // High-value trials (software/services >$40)
   | "corporate-perk" // Employee benefits
   | "public-good";   // Municipal programs
@@ -50,6 +50,18 @@ export type ValueEstimate = {
   currency: "USD";
   source: "system" | "partner" | "user";
   confidence: number; // 0-100
+  lastUpdated?: string;
+};
+
+export type FreeconomyOffer = {
+  systemMetrics: {
+    lastVerified: string;  
+    freshnessScore: number; // 0-100 based on age
+    routePriority?: number; // Suggested optimization score
+  };
+  economyType: FreeconomyCategory;
+  valueEstimate?: ValueEstimate;
+  restrictions?: string[];
 };
 
 export type ValueEstimate = {

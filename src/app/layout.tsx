@@ -5,8 +5,8 @@ import { MapPin, List, PlusCircle, Sun, Moon } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 
 export const metadata: Metadata = {
-  title: "FreeWash Finder",
-  description: "The Google Maps of free value. Discover verified free car washes, trials, and perks near you.",
+  title: "Freeconomie | The OS for Free Value",
+  description: "Discover verified high-value free offerings - starting with car washes and expanding to premium trials, corporate perks, and public goods.",
 };
 
 export default function RootLayout({
