@@ -100,19 +100,10 @@ export function calculateLocalRelevance(offer: FreeconomyOffer & LocalOffer): nu
 }
 
 export function isPremiumOffer(offer: FreeconomyOffer & LocalOffer): boolean {
-  const isPremiumTrial = offer.trialDetails?.valueEstimate >= 25 &&
-    calculateVerificationScore(offer) >= 80;
-  const isVerifiedPerk = offer.perkDetails?.valueEstimate >= 15 &&
-    calculateVerificationScore(offer) >= 75;
-  const isPremiumSaaS = isVerifiedSaaSTrial(offer);
-  
   return (
-    isPremiumTrial ||
-    isVerifiedPerk ||
-    isPremiumSaaS ||
-    calculateLocalRelevance(offer) >= 70 ||
-    (offer.valueEstimate?.amount || 0) >= 10 ||
-    offer.category === "free-car-wash"
+    (offer.valueEstimate?.amount || 0) >= 15 || // $15+ value
+    offer.category === "free-car-wash" || // Grandfathered
+    (offer.verification?.confidenceScore || 0) >= 80 // High confidence
   );
 }
 

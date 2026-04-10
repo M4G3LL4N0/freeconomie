@@ -35,35 +35,30 @@ function themeClasses(theme: string) {
   }
 }
 
-interface RouteIntelligencePanelProps {
-  title: string;
-  route: string;
-  eta?: string;
-  stops?: number;
-  verified?: boolean;
-  theme?: string;
+interface RouteIntelProps {
+  currentRoute: [number, number][];
+  valuePerMile: number;
+  timeSavings: number;
+  premiumOffers: FreeconomyOffer[];
+  routeEfficiencyScore: number;
+  detourMinutes?: number;
 }
 
 export default function RouteIntelligencePanel({
-  title,
-  route,
-  eta = "On route",
-  stops = 1,
-  verified = true,
-  theme = "cyan",
-}: RouteIntelligencePanelProps) {
-  const c = themeClasses(theme);
-
-  // Calculate value density
-  const valueDensity = Math.round(
-    (offer.valueEstimate?.amount || 10) / 
-    (route.length / 1609.34) // Convert meters to miles
-  );
+  currentRoute,
+  valuePerMile,
+  timeSavings,
+  premiumOffers,
+  routeEfficiencyScore,
+  detourMinutes = 0
+}: RouteIntelProps) {
+  const efficiencyVariant = 
+    routeEfficiencyScore >= 90 ? 'emerald' :
+    routeEfficiencyScore >= 70 ? 'cyan' : 
+    'orange';
 
   return (
-    <div 
-      className={`overflow-hidden rounded-[1.5rem] border border-white/10 bg-gradient-to-br ${c.glow} p-[1px]`}
-    >
+    <div className="rounded-[1.5rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.24)]">
       <div className="rounded-[calc(1.5rem-1px)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.24)]">
         <div className="flex items-center justify-between gap-4">
           <div className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${c.pill}`}>
