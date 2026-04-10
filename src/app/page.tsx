@@ -93,6 +93,13 @@ export default function Home() {
                       the first step in building the definitive network for high-value free offers
                     </span>
                   </h1>
+                  
+                  <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
+                    <p className="rounded-xl border border-cyan-400/20 bg-cyan-500/10 p-4">
+                      Freeconomie is building the definitive verification network for high-value free opportunities. 
+                      Starting with car washes, we're creating a system to surface and validate truly free offers - 
+                      no hidden costs, no purchase requirements, just verified value.
+                    </p>
 
                   <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
                     <p>
@@ -158,32 +165,38 @@ export default function Home() {
                   </div>
 
                   <div className="mt-10 rounded-xl border border-white/10 bg-white/6 p-6">
-                    <h3 className="text-sm font-semibold text-white">Product Roadmap</h3>
+                    <h3 className="text-sm font-semibold text-white">Our Verification Process</h3>
                     <div className="mt-4 space-y-4 text-sm text-white/72">
                       <div className="flex items-start gap-3">
                         <div className="mt-1 h-2 w-2 rounded-full bg-cyan-400/80"></div>
                         <div>
-                          <p className="font-medium">Live Updates (Q3 2026)</p>
-                          <p className="mt-1 text-xs text-white/60">Automated verification and real-time status monitoring</p>
+                          <p className="font-medium">Source Verification</p>
+                          <p className="mt-1 text-xs text-white/60">
+                            {(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% confirmed via official business websites
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="mt-1 h-2 w-2 rounded-full bg-violet-400/80"></div>
                         <div>
-                          <p className="font-medium">Route Intelligence (Q4 2026)</p>
-                          <p className="mt-1 text-xs text-white/60">Optimized routing and expanded categories</p>
+                          <p className="font-medium">On-Site Confirmation</p>
+                          <p className="mt-1 text-xs text-white/60">
+                            {(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% physically verified
+                          </p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="mt-1 h-2 w-2 rounded-full bg-orange-400/80"></div>
                         <div>
-                          <p className="font-medium">National Expansion (2027)</p>
-                          <p className="mt-1 text-xs text-white/60">Verified free opportunities across the US</p>
+                          <p className="font-medium">Community Reports</p>
+                          <p className="mt-1 text-xs text-white/60">
+                            {(bayAreaStaticOffers.filter(o => o.source.type === "user").length / bayAreaStaticOffers.length * 100).toFixed(0)}% validated by community submissions
+                          </p>
                         </div>
                       </div>
                     </div>
                     <div className="mt-4 text-xs text-white/50">
-                      Current version: Static Seed ({new Date().toLocaleDateString()}) - {bayAreaStaticOffers.length} verified offers
+                      Current verification status: Static Seed ({new Date().toLocaleDateString()}) - {bayAreaStaticOffers.length} verified offers
                     </div>
                   </div>
 
