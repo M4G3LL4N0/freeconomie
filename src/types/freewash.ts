@@ -37,16 +37,26 @@ export type VerificationStatus = {
 };
 
 export type FreeconomyCategory = 
-  | "free-car-wash"
-  | "free-trials"
-  | "free-trial" // Alias for backwards compatibility
+  | "free-car-wash" // Keep existing
+  | "free-trial"    // High-value trials (software/services)
+  | "community-exchange" // Skill/time swaps
+  | "corporate-perk" // Employee benefits
+  | "public-good"   // Government/community programs
+  // Backwards compatible aliases
+  | "free-trials" 
   | "free-samples"
-  | "free-sample" // Alias for backwards compatibility  
+  | "free-sample"
   | "community-shares"
-  | "community-exchange" // New category
   | "grand-openings"
   | "no-strings-freebies"
   | "promotional-offer";
+
+export type ValueEstimate = {
+  amount: number;
+  currency: "USD";
+  source: "system" | "partner" | "user";
+  lastUpdated?: string;
+};
 
 // Backwards compatible alias
 export type RouteCategory = FreeconomyCategory;

@@ -23,6 +23,11 @@ export default function OfferCard({ offer }: OfferCardProps) {
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <span className="text-sm text-white/65">{offer.offerTitle}</span>
             <EconomyBadge category={offer.economyType || "free-car-wash"} />
+            {offer.valueEstimate && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-amber-300/20 bg-amber-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-200">
+                ${offer.valueEstimate.amount.toLocaleString()}
+              </span>
+            )}
             {offer.signupRequired && (
               <SignupBadge type={offer.signupType || "email"} />
             )}

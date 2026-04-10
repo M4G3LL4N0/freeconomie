@@ -68,6 +68,15 @@ export function calculateVerificationScore(offer: FreeconomyOffer): number {
 export function isHighConfidenceOffer(offer: StaticOffer): boolean {
   return calculateVerificationScore(offer) >= 70;
 }
+
+export function isPremiumOffer(offer: FreeconomyOffer): boolean {
+  return (
+    offer.verification?.confidenceScore >= 80 ||
+    (offer.valueEstimate?.amount || 0) >= 25 ||
+    offer.category === "corporate-perk" ||
+    offer.category === "public-good"
+  );
+}
 import { VerificationStatus } from "@/types/freewash";
 
 export function getVerificationIcon(status?: VerificationStatus): string {
