@@ -64,17 +64,27 @@ export default function Home() {
                   </div>
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
-                    Verified Free Car Washes in{" "}
                     <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
-                      the Bay Area
-                    </span>
-                    <span className="block mt-4 text-xl text-white/70">Part of the Freeconomie network - surfacing premium verified free opportunities</span>
+                      Freeconomie
+                    </span>{" "}
+                    <span className="text-white">Network Launch</span>
+                    <span className="block mt-4 text-xl text-white/70">Starting with verified free car washes in the Bay Area</span>
                   </h1>
 
-                  <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
-                    Discover premium verified free car washes across the Bay Area. Each offer has been manually verified through official sources and site visits. 
-                    FreeWash Finder is your trusted guide to high-value free opportunities, starting with car washes and expanding to trials, perks, and public goods.
-                  </p>
+                  <div className="mt-7 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
+                    <p>
+                      Freeconomie surfaces premium verified free opportunities - from car washes to trials, samples, and public goods. 
+                      Our Bay Area launch features {bayAreaStaticOffers.length} manually verified free car washes, each confirmed through:
+                    </p>
+                    <ul className="space-y-2 pl-5 list-disc">
+                      <li>Official business websites and documentation</li>
+                      <li>On-site verification visits</li>
+                      <li>Partner API integrations where available</li>
+                    </ul>
+                    <p>
+                      This is our static seed dataset - live updates, automated verification, and route intelligence coming soon.
+                    </p>
+                  </div>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                     <Link
@@ -131,11 +141,22 @@ export default function Home() {
                             <div className="flex items-center justify-between gap-4">
                               <div>
                                 <div className="flex items-center gap-2">
-                                  <div className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-200">
-                                    {item.city}
-                                  </div>
-                                  <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">
-                                    Verified {new Date(item.verifiedAt).toLocaleDateString()}
+                                  <div className="flex items-center gap-2">
+                                    <div className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-200">
+                                      {item.city}
+                                    </div>
+                                    <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">
+                                      Verified {new Date(item.verifiedAt).toLocaleDateString()}
+                                    </div>
+                                    {item.source.type === "official" && (
+                                      <div className="inline-flex items-center gap-1 rounded-full border border-emerald-300/20 bg-emerald-400/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-200">
+                                        <span className="relative flex h-2 w-2">
+                                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                                          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                                        </span>
+                                        Official Source
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
                                 <h3 className="mt-3 text-base font-semibold text-white">
@@ -158,13 +179,28 @@ export default function Home() {
 
                       <div className="mt-5 rounded-[1.25rem] border border-white/8 bg-white/[0.04] p-4">
                         <div className="text-[11px] uppercase tracking-[0.24em] text-white/42">
-                          Live Next
+                          Roadmap
                         </div>
-                        <p className="mt-2 text-sm leading-6 text-white/62">
-                          Our static seed data includes {bayAreaStaticOffers.length} manually verified Bay Area car washes. 
-                          Each offer has been confirmed through official sources and site visits. 
-                          Live updates and automated re-verification coming soon.
-                        </p>
+                        <div className="mt-3 space-y-3 text-sm leading-6 text-white/62">
+                          <div className="flex items-start gap-3">
+                            <div className="mt-1 h-2 w-2 rounded-full bg-cyan-400/80"></div>
+                            <div>
+                              <span className="font-medium text-white/80">Static Seed:</span> {bayAreaStaticOffers.length} manually verified offers
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <div className="mt-1 h-2 w-2 rounded-full bg-white/30"></div>
+                            <div>
+                              <span className="font-medium text-white/80">Next:</span> Live updates & automated verification
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <div className="mt-1 h-2 w-2 rounded-full bg-white/10"></div>
+                            <div>
+                              <span className="font-medium text-white/80">Future:</span> Route intelligence & expanded categories
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
