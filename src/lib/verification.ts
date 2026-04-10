@@ -26,31 +26,38 @@ export function calculateVerificationScore(offer: StaticOffer): number {
   let score = 0;
   const details = getVerificationDetails(offer);
 
-  if (details.sourceType === "official") score += 40;
-  if (details.verificationMethod === "partner-api") score += 30;
-  if (details.verificationMethod === "official-site") score += 20;
-  if (details.verificationMethod === "manual-review") score += 15;
-  if (details.verificationMethod === "phone-call") score += 15;
+  // Source Type Weighting
+  if (details.sourceType === "official") score += 50;
+  else if (details.sourceType === "partner") score += 40;
+  else if (details.sourceType === "user") score += 20;
 
-  if ("verified" in offer && (offer as StaticOffer & { verified?: boolean }).verified) {
-    score += 10;
-  }
+  // Verification Method Weighting
+  if (details.verificationMethod === "partner-api") score += 40;
+  else if (details.verificationMethod === "official-site") score += 30;
+  else if (details.verificationMethod === "in-person-visit") score += 50;
+  else if (details.verificationMethod === "phone-call") score += 30;
+  else if (details.verificationMethod === "manual-review") score += 20;
 
+  // Recency Multiplier (exponential decay)
   if (details.verifiedAt) {
     const verifiedTime = new Date(details.verifiedAt).getTime();
     if (!Number.isNaN(verifiedTime)) {
       const daysOld = (Date.now() - verifiedTime) / (1000 * 60 * 60 * 24);
-      if (daysOld <= 7) score += 15;
-      else if (daysOld <= 30) score += 10;
-      else if (daysOld <= 90) score += 5;
+      if (daysOld <= 1) score *= 1.0;
+      else if (daysOld <= 7) score *= 0.95;
+      else if (daysOld <= 30) score *= 0.85;
+      else if (daysOld <= 90) score *= 0.70;
+      else score *= 0.50;
     }
   }
 
+  // Confidence Score Adjustment
   if (typeof details.confidenceScore === "number") {
-    score += Math.max(0, Math.min(20, Math.round(details.confidenceScore / 5)));
+    score = Math.min(100, score + details.confidenceScore);
   }
 
-  return Math.min(score, 100);
+  // Cap at 100 and ensure minimum of 0
+  return Math.max(0, Math.min(100, Math.round(score)));
 }
 
 export function isHighConfidenceOffer(offer: StaticOffer): boolean {

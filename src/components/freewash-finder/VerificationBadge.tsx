@@ -13,29 +13,40 @@ export function VerificationBadge({
   const method = verification?.verificationMethod;
 
   const getBadgeStyle = (score: number) => {
-    if (score >= 90) {
+    if (score >= 95) {
       return {
         className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200",
-        text: "Highly Verified",
+        text: "Gold Verified",
+        icon: "✓✓✓",
+        tooltip: "Official site verification + in-person confirmation"
+      };
+    } else if (score >= 85) {
+      return {
+        className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200",
+        text: "Silver Verified",
         icon: "✓✓",
+        tooltip: "Official site + phone confirmation"
       };
     } else if (score >= 70) {
       return {
         className: "border-cyan-300/20 bg-cyan-400/10 text-cyan-200",
-        text: "Verified", 
+        text: "Bronze Verified", 
         icon: "✓",
+        tooltip: "Official site verification"
       };
     } else if (score >= 50) {
       return {
         className: "border-amber-300/20 bg-amber-400/10 text-amber-200",
-        text: "Partially Verified",
-        icon: "~",
+        text: "Community Reported",
+        icon: "👥",
+        tooltip: "User-submitted, pending verification"
       };
     } else {
       return {
         className: "border-white/10 bg-white/6 text-white/70",
         text: "Unverified",
         icon: "?",
+        tooltip: "Not yet verified"
       };
     }
   };
