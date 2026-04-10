@@ -2,10 +2,30 @@ import Link from "next/link";
 import { bayAreaStaticOffers } from "@/lib/bay-area-offers";
 
 const stats = [
-  { value: `${bayAreaStaticOffers.length}+`, label: "Launch offers" },
-  { value: `${new Set(bayAreaStaticOffers.map((o) => o.city)).size}`, label: "Cities covered" },
-  { value: `${new Set(bayAreaStaticOffers.map((o) => o.region)).size}`, label: "Regions covered" },
-  { value: "Verified", label: "Official-site sourced" },
+  { 
+    value: `${bayAreaStaticOffers.length}+`, 
+    label: "Verified Offers",
+    description: "Manually verified free car washes",
+    icon: "verified"
+  },
+  { 
+    value: `${new Set(bayAreaStaticOffers.map((o) => o.city)).size}`, 
+    label: "Cities Covered",
+    description: "Across the Bay Area",
+    icon: "location"
+  },
+  { 
+    value: `${new Set(bayAreaStaticOffers.map((o) => o.region)).size}`, 
+    label: "Regions Covered",
+    description: "From South Bay to North Bay",
+    icon: "region"
+  },
+  { 
+    value: `${Math.round((bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length) * 100)}%`, 
+    label: "Official Sources",
+    description: "Direct from business websites",
+    icon: "source"
+  },
 ];
 
 const featured = bayAreaStaticOffers.slice(0, 3);
@@ -112,10 +132,29 @@ export default function Home() {
                     {stats.map((item) => (
                       <div
                         key={item.value + item.label}
-                        className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-4 backdrop-blur-xl"
+                        className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-5 backdrop-blur-xl"
                       >
-                        <div className="text-sm font-semibold text-white">{item.value}</div>
-                        <div className="mt-1 text-xs leading-5 text-white/54">{item.label}</div>
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm font-semibold text-white">{item.value}</div>
+                          <div className="h-5 w-5 rounded-full bg-white/6 flex items-center justify-center">
+                            {/* Icon would go here */}
+                          </div>
+                        </div>
+                        <div className="mt-2 text-sm font-medium text-white">{item.label}</div>
+                        <div className="mt-1 text-xs leading-5 text-white/54">{item.description}</div>
+                        {item.icon === "verified" && (
+                          <div className="mt-3">
+                            <div className="h-1.5 rounded-full bg-white/6">
+                              <div 
+                                className="h-1.5 rounded-full bg-gradient-to-r from-cyan-400 to-violet-500" 
+                                style={{ width: `${Math.round((bayAreaStaticOffers.filter(o => o.verifiedAt).length / bayAreaStaticOffers.length) * 100)}%` }}
+                              />
+                            </div>
+                            <div className="mt-1 text-[10px] text-white/40">
+                              {bayAreaStaticOffers.filter(o => o.verifiedAt).length}/{bayAreaStaticOffers.length} verified
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -186,27 +225,48 @@ export default function Home() {
                         ))}
                       </div>
 
-                      <div className="mt-5 rounded-[1.25rem] border border-white/8 bg-white/[0.04] p-4">
+                      <div className="mt-5 rounded-[1.25rem] border border-white/8 bg-white/[0.04] p-5">
                         <div className="text-[11px] uppercase tracking-[0.24em] text-white/42">
                           Roadmap
                         </div>
-                        <div className="mt-3 space-y-3 text-sm leading-6 text-white/62">
-                          <div className="flex items-start gap-3">
-                            <div className="mt-1 h-2 w-2 rounded-full bg-cyan-400/80"></div>
+                        <div className="mt-4 space-y-4">
+                          <div className="flex items-start gap-4">
+                            <div className="relative pt-1">
+                              <div className="absolute left-0 top-0 h-full w-0.5 bg-gradient-to-b from-cyan-400/80 via-white/30 to-white/10" />
+                            </div>
                             <div>
-                              <span className="font-medium text-white/80">Static Seed:</span> {bayAreaStaticOffers.length} manually verified offers
+                              <div className="text-sm font-medium text-white">
+                                Static Seed ({new Date().toLocaleDateString()})
+                              </div>
+                              <div className="mt-1 text-sm leading-6 text-white/62">
+                                {bayAreaStaticOffers.length} manually verified offers across {new Set(bayAreaStaticOffers.map(o => o.city)).size} cities
+                              </div>
                             </div>
                           </div>
-                          <div className="flex items-start gap-3">
-                            <div className="mt-1 h-2 w-2 rounded-full bg-white/30"></div>
+                          <div className="flex items-start gap-4">
+                            <div className="relative pt-1">
+                              <div className="absolute left-0 top-0 h-full w-0.5 bg-gradient-to-b from-white/30 via-white/10 to-transparent" />
+                            </div>
                             <div>
-                              <span className="font-medium text-white/80">Next:</span> Live updates & automated verification
+                              <div className="text-sm font-medium text-white">
+                                Live Updates (Q3 2026)
+                              </div>
+                              <div className="mt-1 text-sm leading-6 text-white/62">
+                                Automated verification and real-time status updates
+                              </div>
                             </div>
                           </div>
-                          <div className="flex items-start gap-3">
-                            <div className="mt-1 h-2 w-2 rounded-full bg-white/10"></div>
+                          <div className="flex items-start gap-4">
+                            <div className="relative pt-1">
+                              <div className="absolute left-0 top-0 h-full w-0.5 bg-gradient-to-b from-white/10 to-transparent" />
+                            </div>
                             <div>
-                              <span className="font-medium text-white/80">Future:</span> Route intelligence & expanded categories
+                              <div className="text-sm font-medium text-white">
+                                Route Intelligence (Q4 2026)
+                              </div>
+                              <div className="mt-1 text-sm leading-6 text-white/62">
+                                Optimized routing and expanded categories
+                              </div>
                             </div>
                           </div>
                         </div>
