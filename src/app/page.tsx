@@ -87,8 +87,8 @@ export default function Home() {
                     <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
                       Freeconomie
                     </span>{" "}
-                    <span className="text-white">Network</span>
-                    <span className="block mt-4 text-xl text-white/70">Premium verified free opportunities - launching with FreeWash Finder: {bayAreaStaticOffers.length} Bay Area car washes</span>
+                    <span className="text-white">Verifies Free Opportunities</span>
+                    <span className="block mt-4 text-xl text-white/70">Discover high-value free offers with rigorous verification - starting with {bayAreaStaticOffers.length} Bay Area car washes</span>
                   </h1>
 
                   <div className="mt-7 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
@@ -121,12 +121,26 @@ export default function Home() {
                           </li>
                         </ul>
                         <p className="mt-4 text-xs text-emerald-200/70">
-                          Our static seed dataset represents the foundation for automated verification systems currently in development.
+                          Our static seed dataset represents the foundation for automated verification systems. Each entry includes:
                         </p>
+                        <ul className="mt-3 space-y-3">
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>Source documentation (screenshots, URLs)</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>Verification method metadata</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>Expiration monitoring markers</span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                     <p>
-                      This static seed dataset represents our initial proof-of-concept. We're actively working to bring you:
+                      This hand-verified dataset powers our launch - next we're building:
                     </p>
                     <ul className="space-y-2 pl-5 list-disc">
                       <li>Live updates and automated verification</li>
