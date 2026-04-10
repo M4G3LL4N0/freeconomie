@@ -57,8 +57,9 @@ export async function GET(request: Request) {
       const isPremiumTrial = 
         offer.trialDetails?.valueEstimate >= 25 && 
         (offer.verification?.confidenceScore || 0) >= 80;
+      const isPremiumAITrial = isVerifiedAITrial(offer);
         
-      if (!isPremiumTrial && offer.category !== "free-car-wash") return false;
+      if (!isPremiumTrial && !isPremiumAITrial && offer.category !== "free-car-wash") return false;
       // Location filtering
       if (!offer.latitude || !offer.longitude) return false;
       

@@ -46,6 +46,11 @@ const categoryVariants = {
   "referral-bonus": {
     text: "Referral Bonus",
     className: "border-violet-300/20 bg-violet-400/10 text-violet-200"
+  },
+  "ai-trial": {
+    text: "AI Tool Trial",
+    className: "border-purple-300/20 bg-purple-400/10 text-purple-200",
+    icon: "🤖"
   }
 };
 

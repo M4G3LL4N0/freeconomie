@@ -123,6 +123,13 @@ export function isVerifiedSaaSTrial(offer: FreeconomyOffer): boolean {
     calculateVerificationScore(offer) >= 85;
 }
 
+export function isVerifiedAITrial(offer: FreeconomyOffer): boolean {
+  return !!offer.trialDetails && 
+    offer.trialDetails.trialType === 'ai-tool' &&
+    (offer.valueEstimate?.amount || 0) >= 50 &&
+    calculateVerificationScore(offer) >= 85;
+}
+
 export function isHighValueTrial(offer: FreeconomyOffer): boolean {
   return !!offer.trialDetails && 
     offer.trialDetails.valueEstimate >= 25 &&

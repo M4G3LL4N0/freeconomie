@@ -44,7 +44,8 @@ export type FreeconomyCategory =
   | "saas-trial"          // New SaaS trial category
   | "premium-trial"       // Premium trial offers
   | "corporate-perk"      // Corporate perk offers
-  | "grand-opening";      // Grand opening offers
+  | "grand-opening"       // Grand opening offers
+  | "ai-trial";           // AI tool trials
 
 export type LocalOffer = {
   hyperlocalScore: number; // 0-100 based on neighborhood relevance
@@ -62,7 +63,8 @@ export type ValueEstimate = {
 };
 
 export type TrialOffer = {
-  trialType: 'membership' | 'saas' | 'service';
+  trialType: 'membership' | 'saas' | 'service' | 'ai-tool';
+  aiFeatures?: string[];
   durationDays: number;
   requiresPaymentMethod: boolean;
   autoRenews: boolean;

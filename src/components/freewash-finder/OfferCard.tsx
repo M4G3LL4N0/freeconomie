@@ -39,6 +39,20 @@ export default function OfferCard({ offer }: OfferCardProps) {
             {offer.signupRequired && (
               <SignupBadge type={offer.signupType || "email"} />
             )}
+            {offer.trialDetails?.trialType === 'ai-tool' && (
+              <div className="mt-3 grid gap-2 text-sm">
+                <div className="flex items-center gap-2 text-purple-200">
+                  <span>🧠 AI Features:</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {offer.trialDetails.aiFeatures?.map(feature => (
+                    <span key={feature} className="rounded-full border border-purple-300/20 bg-purple-400/[0.08] px-3 py-1 text-xs text-purple-200">
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             <span className="text-xs text-white/42">
               {offer.city}, {offer.region}
             </span>
