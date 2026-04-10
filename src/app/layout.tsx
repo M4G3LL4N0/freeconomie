@@ -5,8 +5,8 @@ import { MapPin, List, PlusCircle, Sun, Moon } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
 
 export const metadata: Metadata = {
-  title: "Freeconomie | The OS for Free Value",
-  description: "Discover verified high-value free offerings - starting with premium car washes and expanding to trials, corporate perks, and public goods.",
+  title: "Freeconomie | Bay Area Free Car Washes",
+  description: "Discover verified high-value free car wash offers across the Bay Area - South Bay, Peninsula and East Bay.",
 };
 
 export default function RootLayout({

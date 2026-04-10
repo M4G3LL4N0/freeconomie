@@ -63,7 +63,7 @@ export function VerificationBadge({ verification, label }: VerificationBadgeProp
           </p>
         )}
         <small className="block mt-1 text-xs opacity-70">
-          Part of Freeconomie's verified free value network
+          Bay Area verified free wash
         </small>
       </TooltipContent>
     </Tooltip>

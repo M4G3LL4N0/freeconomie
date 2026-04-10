@@ -60,18 +60,19 @@ export default function Home() {
               <div className="relative grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
                 <div>
                   <div className="inline-flex items-center rounded-full border border-white/10 bg-white/6 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.26em] text-white/68 backdrop-blur-xl">
-                    Premium free-value discovery, not coupon clutter
+                    Launching with {bayAreaStaticOffers.length} verified Bay Area car washes
                   </div>
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
-                    The Intelligence Layer for{" "}
+                    Premium Free Car Washes in{" "}
                     <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
-                      High-Value Free
+                      the Bay Area
                     </span>
                   </h1>
 
                   <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
-                    Freeconomie combines rigorous verification, route-aware discovery, and premium curation to surface only the highest-value free offerings - starting with car washes and expanding to trials, perks, and public goods.
+                    Freeconomie launches with rigorously verified free car wash offers across the Bay Area. 
+                    Our premium verification system ensures only legitimate, high-value opportunities are shown.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">

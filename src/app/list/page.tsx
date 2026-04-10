@@ -14,10 +14,10 @@ export default function ListPage() {
               List View
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
-              Premium Free Value Inventory
+              Bay Area Free Wash Inventory
             </h1>
             <p className="mt-6 text-base leading-8 text-white/66">
-              Premium car wash offers form our launch dataset, with expansion to trials, perks and public goods coming next.
+              Premium verified car wash offers across {new Set(bayAreaStaticOffers.map(o => o.region)).size} Bay Area regions.
             </p>
           </div>
 
