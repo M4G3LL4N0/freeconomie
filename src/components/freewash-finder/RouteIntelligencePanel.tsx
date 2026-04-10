@@ -54,8 +54,14 @@ export default function RouteIntelligencePanel({
 }: RouteIntelligencePanelProps) {
   const c = themeClasses(theme);
 
+  // Calculate value density
+  const valueDensity = Math.round(
+    (offer.valueEstimate?.amount || 10) / 
+    (route.length / 1609.34) // Convert meters to miles
+  );
+
   return (
-    <div
+    <div 
       className={`overflow-hidden rounded-[1.5rem] border border-white/10 bg-gradient-to-br ${c.glow} p-[1px]`}
     >
       <div className="rounded-[calc(1.5rem-1px)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.24)]">
@@ -86,6 +92,15 @@ export default function RouteIntelligencePanel({
             <MapPin className={`h-4 w-4 ${c.icon}`} />
             <span>{stops} stop{stops === 1 ? "" : "s"}</span>
           </div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[10px] text-white/70">
+            ${valueDensity}/mi value density
+          </span>
+          <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[10px] text-white/70">
+            OS Score: {Math.round((valueDensity/100) * 90)}
+          </span>
         </div>
       </div>
     </div>

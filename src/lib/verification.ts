@@ -22,8 +22,13 @@ function getVerificationDetails(offer: StaticOffer): VerificationDetails {
   return maybeDetails ?? {};
 }
 
-export function calculateVerificationScore(offer: FreeconomyOffer): number {
+export function calculateVerificationScore(offer: FreeconomyOffer): OSMetrics {
   let score = 0;
+  const osMetrics = {
+    valueScore: 0,
+    routeDensity: 0,
+    freshnessScore: 0
+  };
   const details = getVerificationDetails(offer);
 
   // Source Type Weighting
@@ -62,7 +67,17 @@ export function calculateVerificationScore(offer: FreeconomyOffer): number {
     : 0;
     
   // Cap at 100 and ensure minimum of 0
-  return Math.max(0, Math.min(100, Math.round(score + valueModifier)));
+  // Calculate OS metrics
+  osMetrics.valueScore = Math.min(100, Math.round(
+    (score * 0.6) + 
+    (valueModifier * 20) +
+    (getFreshnessScore(offer.source.checkedAt) * 20)
+  ));
+
+  return {
+    confidenceScore: Math.max(0, Math.min(100, Math.round(score + valueModifier))),
+    ...osMetrics
+  };
 }
 
 export function isHighConfidenceOffer(offer: StaticOffer): boolean {

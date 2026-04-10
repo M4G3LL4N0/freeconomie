@@ -32,6 +32,11 @@ export type VerificationStatus = {
   verifiedBy: string; // 'system' | 'admin@freewashfinder.com' | userId
   verificationMethod: VerificationMethod;
   confidenceScore: number; // 0-100
+  systemRating?: {
+    valueScore: number; // 0-100 quality rating  
+    demandSignal: number; // 0-100 user interest
+    routeDensity: number; // 0-100 nearby value density
+  }
 };
 
 export type FreeconomyCategory = 
