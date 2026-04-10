@@ -28,6 +28,14 @@ const categoryVariants = {
   "membership-perk": {
     text: "Membership Perk",
     className: "border-violet-300/20 bg-violet-400/10 text-violet-200"
+  },
+  "signup-bonus": {
+    text: "Signup Bonus",
+    className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200"
+  },
+  "referral-bonus": {
+    text: "Referral Bonus",
+    className: "border-violet-300/20 bg-violet-400/10 text-violet-200"
   }
 };
 

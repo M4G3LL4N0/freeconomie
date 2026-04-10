@@ -92,6 +92,14 @@ export type RouteCategory = FreeconomyCategory;
 
 export type SignupType = 'email' | 'phone' | 'credit-card' | 'app' | 'membership' | 'none';
 
+export type BonusOffer = {
+  bonusType: 'signup' | 'referral' | 'loyalty' | 'seasonal';
+  requirements: string[];
+  expiration?: string;
+  redemptionMethod: 'code' | 'app' | 'in-person';
+  valueEstimate: number;
+};
+
 export type PerkOffer = {
   perkType: 'corporate' | 'membership' | 'community';
   provider: string;
@@ -108,7 +116,8 @@ export type FreeconomyOffer = {
   };
   economyType: FreeconomyCategory;
   valueEstimate?: number;
-  perkDetails?: PerkOffer; // New optional field
+  perkDetails?: PerkOffer;
+  bonusDetails?: BonusOffer; // New optional field
   restrictions?: string[];
   // Core identification
   id: string;
