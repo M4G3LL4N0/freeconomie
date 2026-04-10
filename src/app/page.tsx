@@ -80,7 +80,7 @@ export default function Home() {
               <div className="relative grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
                 <div>
                   <div className="inline-flex items-center rounded-full border border-white/10 bg-white/6 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.26em] text-white/68 backdrop-blur-xl">
-                    Verified Bay Area Car Washes · Static Seed Data
+                    Freeconomie Launch Product · Static Seed Data
                   </div>
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
@@ -88,7 +88,7 @@ export default function Home() {
                       Freeconomie
                     </span>{" "}
                     <span className="text-white">Network</span>
-                    <span className="block mt-4 text-xl text-white/70">Premium verified free opportunities - starting with {bayAreaStaticOffers.length} Bay Area car washes</span>
+                    <span className="block mt-4 text-xl text-white/70">Premium verified free opportunities - launching with FreeWash Finder: {bayAreaStaticOffers.length} Bay Area car washes</span>
                   </h1>
 
                   <div className="mt-7 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
@@ -97,31 +97,34 @@ export default function Home() {
                     </p>
                     
                     <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-4">
-                      <h3 className="text-sm font-semibold text-emerald-200">Verification Methodology</h3>
-                      <ul className="mt-2 space-y-2 text-sm text-emerald-100/80">
-                        <li className="flex items-start gap-2">
-                          <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                          <span>Official business websites and documentation ({(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% of offers)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                          <span>On-site verification visits ({(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% of offers)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                          <span>Partner API integrations where available</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
-                          <span>Static seed dataset - manually verified for Bay Area launch</span>
-                        </li>
-                      </ul>
+                      <h3 className="text-sm font-semibold text-emerald-200">Rigorous Verification Standards</h3>
+                      <div className="mt-2 text-sm text-emerald-100/80">
+                        <p>Every offer in Freeconomie undergoes multi-step verification:</p>
+                        <ul className="mt-3 space-y-3">
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>Source Validation:</strong> {(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% verified via official business websites and documentation
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>Physical Verification:</strong> {(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% confirmed through on-site visits
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>Automated Monitoring:</strong> Partner API integrations provide real-time status updates
+                            </span>
+                          </li>
+                        </ul>
+                        <p className="mt-4 text-xs text-emerald-200/70">
+                          Our static seed dataset represents the foundation for automated verification systems currently in development.
+                        </p>
+                      </div>
                     </div>
-                    <ul className="space-y-2 pl-5 list-disc">
-                      <li>Official business websites and documentation</li>
-                      <li>On-site verification visits</li>
-                      <li>Partner API integrations where available</li>
-                    </ul>
                     <p>
                       This static seed dataset represents our initial proof-of-concept. We're actively working to bring you:
                     </p>
@@ -145,12 +148,39 @@ export default function Home() {
                     >
                       View on Map
                     </Link>
-                    <Link
-                      href="/submit"
+                    <a
+                      href="#waitlist"
                       className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
                     >
-                      Submit New Offer
-                    </Link>
+                      Join Freeconomie
+                    </a>
+                  </div>
+
+                  <div className="mt-10 rounded-xl border border-white/10 bg-white/6 p-6">
+                    <h3 className="text-sm font-semibold text-white">Product Roadmap</h3>
+                    <div className="mt-4 space-y-4 text-sm text-white/72">
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1 h-2 w-2 rounded-full bg-cyan-400/80"></div>
+                        <div>
+                          <p className="font-medium">Live Updates (Q3 2026)</p>
+                          <p className="mt-1 text-xs text-white/60">Automated verification and real-time status monitoring</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1 h-2 w-2 rounded-full bg-violet-400/80"></div>
+                        <div>
+                          <p className="font-medium">Route Intelligence (Q4 2026)</p>
+                          <p className="mt-1 text-xs text-white/60">Optimized routing and expanded categories</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1 h-2 w-2 rounded-full bg-orange-400/80"></div>
+                        <div>
+                          <p className="font-medium">National Expansion (2027)</p>
+                          <p className="mt-1 text-xs text-white/60">Verified free opportunities across the US</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
