@@ -91,6 +91,38 @@ export default function Home() {
                     <span className="block mt-4 text-xl text-white/70">Discover high-value free offers with rigorous verification - starting with {bayAreaStaticOffers.length} Bay Area car washes</span>
                   </h1>
 
+                  <div className="mt-8 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
+                    <p>
+                      Freeconomie is building the definitive network for high-value free opportunities - from car washes to trials, samples, and public goods - with rigorous verification standards.
+                    </p>
+                    
+                    <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-4">
+                      <h3 className="text-sm font-semibold text-emerald-200">Verification Criteria</h3>
+                      <div className="mt-2 text-sm text-emerald-100/80">
+                        <p>Every offer must meet these standards:</p>
+                        <ul className="mt-3 space-y-3">
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>Source Validation:</strong> Verified via official business websites or partner APIs
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>No Purchase Required:</strong> Truly free with no hidden costs
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                            <span>
+                              <strong>Recency:</strong> Verified within last 90 days
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
                   <div className="mt-7 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
                     <p>
                       Freeconomie is building the definitive network for high-value free opportunities - from car washes to trials, samples, and public goods - with rigorous verification standards.
@@ -195,6 +227,9 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
+                    <div className="mt-4 text-xs text-white/50">
+                      Current version: Static Seed ({new Date().toLocaleDateString()}) - {bayAreaStaticOffers.length} verified offers
+                    </div>
                   </div>
 
                   <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -226,6 +261,21 @@ export default function Home() {
                         )}
                       </div>
                     ))}
+                  </div>
+
+                  <div className="mt-10 rounded-xl border border-white/10 bg-white/6 p-6">
+                    <h3 className="text-sm font-semibold text-white">Bay Area Coverage</h3>
+                    <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-white/72 sm:grid-cols-3">
+                      {Array.from(new Set(bayAreaStaticOffers.map(o => o.city))).slice(0, 6).map(city => (
+                        <div key={city} className="flex items-center gap-2">
+                          <span className="h-2 w-2 rounded-full bg-cyan-400/80"></span>
+                          <span>{city}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 text-xs text-white/50">
+                      Covering {new Set(bayAreaStaticOffers.map(o => o.city)).size} cities across {new Set(bayAreaStaticOffers.map(o => o.region)).size} Bay Area regions
+                    </div>
                   </div>
                 </div>
 
