@@ -63,6 +63,8 @@ export default function Home() {
               <Link href="/map" className="transition hover:text-white">Map</Link>
               <Link href="/list" className="transition hover:text-white">List</Link>
               <Link href="/submit" className="transition hover:text-white">Submit</Link>
+              <Link href="/about" className="transition hover:text-white">About</Link>
+              <Link href="/verification" className="transition hover:text-white">Verification</Link>
             </nav>
 
             <a
