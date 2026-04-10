@@ -104,6 +104,17 @@ export type FinancialIncentive = {
   applicationUrl?: string;
 };
 
+export type StackableValue = {
+  type: 'combo' | 'sequential' | 'bundled';
+  components: {
+    offerId: string;
+    valueEstimate: number;
+    requirements?: string;
+  }[];
+  maxStackValue: number;
+  redemptionMethod: 'auto' | 'manual' | 'code';
+};
+
 export type FreeconomyOffer = {
   systemMetrics: {
     lastVerified: string;  
@@ -114,7 +125,8 @@ export type FreeconomyOffer = {
   valueEstimate?: ValueEstimate;
   restrictions?: string[];
   trialDetails?: TrialOffer;
-  financialIncentives?: FinancialIncentive[]; // New optional field
+  financialIncentives?: FinancialIncentive[];
+  stackableValue?: StackableValue; // New optional field
 };
 
 export type ValueEstimate = {

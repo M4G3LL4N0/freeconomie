@@ -137,6 +137,12 @@ export function isVerifiedFinancialIncentive(offer: FreeconomyOffer): boolean {
     calculateVerificationScore(offer) >= 85
   );
 }
+
+export function isVerifiedStackable(offer: FreeconomyOffer): boolean {
+  return !!offer.stackableValue && 
+    offer.stackableValue.maxStackValue >= 25 &&
+    calculateVerificationScore(offer) >= 85;
+}
 import { VerificationStatus } from "@/types/freewash";
 
 export function getVerificationIcon(status?: VerificationStatus): string {

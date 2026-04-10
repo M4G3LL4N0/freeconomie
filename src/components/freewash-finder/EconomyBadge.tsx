@@ -61,6 +61,11 @@ const categoryVariants = {
     text: "Tax Credit",
     className: "border-blue-300/20 bg-blue-400/10 text-blue-200",
     icon: "🏛️"
+  },
+  "stackable-value": {
+    text: "Stackable Value",
+    className: "border-emerald-300/20 bg-gradient-to-r from-emerald-400/15 to-teal-500/10 text-emerald-200",
+    icon: "🧩"
   }
 };
 
