@@ -1,76 +1,108 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { FormEvent, useState } from "react";
 import { captureEvent } from "@/lib/analytics";
 import { showSuccess, showError } from "@/lib/notifications";
 
-const schema = z.object({
-  email: z.string().email("Please enter a valid email"),
-  referral_code: z.string().optional(),
-});
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
 
 export default function WaitlistForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm({
-    resolver: zodResolver(schema),
-  });
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const onSubmit = async (data) => {
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    setSuccessMessage("");
+    setErrorMessage("");
+
+    const normalizedEmail = email.trim();
+
+    if (!normalizedEmail) {
+      const message = "Email is required.";
+      setErrorMessage(message);
+      showError(message);
+      return;
+    }
+
+    if (!isValidEmail(normalizedEmail)) {
+      const message = "Please enter a valid email address.";
+      setErrorMessage(message);
+      showError(message);
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      const response = await fetch("/api/waitlist", {
+      const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ email: normalizedEmail }),
       });
 
-      if (!response.ok) throw new Error("Failed to join waitlist");
+      const data = await res.json();
 
-      showSuccess("You're on the list! We'll notify you soon.");
-      reset();
-      captureEvent("waitlist_signup", { email: data.email });
+      if (!res.ok) {
+        throw new Error(data?.error || "Failed to join waitlist.");
+      }
+
+      captureEvent("waitlist_form_submitted", { email: normalizedEmail });
+
+      const message = "You’ve been added to the waitlist.";
+      setSuccessMessage(message);
+      setEmail("");
+      showSuccess(message);
     } catch (error) {
-      showError(error.message || "Failed to join waitlist");
-      captureEvent("waitlist_error", { error: error.message });
+      const message =
+        error instanceof Error ? error.message : "Failed to join waitlist.";
+      setErrorMessage(message);
+      showError(message);
+    } finally {
+      setLoading(false);
     }
-  };
+  }
 
   return (
-    <form 
-      onSubmit={handleSubmit(onSubmit)} 
-      aria-labelledby="waitlist-heading"
-      className="mt-6 sm:mt-8 flex flex-col gap-4 sm:flex-row sm:gap-6 max-w-2xl"
-    >
-      <h2 id="waitlist-heading" className="sr-only">Join Waitlist</h2>
-      <div className="w-full sm:flex-1">
-        <label htmlFor="waitlist-email" className="sr-only">Email address</label>
+    <form onSubmit={onSubmit} className="mt-8 flex max-w-2xl flex-col gap-4 sm:flex-row">
+      <div className="flex-1">
+        <label htmlFor="waitlist-email" className="sr-only">
+          Email address
+        </label>
         <input
           id="waitlist-email"
           type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          className={`w-full rounded-full border-2 ${errors.email ? 'border-rose-400/50' : 'border-white/15'} glass-form-element px-4 py-3 sm:px-5 sm:py-3.5 text-sm text-white/90 outline-none transition-all placeholder:text-white/28 focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-300/30`}
-          {...register("email")}
-          aria-required="true"
-          aria-invalid={errors.email ? "true" : "false"}
-          aria-describedby={errors.email ? "email-error" : undefined}
+          autoComplete="email"
+          className="min-w-0 w-full rounded-full border border-white/10 bg-[#091323]/94 px-5 py-4 text-sm text-white outline-none placeholder:text-white/28"
+          aria-invalid={errorMessage ? "true" : "false"}
+          aria-describedby={errorMessage ? "waitlist-error" : successMessage ? "waitlist-success" : undefined}
         />
-        {errors.email && (
-          <p className="mt-1.5 text-xs leading-5 text-rose-400">{errors.email.message}</p>
-        )}
+        {errorMessage ? (
+          <p id="waitlist-error" className="mt-3 text-sm text-red-200" aria-live="polite">
+            {errorMessage}
+          </p>
+        ) : null}
+        {successMessage ? (
+          <p id="waitlist-success" className="mt-3 text-sm text-emerald-200" aria-live="polite">
+            {successMessage}
+          </p>
+        ) : null}
       </div>
+
       <button
         type="submit"
-        disabled={isSubmitting}
-        className="w-full sm:w-auto rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-3 sm:px-8 sm:py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_14px_50px_rgba(59,130,246,0.4)] disabled:opacity-70"
+        disabled={loading}
+        className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.26)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isSubmitting ? "Joining..." : "Join Waitlist"}
+        {loading ? "Joining..." : "Join Waitlist"}
       </button>
     </form>
   );

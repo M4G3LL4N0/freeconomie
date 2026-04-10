@@ -2,22 +2,10 @@ import Link from "next/link";
 import { bayAreaStaticOffers } from "@/lib/bay-area-offers";
 
 const stats = [
-  { 
-    value: `${bayAreaStaticOffers.length}+`, 
-    label: "Verified Launch Offers" 
-  },
-  { 
-    value: `${new Set(bayAreaStaticOffers.map(o => o.city)).size}`, 
-    label: "Bay Area Cities" 
-  },
-  { 
-    value: `${new Set(bayAreaStaticOffers.map(o => o.region)).size}`, 
-    label: "Regions Covered" 
-  },
-  { 
-    value: "Static Seed", 
-    label: "Current Data State" 
-  },
+  { value: `${bayAreaStaticOffers.length}+`, label: "Launch offers" },
+  { value: `${new Set(bayAreaStaticOffers.map((o) => o.city)).size}`, label: "Cities covered" },
+  { value: `${new Set(bayAreaStaticOffers.map((o) => o.region)).size}`, label: "Regions covered" },
+  { value: "Verified", label: "Official-site sourced" },
 ];
 
 const featured = bayAreaStaticOffers.slice(0, 3);
@@ -52,15 +40,9 @@ export default function Home() {
             </div>
 
             <nav className="hidden items-center gap-8 text-sm text-white/60 md:flex">
-              <Link href="/map" className="transition hover:text-white">
-                Map
-              </Link>
-              <Link href="/list" className="transition hover:text-white">
-                List
-              </Link>
-              <Link href="/submit" className="transition hover:text-white">
-                Submit
-              </Link>
+              <Link href="/map" className="transition hover:text-white">Map</Link>
+              <Link href="/list" className="transition hover:text-white">List</Link>
+              <Link href="/submit" className="transition hover:text-white">Submit</Link>
             </nav>
 
             <a
@@ -89,7 +71,7 @@ export default function Home() {
                   </h1>
 
                   <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
-                    Launching with verified static Bay Area inventory now, then expanding into live ingestion, re-checking, and broader free-value discovery. Currently covering {bayAreaStaticOffers.length} offers across {new Set(bayAreaStaticOffers.map(o => o.city)).size} cities.
+                    FreeWash Finder launches with verified Bay Area free-wash offers sourced from official car wash websites and structured into a premium route-aware discovery experience.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -176,61 +158,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-6 pb-20 sm:px-8 lg:px-10">
-          <div className="mx-auto max-w-7xl">
-            <div className="grid gap-5 md:grid-cols-3">
-              {featured.map((item) => (
-                <div
-                  key={item.id}
-                  className="rounded-[1.7rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-5 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
-                >
-                  <div className="inline-flex rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/70">
-                    {item.region}
-                  </div>
-                  <h3 className="mt-4 text-xl font-semibold text-white">{item.businessName}</h3>
-                  <p className="mt-2 text-sm text-white/62">{item.city}</p>
-                  <p className="mt-4 text-sm leading-6 text-white/62">{item.summary}</p>
-                  <div className="mt-4 text-xs uppercase tracking-[0.18em] text-white/40">
-                    Source {item.source.name}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="waitlist" className="px-6 pb-24 sm:px-8 lg:px-10">
-          <div className="mx-auto max-w-7xl">
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-8 shadow-[0_18px_60px_rgba(0,0,0,0.3)] sm:p-10 lg:p-12">
-              <div className="max-w-3xl">
-                <div className="text-[11px] uppercase tracking-[0.28em] text-white/42">
-                  Early Access
-                </div>
-                <h2 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
-                  Bay Area first. Live product next.
-                </h2>
-                <p className="mt-6 text-base leading-8 text-white/66">
-                  Launching with verified static Bay Area inventory now, then expanding into live ingestion, re-checking, and broader free-value discovery.
-                </p>
-              </div>
-
-              <form className="mt-8 flex max-w-2xl flex-col gap-4 sm:flex-row">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="min-w-0 flex-1 rounded-full border border-white/10 bg-[#091323]/94 px-5 py-4 text-sm text-white outline-none placeholder:text-white/28"
-                />
-                <button
-                  type="submit"
-                  className="rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-4 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.26)] transition hover:scale-[1.02]"
-                >
-                  Join Waitlist
-                </button>
-              </form>
             </div>
           </div>
         </section>
