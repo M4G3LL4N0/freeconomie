@@ -39,10 +39,13 @@ export type VerificationStatus = {
 export type FreeconomyCategory = 
   | "free-car-wash"
   | "free-trials"
-  | "free-samples" 
+  | "free-trial" // Alias for backwards compatibility
+  | "free-samples"
+  | "free-sample" // Alias for backwards compatibility  
   | "community-shares"
   | "grand-openings"
-  | "no-strings-freebies";
+  | "no-strings-freebies"
+  | "promotional-offer";
 
 // Backwards compatible alias
 export type RouteCategory = FreeconomyCategory;
