@@ -7,9 +7,9 @@ export default function MapPage() {
   return (
     <main className="min-h-screen bg-[#06111f] pt-10 text-white">
       <SectionShell
-        eyebrow="Map View"
-        title="Bay Area route discovery, starting with static verified launch data."
-        description="This is the product scaffold for route-aware free wash discovery. Live mapping comes next; for now, the interface is driven by verified static Bay Area inventory."
+        eyebrow="Value Map"
+        title="Route-aware discovery of verified free offerings"
+        description="Starting with static car wash data while building live verification and dynamic routing for all high-value free opportunities."
       >
         <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(13,28,52,0.96),rgba(20,34,68,0.88)_38%,rgba(25,24,52,0.84)_100%)] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.42)]">

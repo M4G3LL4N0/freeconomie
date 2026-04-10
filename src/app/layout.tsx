@@ -6,7 +6,7 @@ import ThemeToggle from "@/components/theme-toggle";
 
 export const metadata: Metadata = {
   title: "Freeconomie | The OS for Free Value",
-  description: "Discover verified high-value free offerings - starting with car washes and expanding to premium trials, corporate perks, and public goods.",
+  description: "Discover verified high-value free offerings - starting with premium car washes and expanding to trials, corporate perks, and public goods.",
 };
 
 export default function RootLayout({

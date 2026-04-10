@@ -14,10 +14,10 @@ export default function ListPage() {
               List View
             </div>
             <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
-              Verified Bay Area free wash inventory.
+              Premium Free Value Inventory
             </h1>
             <p className="mt-6 text-base leading-8 text-white/66">
-              Static launch data from official sites, organized into a premium list view while live ingestion comes next.
+              Premium car wash offers form our launch dataset, with expansion to trials, perks and public goods coming next.
             </p>
           </div>
 

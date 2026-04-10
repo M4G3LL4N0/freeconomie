@@ -60,7 +60,7 @@ export default function Home() {
               <div className="relative grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
                 <div>
                   <div className="inline-flex items-center rounded-full border border-white/10 bg-white/6 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.26em] text-white/68 backdrop-blur-xl">
-                    Premium consumer utility, not coupon clutter
+                    Premium free-value discovery, not coupon clutter
                   </div>
 
                   <h1 className="mt-7 max-w-4xl text-5xl font-semibold leading-[0.96] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
@@ -71,7 +71,7 @@ export default function Home() {
                   </h1>
 
                   <p className="mt-7 max-w-3xl text-base leading-8 text-white/72 sm:text-lg">
-                    Freeconomie launches with verified Bay Area free car washes while building the intelligence layer for all high-value free offerings - from trials to perks to public goods.
+                    Freeconomie launches with verified Bay Area free car washes while building the intelligence layer for all high-value free offerings - from premium trials to corporate perks to public goods.
                   </p>
 
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row">

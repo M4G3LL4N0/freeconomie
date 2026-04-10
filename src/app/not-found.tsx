@@ -13,8 +13,7 @@ export default function NotFound() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-base leading-8 text-white/66 sm:text-lg">
-          The page you tried to open is unavailable or has moved. Return to the main
-          Freeconomie experience and continue exploring verified free-value opportunities.
+          The page you tried to open is unavailable. Return to discover verified free-value opportunities across the Bay Area.
         </p>
 
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
