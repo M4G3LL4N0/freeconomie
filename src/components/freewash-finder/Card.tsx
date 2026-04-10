@@ -39,6 +39,9 @@ interface CardProps {
   label?: string;
   meta?: string;
   theme?: string;
+  valueBadge?: number;
+  economyType?: 'car-wash' | 'trial' | 'sample';
+  verificationLevel?: 'gold' | 'silver' | 'bronze';
 }
 
 export default function Card({
@@ -47,8 +50,14 @@ export default function Card({
   label,
   meta,
   theme = "cyan",
+  valueBadge,
+  economyType = 'car-wash',
+  verificationLevel = 'bronze'
 }: CardProps) {
-  const c = themeClasses(theme);
+  const c = themeClasses(
+    economyType === 'trial' ? 'violet' : 
+    economyType === 'sample' ? 'emerald' : 'cyan'
+  );
 
   return (
     <div
@@ -59,6 +68,18 @@ export default function Card({
         {label ? (
           <div className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${c.pill}`}>
             {label}
+            {valueBadge && (
+              <span className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] bg-gradient-to-r from-amber-400/20 to-amber-600/10 border-amber-300/20 text-amber-100`}>
+                ${valueBadge} Value
+              </span>
+            )}
+            <span className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${
+              verificationLevel === 'gold' ? 'bg-gradient-to-r from-yellow-400/15 to-yellow-600/10 border-yellow-300/20 text-yellow-100' :
+              verificationLevel === 'silver' ? 'bg-white/10 border-white/20 text-white/80' :
+              'border-white/10 bg-white/6 text-white/70'
+            }`}>
+              {verificationLevel.toUpperCase()} VERIFIED
+            </span>
           </div>
         ) : null}
         <h3 className="mt-4 text-xl font-semibold text-white">{title}</h3>
