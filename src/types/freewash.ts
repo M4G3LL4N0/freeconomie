@@ -43,6 +43,7 @@ export type FreeconomyCategory =
   | "free-samples"
   | "free-sample" // Alias for backwards compatibility  
   | "community-shares"
+  | "community-exchange" // New category
   | "grand-openings"
   | "no-strings-freebies"
   | "promotional-offer";

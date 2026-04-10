@@ -61,12 +61,12 @@ export async function GET(request: Request) {
       // Early exit if geo filter fails
       if (distance > input.radius * 1000) return false;
 
-      // Category filtering
-      if (input.category && offer.category !== input.category) {
-        // Special case for backwards compatibility
-        if (!(input.category === 'free-first-wash' && offer.category === 'free-car-wash')) {
-          return false;
-        }
+      // Category filtering with backwards compatibility
+      const effectiveCategory = offer.economyType || 
+        (offer.category === 'free-car-wash' ? 'free-car-wash' : undefined);
+      
+      if (input.category && effectiveCategory !== input.category) {
+        return false;
       }
 
       // Value filtering (if offer has valueEstimate)

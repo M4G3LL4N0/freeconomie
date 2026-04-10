@@ -22,7 +22,11 @@ const envSchema = z.object({
   // Dynamic configuration  
   NEXT_PUBLIC_FREEONOMY_CATEGORIES: z
     .string()
-    .default('free-car-wash,free-membership-trial')
+    .default('free-car-wash') // Default to only car washes for safety
+    .transform(s => s.split(',') as FreeconomyCategory[]),
+  NEXT_PUBLIC_EXPERIMENTAL_CATEGORIES: z
+    .string()
+    .default('free-car-wash,free-trials') // New experimental categories
     .transform(s => s.split(',') as FreeconomyCategory[]),
   NEXT_PUBLIC_DEFAULT_REGION: z
     .string()

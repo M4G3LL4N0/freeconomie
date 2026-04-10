@@ -6,8 +6,12 @@ const categoryVariants = {
     className: "border-cyan-300/20 bg-cyan-400/10 text-cyan-200"
   },
   "free-trials": {
-    text: "Free Trial",
+    text: "Free Trial", 
     className: "border-violet-300/20 bg-violet-400/10 text-violet-200"
+  },
+  "community-exchange": {
+    text: "Community Exchange",
+    className: "border-emerald-300/20 bg-emerald-400/10 text-emerald-200"
   },
   "free-samples": {
     text: "Free Sample",
