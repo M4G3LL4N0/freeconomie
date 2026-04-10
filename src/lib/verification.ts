@@ -1,63 +1,58 @@
-import { StaticOffer } from "../types/freewash";
+import type { StaticOffer } from "@/types/freewash";
 
-export const verifyOffer = (offer: StaticOffer): StaticOffer => {
-  // Calculate verification score (0-100)
-  let score = 0;
-  
-  // Official sources score higher
-  if (offer.verificationDetails.sourceType === 'official') score += 40;
-  if (offer.verificationDetails.verificationMethod === 'partner-api') score += 30;
-  
-  // Recent verification boosts score
-  const daysSinceVerification = Math.floor(
-    (new Date().getTime() - new Date(offer.verificationDetails.lastVerifiedAt).getTime()) / 
-    (1000 * 60 * 60 * 24)
-  );
-  if (daysSinceVerification < 7) score += 20;
-  if (daysSinceVerification < 30) score += 10;
-
-  // Expired offers get score penalty
-  if (offer.isExpired) score = Math.max(0, score - 50);
-
-  return {
-    ...offer,
-    verificationScore: Math.min(100, score),
-    verified: score >= 70
-  };
+type VerificationDetails = {
+  sourceType?: "official" | "partner" | "user" | "scraped" | "unknown";
+  verificationMethod?:
+    | "partner-api"
+    | "manual-review"
+    | "official-site"
+    | "phone-call"
+    | "scrape-check"
+    | "unknown";
+  verifiedAt?: string;
+  confidenceScore?: number;
+  notes?: string;
 };
 
-export const filterAndSortOffers = (
-  offers: StaticOffer[], 
-  route?: { origin: [number, number], destination: [number, number] }
-): StaticOffer[] => {
-  // Basic filtering
-  let filtered = offers
-    .filter(offer => !offer.isExpired)
-    .filter(offer => offer.verificationScore >= 50);
+function getVerificationDetails(offer: StaticOffer): VerificationDetails {
+  const maybeDetails = (offer as StaticOffer & {
+    verificationDetails?: VerificationDetails;
+  }).verificationDetails;
 
-  // If route provided, prioritize offers along the route
-  if (route) {
-    filtered = filtered.map(offer => ({
-      ...offer,
-      routeScore: calculateRouteScore(offer, route)
-    })).sort((a, b) => (b.routeScore || 0) - (a.routeScore || 0));
+  return maybeDetails ?? {};
+}
+
+export function calculateVerificationScore(offer: StaticOffer): number {
+  let score = 0;
+  const details = getVerificationDetails(offer);
+
+  if (details.sourceType === "official") score += 40;
+  if (details.verificationMethod === "partner-api") score += 30;
+  if (details.verificationMethod === "official-site") score += 20;
+  if (details.verificationMethod === "manual-review") score += 15;
+  if (details.verificationMethod === "phone-call") score += 15;
+
+  if ("verified" in offer && (offer as StaticOffer & { verified?: boolean }).verified) {
+    score += 10;
   }
 
-  return filtered;
-};
+  if (details.verifiedAt) {
+    const verifiedTime = new Date(details.verifiedAt).getTime();
+    if (!Number.isNaN(verifiedTime)) {
+      const daysOld = (Date.now() - verifiedTime) / (1000 * 60 * 60 * 24);
+      if (daysOld <= 7) score += 15;
+      else if (daysOld <= 30) score += 10;
+      else if (daysOld <= 90) score += 5;
+    }
+  }
 
-const calculateRouteScore = (
-  offer: StaticOffer,
-  route: { origin: [number, number], destination: [number, number] }
-): number => {
-  // Simplified route scoring - would integrate with Mapbox/Directions API in prod
-  const offerPoint = [offer.latitude, offer.longitude];
-  const originToOffer = haversine(route.origin, offerPoint);
-  const offerToDest = haversine(offerPoint, route.destination);
-  const totalRoute = haversine(route.origin, route.destination);
-  
-  // Lower score is better (less detour)
-  return (originToOffer + offerToDest) - totalRoute;
-};
+  if (typeof details.confidenceScore === "number") {
+    score += Math.max(0, Math.min(20, Math.round(details.confidenceScore / 5)));
+  }
 
-// Haversine distance implementation would go here
+  return Math.min(score, 100);
+}
+
+export function isHighConfidenceOffer(offer: StaticOffer): boolean {
+  return calculateVerificationScore(offer) >= 70;
+}
