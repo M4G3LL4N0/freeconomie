@@ -61,6 +61,7 @@ export type FreeconomyOffer = {
   id: string;
   businessName: string;
   offerTitle: string;
+  economyType?: FreeconomyCategory; // Optional new field
   
   // Location data
   location: {
