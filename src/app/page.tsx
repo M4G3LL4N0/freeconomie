@@ -3,28 +3,28 @@ import { bayAreaStaticOffers } from "@/lib/bay-area-offers";
 
 const stats = [
   { 
-    value: `${bayAreaStaticOffers.length}+`, 
-    label: "Verified Offers",
-    description: "Manually verified free car washes",
+    value: `${bayAreaStaticOffers.length}`, 
+    label: "Verified Car Washes",
+    description: `Across ${new Set(bayAreaStaticOffers.map((o) => o.city)).size} Bay Area cities`,
     icon: "verified"
-  },
-  { 
-    value: `${new Set(bayAreaStaticOffers.map((o) => o.city)).size}`, 
-    label: "Cities Covered",
-    description: "Across the Bay Area",
-    icon: "location"
-  },
-  { 
-    value: `${new Set(bayAreaStaticOffers.map((o) => o.region)).size}`, 
-    label: "Regions Covered",
-    description: "From South Bay to North Bay",
-    icon: "region"
   },
   { 
     value: `${Math.round((bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length) * 100)}%`, 
     label: "Official Sources",
-    description: "Direct from business websites",
+    description: "Verified via business websites",
     icon: "source"
+  },
+  { 
+    value: `${Math.round((bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length) * 100)}%`, 
+    label: "On-Site Verified",
+    description: "Physically confirmed locations",
+    icon: "check"
+  },
+  { 
+    value: `${new Set(bayAreaStaticOffers.map((o) => o.region)).size}`, 
+    label: "Bay Area Regions",
+    description: "From South Bay to North Bay",
+    icon: "region"
   },
 ];
 
@@ -87,17 +87,36 @@ export default function Home() {
                     <span className="bg-gradient-to-r from-cyan-200 via-white to-orange-200 bg-clip-text text-transparent">
                       Freeconomie
                     </span>{" "}
-                    <span className="text-white">Network Launch</span>
-                    <span className="block mt-4 text-xl text-white/70">Discover premium verified free opportunities - starting with car washes in the Bay Area</span>
+                    <span className="text-white">Network</span>
+                    <span className="block mt-4 text-xl text-white/70">Premium verified free opportunities - starting with {bayAreaStaticOffers.length} Bay Area car washes</span>
                   </h1>
 
                   <div className="mt-7 max-w-3xl space-y-4 text-base leading-8 text-white/72 sm:text-lg">
                     <p>
-                      Freeconomie is building the definitive network for premium verified free opportunities - from car washes to trials, samples, and public goods. 
+                      Freeconomie is building the definitive network for high-value free opportunities - from car washes to trials, samples, and public goods - with rigorous verification standards.
                     </p>
-                    <p>
-                      Our Bay Area launch features {bayAreaStaticOffers.length} manually verified free car washes, each confirmed through:
-                    </p>
+                    
+                    <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 p-4">
+                      <h3 className="text-sm font-semibold text-emerald-200">Verification Methodology</h3>
+                      <ul className="mt-2 space-y-2 text-sm text-emerald-100/80">
+                        <li className="flex items-start gap-2">
+                          <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                          <span>Official business websites and documentation ({(bayAreaStaticOffers.filter(o => o.source.type === "official").length / bayAreaStaticOffers.length * 100).toFixed(0)}% of offers)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                          <span>On-site verification visits ({(bayAreaStaticOffers.filter(o => o.verification?.verificationMethod === "in-person-visit").length / bayAreaStaticOffers.length * 100).toFixed(0)}% of offers)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                          <span>Partner API integrations where available</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="mt-0.5 h-2 w-2 rounded-full bg-emerald-400/80"></span>
+                          <span>Static seed dataset - manually verified for Bay Area launch</span>
+                        </li>
+                      </ul>
+                    </div>
                     <ul className="space-y-2 pl-5 list-disc">
                       <li>Official business websites and documentation</li>
                       <li>On-site verification visits</li>
@@ -118,13 +137,19 @@ export default function Home() {
                       href="/list"
                       className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-violet-500 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.02]"
                     >
-                      Explore Bay Area Offers
+                      Browse Verified Washes
                     </Link>
                     <Link
                       href="/map"
                       className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
                     >
-                      View Route Map
+                      View on Map
+                    </Link>
+                    <Link
+                      href="/submit"
+                      className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/6 px-6 py-3.5 text-sm font-semibold text-white/88 backdrop-blur-xl transition hover:bg-white/10"
+                    >
+                      Submit New Offer
                     </Link>
                   </div>
 
