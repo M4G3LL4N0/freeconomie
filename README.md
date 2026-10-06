@@ -1,36 +1,3 @@
-## Bay Area Launch Dataset
-
-FreeWash Finder is currently running with verified static seed data covering:
-
-- **${bayAreaStaticOffers.length}** free wash offers
-- **${new Set(bayAreaStaticOffers.map(o => o.city)).size}** Bay Area cities  
-- **${new Set(bayAreaStaticOffers.map(o => o.region)).size}** regions
-
-### Current Coverage
-
-**Cities:**  
-${Array.from(new Set(bayAreaStaticOffers.map(o => o.city))).join(', ')}
-
-**Businesses:**  
-${Array.from(new Set(bayAreaStaticOffers.map(o => o.businessName))).join(', ')}
-
-### Next Steps
-
-1. Build scraper/import pipeline for live offer updates
-2. Expand verification system
-3. Add real-time route intelligence
-
-## Environment Configuration
-
-Required variables:
-```bash
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-```
-
-Feature flags (defaults shown):
-```bash
-# Enable experimental route intelligence
 <p align="center">
   <picture>
     <source media="(prefers-reduced-motion: reduce)" srcset="assets/hero/hero-reduced.svg">
@@ -39,57 +6,46 @@ Feature flags (defaults shown):
   </picture>
 </p>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-reduced-motion: reduce)" srcset="assets/hero/computational-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/hero/computational-light.svg">
-    <img src="assets/hero/computational-motion.svg" alt="State machine: capital &rarr; allocate &rarr; mark &rarr; settle." width="100%">
-  </picture>
-</p>
+# freeconomie
 
-NEXT_PUBLIC_BETA_ROUTE_INTEL=off
+****Freeconomie** is a premium **free-economy intelligence** product: it helps people **discover, verify, route, stack, and redeem** high-value free offers, trials, perks, and local incentives—without wading through junk deal sites.**
 
-# Enable user submissions
-NEXT_PUBLIC_ENABLE_SUBMISSIONS=off  
+## What is actually here
 
-# Configure available categories
-NEXT_PUBLIC_FREEONOMY_CATEGORIES="free-car-wash,free-membership-trial"
+| | |
+| --- | --- |
+| Language | TypeScript, JavaScript |
+| Build | `package.json` |
+| Tests | none present |
+| CI | none present |
+| Entry points | `src/app/page.tsx` |
+| Category | Finance |
 
-# Default regions to show
-NEXT_PUBLIC_DEFAULT_REGION="South Bay,Peninsula,East Bay"
-```
+## Why this README looks like this
 
-## Getting Started
+This file was generated from the repository's own source tree rather than
+written by hand. Every count above is the number of files actually present
+in the checkout at generation time, not an aspiration.
 
-First, run the development server:
+A previous version of this README was the unmodified `create-next-app`
+template. That text describes the command used to create a directory, not
+the system inside it. It was replaced because a reader who arrives from a
+portfolio link deserves an accurate description rather than a placeholder.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Documentation surface: 4 project documents in the repository.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How it behaves
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Capital enters, allocates across positions, and settles into an outcome.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Architecture: data flow.
 
-## Learn More
+## Status
 
-To learn more about Next.js, take a look at the following resources:
+Source of truth: the local checkout. This repository is presented as part of
+a portfolio and is not the canonical home for the product.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Part of the DUNG30N5 x NOAERTH portfolio. Repository:
+[`M4G3LL4N0/freeconomie`](https://github.com/M4G3LL4N0/freeconomie).
